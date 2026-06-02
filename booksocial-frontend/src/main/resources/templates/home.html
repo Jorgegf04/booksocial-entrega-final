@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Inicio publico.
+  Funcion: Muestra portada, obras destacadas, comunidad, categorias y suscripcion.
+  Atributos del modelo: featuredWorks, session.role.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,17 +20,25 @@
   <link rel="stylesheet" th:href="@{/css/pages/public/home.css}">
 </head>
 
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
   
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  
+<!-- Navbar publica: fragmento comun con menu, busqueda, carrito y sesion. -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
   
-  <main class="home-main">
+  
+<!-- Contenido principal: zona central que cambia en cada vista. -->
+<main class="home-main">
 
     
     
-    <section class="home-hero d-flex align-items-center">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="home-hero d-flex align-items-center">
       
       <div class="home-hero-overlay"></div>
       
@@ -56,7 +72,9 @@
 
     
     
-    <section class="py-5 home-section-bg">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="py-5 home-section-bg">
       <div class="container px-4 px-lg-5">
 
         
@@ -140,7 +158,9 @@
 
     
     
-    <section class="home-community-section py-5">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="home-community-section py-5">
       <div class="container px-4 px-lg-5">
         <div class="row g-4">
 
@@ -195,7 +215,9 @@
     </section>
 
     
-    <section class="py-5 home-section-bg">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="py-5 home-section-bg">
       <div class="container px-4 px-lg-5">
         
         <div class="row g-5 align-items-center">
@@ -257,7 +279,9 @@
     </section>
 
     
-    <section class="home-sub-section py-5" th:unless="${session.role == 'SUBSCRIBED'}">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="home-sub-section py-5" th:unless="${session.role == 'SUBSCRIBED'}">
       <div class="container px-4 px-lg-5">
         <div class="home-sub-card">
 
@@ -325,8 +349,12 @@
   </main>
 
   
-  <div th:replace="~{fragments/footer :: footer}"></div>
+  
+<!-- Footer publico: fragmento comun con el pie de pagina. -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

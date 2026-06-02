@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Carrito.
+  Funcion: Muestra productos del carrito, totales, sugerencias y acciones de compra.
+  Atributos del modelo: cartItems, suggestions, cartSuccess, cartError, isSubscribed, session.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,15 +18,21 @@
   
   <link rel="stylesheet" th:href="@{/css/pages/public/cart.css}">
 </head>
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
   
   
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  
+<!-- Navbar publica: fragmento comun con menu, busqueda, carrito y sesion. -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
   
   
-  <main class="container cart-main">
+  
+<!-- Contenido principal: zona central que cambia en cada vista. -->
+<main class="container cart-main">
 
     
     
@@ -122,7 +136,9 @@
               <div class="d-flex align-items-center justify-content-between mt-3">
                 
                 
-                <form th:action="@{/cart/update}" method="post" class="d-flex align-items-center gap-0">
+                
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/cart/update}" method="post" class="d-flex align-items-center gap-0">
                   <input type="hidden" name="productId" th:value="${item.productId}">
                   <div class="cart-qty-control">
                     <button type="submit" name="quantity" th:value="${item.quantity - 1}"
@@ -141,7 +157,9 @@
                 
                 
                 
-                <form th:action="@{'/cart/remove/' + ${item.productId}}" method="post">
+                
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/cart/remove/' + ${item.productId}}" method="post">
                   <button type="submit" class="cart-remove-btn">
                     
                     <span class="material-symbols-outlined cart-remove-icon">delete</span>
@@ -243,7 +261,9 @@
           
           
           
-          <form th:action="@{/cart/checkout}" method="post">
+          
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/cart/checkout}" method="post">
             
             <div th:if="${session.userId == null}" class="mb-3">
               <label for="guestEmail" class="form-label fw-semibold">Email de confirmacion</label>
@@ -274,7 +294,9 @@
     </div>
 
     
-    <section class="mt-5 pt-4" th:if="${suggestions != null and !suggestions.isEmpty()}">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="mt-5 pt-4" th:if="${suggestions != null and !suggestions.isEmpty()}">
       <div class="mb-4">
         <p class="filter-section-title mb-1">También te puede interesar</p>
         
@@ -319,8 +341,12 @@
   </main>
 
   
-  <div th:replace="~{fragments/footer :: footer}"></div>
+  
+<!-- Footer publico: fragmento comun con el pie de pagina. -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

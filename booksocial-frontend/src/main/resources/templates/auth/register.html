@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Registro.
+  Funcion: Formulario de alta de usuario y errores de validacion.
+  Atributos del modelo: registerRequest, error, errorDetails, detail.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,6 +20,8 @@
   
   <link rel="stylesheet" th:href="@{/css/pages/public/auth.css}">
 </head>
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
 <div th:replace="~{fragments/messages :: backendStatus}"></div>
@@ -76,7 +86,9 @@
 
       
       
-      <form th:action="@{/auth/register}" th:object="${registerRequest}" method="post" novalidate>
+      
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/auth/register}" th:object="${registerRequest}" method="post" novalidate>
 
         
         
@@ -207,6 +219,8 @@
 
 </div>
 
+
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
 <script>
   /**
    * Alterna visibilidad de la contraseña.

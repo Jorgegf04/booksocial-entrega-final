@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Eventos.
+  Funcion: Muestra evento destacado, eventos secundarios y proximos eventos.
+  Atributos del modelo: featured, secondary, upcoming, sessionUserId.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,15 +18,21 @@
   
   <link rel="stylesheet" th:href="@{/css/pages/public/events.css}">
 </head>
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
   
   
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  
+<!-- Navbar publica: fragmento comun con menu, busqueda, carrito y sesion. -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
   
   
-  <main class="events-main">
+  
+<!-- Contenido principal: zona central que cambia en cada vista. -->
+<main class="events-main">
     <div class="container px-4 px-lg-5">
 
       
@@ -43,7 +57,9 @@
       </header>
 
       
-      <section class="mb-5">
+      
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="mb-5">
         <div class="row g-4">
 
           
@@ -97,7 +113,9 @@
                     
                     <th:block th:if="${featured.userIds != null and #lists.contains(featured.userIds, sessionUserId)}">
                       
-                      <form th:action="@{'/events/' + ${featured.id} + '/leave'}" method="post">
+                      
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/events/' + ${featured.id} + '/leave'}" method="post">
                         <button type="submit" class="event-leave-btn">
                           <span class="material-symbols-outlined events-action-icon">logout</span>
                           Abandonar evento
@@ -106,7 +124,9 @@
                     </th:block>
                     <th:block th:unless="${featured.userIds != null and #lists.contains(featured.userIds, sessionUserId)}">
                       
-                      <form th:action="@{'/events/' + ${featured.id} + '/join'}" method="post">
+                      
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/events/' + ${featured.id} + '/join'}" method="post">
                         <button type="submit" class="btn-primary-pill event-join-btn">
                           <span class="material-symbols-outlined events-action-icon">confirmation_number</span>
                           Reserva tu lugar
@@ -170,13 +190,17 @@
                   
                   <th:block th:if="${secondary.userIds != null and #lists.contains(secondary.userIds, sessionUserId)}">
                     
-                    <form th:action="@{'/events/' + ${secondary.id} + '/leave'}" method="post">
+                    
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/events/' + ${secondary.id} + '/leave'}" method="post">
                       <button type="submit" class="event-secondary-leave w-100">Abandonar sesión</button>
                     </form>
                   </th:block>
                   <th:block th:unless="${secondary.userIds != null and #lists.contains(secondary.userIds, sessionUserId)}">
                     
-                    <form th:action="@{'/events/' + ${secondary.id} + '/join'}" method="post">
+                    
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/events/' + ${secondary.id} + '/join'}" method="post">
                       <button type="submit" class="event-secondary-join w-100">Unirse a la sesión</button>
                     </form>
                   </th:block>
@@ -211,7 +235,9 @@
       </section>
 
       
-      <section th:if="${!upcoming.isEmpty()}">
+      
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section th:if="${!upcoming.isEmpty()}">
         <div class="d-flex justify-content-between align-items-end mb-4">
           <div>
             <p class="filter-section-title mb-1">Agenda</p>
@@ -271,12 +297,16 @@
 
                   <th:block th:if="${sessionUserId != null and sessionRole == 'SUBSCRIBED'}">
                     <th:block th:if="${event.userIds != null and #lists.contains(event.userIds, sessionUserId)}">
-                      <form th:action="@{'/events/' + ${event.id} + '/leave'}" method="post">
+                      
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/events/' + ${event.id} + '/leave'}" method="post">
                         <button type="submit" class="event-card-leave-btn">Abandonar</button>
                       </form>
                     </th:block>
                     <th:block th:unless="${event.userIds != null and #lists.contains(event.userIds, sessionUserId)}">
-                      <form th:action="@{'/events/' + ${event.id} + '/join'}" method="post">
+                      
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{'/events/' + ${event.id} + '/join'}" method="post">
                         <button type="submit" class="event-card-join-btn">Unirse</button>
                       </form>
                     </th:block>
@@ -301,8 +331,12 @@
   </main>
 
   
-  <div th:replace="~{fragments/footer :: footer}"></div>
+  
+<!-- Footer publico: fragmento comun con el pie de pagina. -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

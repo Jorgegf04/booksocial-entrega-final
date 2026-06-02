@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Comunidad.
+  Funcion: Lista usuarios de la comunidad y permite seguir o dejar de seguir.
+  Atributos del modelo: users, followingIds, sessionUserId.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,15 +18,21 @@
   
   <link rel="stylesheet" th:href="@{/css/pages/public/community.css}">
 </head>
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
   
   
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  
+<!-- Navbar publica: fragmento comun con menu, busqueda, carrito y sesion. -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
   
   
-  <main class="container community-main">
+  
+<!-- Contenido principal: zona central que cambia en cada vista. -->
+<main class="container community-main">
 
     
     <div th:replace="~{fragments/messages :: messages}"></div>
@@ -109,7 +123,9 @@
 
               
               
-              <form th:if="${followingIds == null or !followingIds.contains(u.id)}"
+              
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:if="${followingIds == null or !followingIds.contains(u.id)}"
                     th:action="@{'/community/' + ${u.id} + '/follow'}"
                     method="post">
                 <button type="submit"
@@ -120,7 +136,9 @@
 
               
               
-              <form th:if="${followingIds != null and followingIds.contains(u.id)}"
+              
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:if="${followingIds != null and followingIds.contains(u.id)}"
                     th:action="@{'/community/' + ${u.id} + '/unfollow'}"
                     method="post">
                 <button type="submit"
@@ -157,11 +175,17 @@
 
   
   
-  <div th:replace="~{fragments/footer :: footer}"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
-  <script>
+<!-- Footer publico: fragmento comun con el pie de pagina. -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script>
   (function () {
     const input = document.getElementById('searchInput');
     const cols  = document.querySelectorAll('.user-card-col');

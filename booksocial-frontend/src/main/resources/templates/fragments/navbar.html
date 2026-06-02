@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Fragmento navbar.
+  Funcion: Barra superior reutilizable con navegacion, busqueda, carrito y sesion.
+  Atributos del modelo: session, session.cart, session.userId, session.username.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
 <div th:fragment="navbar">
@@ -43,7 +51,9 @@
       </ul>
 
       
-      <form class="d-flex me-3 navbar-search-form" action="/catalog/filter" method="get">
+      
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form class="d-flex me-3 navbar-search-form" action="/catalog/filter" method="get">
         <input type="hidden" name="page" value="0">
         
         <div class="input-group navbar-search-group">
@@ -110,6 +120,8 @@
 
 <div th:replace="~{fragments/messages :: backendStatus}"></div>
 
+
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
 <script th:inline="javascript">
   /*<![CDATA[*/
   (function () {

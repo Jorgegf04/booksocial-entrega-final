@@ -1,7 +1,16 @@
 <!DOCTYPE html>
+
+<!--
+  Vista Thymeleaf: Fragmento comentario.
+  Funcion: Renderiza un comentario y sus respuestas de forma reutilizable.
+  Atributos del modelo: comment, work, depth, loggedIn, sessionUserId, sessionRole, reactionCounts, userLikedCommentIds.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <!-- REF-03.BOOKSOCIAL-FRONTEND/RESOURCES/FRAGMENTS/COMMENT.HTML -->
 <html xmlns:th="http://www.thymeleaf.org">
-  <body>
+  
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
+<body>
 
     <div
       th:fragment="comment(comment, work, loggedIn, sessionUserId, sessionRole, reactionCounts, userLikedCommentIds, depth)"
@@ -30,7 +39,9 @@
         <div class="d-flex gap-3 align-items-center flex-wrap">
 
           <th:block th:if="${loggedIn}">
-            <form
+            
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form
               th:action="@{/work/{wid}/comment/{cid}/reaction(wid=${work.id},cid=${comment.id})}"
               method="post" class="d-inline">
 
@@ -64,7 +75,9 @@
 
           <th:block
             th:if="${loggedIn and (comment.userId == sessionUserId or sessionRole == 'ADMIN')}">
-            <form
+            
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form
               th:action="@{/work/{wid}/comment/{cid}/delete(wid=${work.id},cid=${comment.id})}"
               method="post" class="d-inline">
 
@@ -82,7 +95,9 @@
 
         <div th:if="${loggedIn and depth < 4}"
           th:id="'reply-form-' + ${comment.id}" class="comment-reply-form">
-          <form
+          
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form
             th:action="@{/work/{wid}/comment/{pid}/reply(wid=${work.id},pid=${comment.id})}"
             method="post">
 

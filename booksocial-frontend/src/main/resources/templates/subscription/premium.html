@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Suscripcion premium.
+  Funcion: Presenta el plan premium y muestra si el usuario puede suscribirse.
+  Atributos del modelo: canSubscribe.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,13 +17,19 @@
   <link rel="stylesheet" th:href="@{/css/main.css}">
   <link rel="stylesheet" th:href="@{/css/pages/public/subscription.css}">
 </head>
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
   
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  
+<!-- Navbar publica: fragmento comun con menu, busqueda, carrito y sesion. -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
   
-  <main class="sub-premium-main">
+  
+<!-- Contenido principal: zona central que cambia en cada vista. -->
+<main class="sub-premium-main">
     <div class="container px-4 px-lg-5">
 
       <div th:replace="~{fragments/messages :: messages}"></div>
@@ -78,7 +92,9 @@
           
           <th:block th:if="${canSubscribe}">
             
-            <form th:action="@{/subscription/activate}" method="post" class="d-inline">
+            
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/subscription/activate}" method="post" class="d-inline">
               <button type="submit" class="sub-premium-btn">
                 <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;margin-right:0.3rem">workspace_premium</span>
                 Activar suscripción
@@ -101,8 +117,12 @@
   </main>
 
   
-  <div th:replace="~{fragments/footer :: footer}"></div>
+  
+<!-- Footer publico: fragmento comun con el pie de pagina. -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

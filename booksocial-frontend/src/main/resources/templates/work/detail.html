@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Detalle de obra.
+  Funcion: Muestra la ficha de una obra, ediciones, productos, seguimiento y comentarios.
+  Atributos del modelo: work, editions, productsByEdition, comments, commentCount, userTracking, inLibrary, inWishlist, loggedIn, sessionUserId, sessionRole.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,18 +18,26 @@
   
   <link rel="stylesheet" th:href="@{/css/pages/public/detail.css}">
 </head>
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body>
 
   
   
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  
+<!-- Navbar publica: fragmento comun con menu, busqueda, carrito y sesion. -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
   
   
-  <main class="container detail-main">
+  
+<!-- Contenido principal: zona central que cambia en cada vista. -->
+<main class="container detail-main">
 
     
-    <section class="row g-5 mb-5 align-items-start detail-section--spaced">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="row g-5 mb-5 align-items-start detail-section--spaced">
 
       
       <div class="col-lg-4 col-md-5">
@@ -161,7 +177,9 @@
           
           <th:block th:if="${loggedIn}">
             
-            <form th:action="@{/work/{wid}/library(wid=${work.id})}" method="post" class="d-inline">
+            
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/work/{wid}/library(wid=${work.id})}" method="post" class="d-inline">
               
               <button type="submit" class="btn-primary-pill d-inline-flex align-items-center gap-2"
                       th:classappend="${inLibrary} ? ' detail-btn-library--active' : ''">
@@ -184,7 +202,9 @@
           
           <th:block th:if="${!productsByEdition.isEmpty()}">
             
-            <form th:action="@{/cart/add}" method="post" class="d-inline" id="buy-form">
+            
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/cart/add}" method="post" class="d-inline" id="buy-form">
               <input type="hidden" name="productId" id="buy-product-id"
                      th:value="${firstProduct != null ? firstProduct.id : ''}">
               
@@ -204,7 +224,9 @@
 
           
           <th:block th:if="${loggedIn}">
-            <form th:action="@{/work/{wid}/wishlist(wid=${work.id})}" method="post" class="d-inline">
+            
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/work/{wid}/wishlist(wid=${work.id})}" method="post" class="d-inline">
               <button type="submit" class="btn-ghost-pill d-inline-flex align-items-center gap-2">
                 <span class="material-symbols-outlined"
                       th:classappend="${inWishlist} ? ' material-symbols-filled' : ''"
@@ -226,7 +248,9 @@
     </section>
 
     
-    <section class="row g-4 mb-5 detail-section--spaced"
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section class="row g-4 mb-5 detail-section--spaced"
              th:if="${editions != null and !editions.isEmpty()}">
 
       
@@ -295,7 +319,9 @@
 
     
     
-    <section id="comments" class="detail-comments-section">
+    
+<!-- Seccion visual: bloque independiente del maquetado de la pagina. -->
+<section id="comments" class="detail-comments-section">
 
       
       
@@ -329,7 +355,9 @@
 
         
         <th:block th:if="${loggedIn}">
-          <form th:action="@{/work/{wid}/comment(wid=${work.id})}" method="post">
+          
+<!-- Formulario: envia datos al controlador mediante los atributos th:action, method y campos name. -->
+<form th:action="@{/work/{wid}/comment(wid=${work.id})}" method="post">
             
             <textarea name="content" rows="3"
                       placeholder="Comparte tu opinión sobre esta obra..."
@@ -381,12 +409,18 @@
   </main>
 
   
-  <div th:replace="~{fragments/footer :: footer}"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- Footer publico: fragmento comun con el pie de pagina. -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
   
-  <script>
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script>
     document.querySelectorAll('.edition-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         // 1. Actualizar chip activo
@@ -447,7 +481,9 @@
   </script>
 
   
-  <script>
+  
+<!-- JavaScript de la vista: gestiona interacciones del navegador sin cambiar el modelo del servidor. -->
+<script>
     document.querySelectorAll('[data-reply-target]').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-reply-target');

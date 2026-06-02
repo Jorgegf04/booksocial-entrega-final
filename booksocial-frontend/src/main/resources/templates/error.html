@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 
+<!--
+  Vista Thymeleaf: Error basico.
+  Funcion: Muestra un error generico con estado y ruta.
+  Atributos del modelo: status, path.
+  Nota: los atributos se leen con th:text, th:if, th:each, th:href y th:action.
+-->
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML: metadatos, titulo y hojas de estilo de la vista. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +21,8 @@
   <link rel="stylesheet" th:href="@{/css/pages/public/error.css}">
 </head>
 
+
+<!-- Cuerpo de la pagina: aqui se montan los fragmentos y el contenido visible. -->
 <body class="error-body">
 
 <div th:replace="~{fragments/messages :: backendStatus}"></div>
