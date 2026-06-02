@@ -1,0 +1,24 @@
+# Dependencias de Node
+node_modules/
+.npm
+
+# Salida del build
+dist/
+dist-ssr/
+
+# Variables de entorno con valores reales (nunca al repo)
+.env
+.env.production
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Vite cache
+.vite/

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+
+    
+    <div
+      th:fragment="comment(comment, work, loggedIn, sessionUserId, sessionRole, reactionCounts, userLikedCommentIds, depth)"
+      class="comment-card">
+
+      
+      <div class="comment-avatar"
+        th:text="${comment.username != null ? #strings.substring(comment.username, 0, 1).toUpperCase() : '?'}">
+      </div>
+
+      
+      
+      <div class="flex-grow-1">
+
+        
+        <div class="d-flex align-items-center gap-2 mb-1">
+          
+          <a th:href="@{'/user/' + ${comment.userId}}"
+            class="comment-username text-decoration-none"
+            th:text="${comment.username}">Usuario</a>
+          
+          <span class="comment-date"
+            th:text="${comment.date != null ? #temporals.format(comment.date, 'dd MMM yyyy') : ''}"></span>
+          
+          <span th:if="${comment.edited}" class="comment-date">(editado)</span>
+        </div>
+
+        
+        <p class="comment-body" th:text="${comment.content}"></p>
+
+        
+        
+        <div class="d-flex gap-3 align-items-center flex-wrap">
+
+          
+          
+          
+          <th:block th:if="${loggedIn}">
+            <form
+              th:action="@{/work/{wid}/comment/{cid}/reaction(wid=${work.id},cid=${comment.id})}"
+              method="post" class="d-inline">
+              
+              <button type="submit" class="comment-action"
+                th:classappend="${userLikedCommentIds.contains(comment.id)} ? ' comment-action--liked' : ''">
+                
+                <span class="material-symbols-outlined comment-icon"
+                  th:classappend="${userLikedCommentIds.contains(comment.id)} ? ' material-symbols-filled' : ''">thumb_up</span>
+                
+                <span
+                  th:text="${reactionCounts[comment.id] != null ? reactionCounts[comment.id] : 0}">0</span>
+              </button>
+            </form>
+          </th:block>
+
+          
+          
+          <th:block th:unless="${loggedIn}">
+            <span class="comment-action comment-action--guest">
+              <span
+                class="material-symbols-outlined comment-icon">thumb_up</span>
+              <span
+                th:text="${reactionCounts[comment.id] != null ? reactionCounts[comment.id] : 0}">0</span>
+            </span>
+          </th:block>
+
+          
+          
+          
+          <button th:if="${loggedIn and depth < 4}" type="button" class="comment-action"
+            th:attr="data-reply-target='reply-form-' + ${comment.id}">
+            <span class="material-symbols-outlined comment-icon">reply</span>
+            Responder
+          </button>
+
+          
+          <th:block
+            
+            th:if="${loggedIn and (comment.userId == sessionUserId or sessionRole == 'ADMIN')}">
+            <form
+              th:action="@{/work/{wid}/comment/{cid}/delete(wid=${work.id},cid=${comment.id})}"
+              method="post" class="d-inline">
+              
+              <button type="submit"
+                class="comment-action comment-action--delete"
+                onclick="return confirm('¿Eliminar este comentario?')">
+                <span
+                  class="material-symbols-outlined comment-icon">delete</span>
+                Eliminar
+              </button>
+            </form>
+          </th:block>
+
+        </div>
+
+        
+        
+        
+        <div th:if="${loggedIn and depth < 4}"
+          th:id="'reply-form-' + ${comment.id}" class="comment-reply-form">
+          <form
+            th:action="@{/work/{wid}/comment/{pid}/reply(wid=${work.id},pid=${comment.id})}"
+            method="post">
+            
+            <textarea name="content" rows="2"
+              placeholder="Escribe tu respuesta..."
+              required minlength="1" maxlength="1000"
+              class="comment-reply-textarea"></textarea>
+            <div class="d-flex gap-2 justify-content-end mt-2">
+              
+              <button type="button" class="btn-ghost-pill comment-reply-btn"
+                th:attr="data-reply-target='reply-form-' + ${comment.id}">
+                Cancelar
+              </button>
+              
+              <button type="submit"
+                class="btn-primary-pill comment-reply-btn comment-reply-btn--submit">
+                Responder
+              </button>
+            </div>
+          </form>
+        </div>
+
+        
+        
+        <div class="reply-thread mt-3"
+          
+          th:if="${depth < 4 and comment.replies != null and !comment.replies.isEmpty()}">
+          
+          <div th:each="reply : ${comment.replies}" class="mb-3">
+            <div
+              th:replace="~{fragments/comment :: comment(${reply}, ${work}, ${loggedIn}, ${sessionUserId}, ${sessionRole}, ${reactionCounts}, ${userLikedCommentIds}, ${depth + 1})}"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

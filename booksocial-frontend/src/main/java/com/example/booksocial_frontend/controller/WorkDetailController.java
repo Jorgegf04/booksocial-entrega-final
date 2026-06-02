@@ -1,0 +1,417 @@
+package com.example.booksocial_frontend.controller;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.example.booksocial_frontend.dto.CommentRequestDTO;
+import com.example.booksocial_frontend.dto.CommentResponseDTO;
+import com.example.booksocial_frontend.dto.EditionResponseDTO;
+import com.example.booksocial_frontend.dto.ProductResponseDTO;
+import com.example.booksocial_frontend.dto.ReactionResponseDTO;
+import com.example.booksocial_frontend.dto.TrackingWorkRequestDTO;
+import com.example.booksocial_frontend.dto.TrackingWorkResponseDTO;
+import com.example.booksocial_frontend.dto.WorkResponseDTO;
+import com.example.booksocial_frontend.service.AuthorClientService;
+import com.example.booksocial_frontend.service.CommentClientService;
+import com.example.booksocial_frontend.service.EditionClientService;
+import com.example.booksocial_frontend.service.ProductClientService;
+import com.example.booksocial_frontend.service.ReactionClientService;
+import com.example.booksocial_frontend.service.TrackingWorkClientService;
+import com.example.booksocial_frontend.service.WorkClientService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Controlador del detalle de una obra. Carga informacion completa, comentarios, biblioteca, wishlist y reacciones.
+ * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+ *
+ * @author Jorge
+ * @version 3
+ * @since 01/06/2026
+ */
+@Slf4j
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/work")
+public class WorkDetailController {
+
+  private final WorkClientService workService;
+  private final AuthorClientService authorService;
+  private final EditionClientService editionService;
+  private final CommentClientService commentService;
+  private final ProductClientService productService;
+  private final ReactionClientService reactionService;
+  private final TrackingWorkClientService trackingService;
+
+  /**
+   * Muestra el detalle de una obra con comentarios y estado del usuario.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @GetMapping("/{id}")
+  public String showWork(@PathVariable Long id, HttpSession session, Model model) {
+
+    WorkResponseDTO work;
+    try {
+      work = workService.getWorkById(id);
+    } catch (Exception e) {
+      return "redirect:/catalog";
+    }
+
+    List<EditionResponseDTO> editions;
+    try {
+      editions = editionService.getEditionsByWork(id);
+    } catch (Exception e) {
+      editions = List.of();
+    }
+
+    List<CommentResponseDTO> comments;
+    try {
+      comments = commentService.getRootCommentsByWork(id);
+    } catch (Exception e) {
+      comments = List.of();
+    }
+
+    // Ordenar todo el árbol de más reciente a más antiguo
+    sortRecursive(comments);
+
+    // Session user info
+    Long userId = (Long) session.getAttribute("userId");
+    String role = (String) session.getAttribute("role");
+    boolean loggedIn = userId != null;
+
+    // Productos por edición (para botón de compra dinámico por edición
+    // seleccionada)
+    Map<Long, ProductResponseDTO> productsByEdition = new HashMap<>();
+    try {
+      List<ProductResponseDTO> products = productService.getProductsByWork(id);
+      for (ProductResponseDTO p : products) {
+        if (p.getEditionId() != null && p.getStock() != null && p.getStock() > 0) {
+          productsByEdition.putIfAbsent(p.getEditionId(), p);
+        }
+      }
+    } catch (Exception e) {
+      log.warn("[WORK_DETAIL] Error al cargar productos para obra id={}: {}", id, e.getMessage());
+    }
+
+    // Contar total de comentarios (árbol completo)
+    int totalCommentCount = countComments(comments);
+
+    // Recopilar todos los comentarios del árbol (para cargar reacciones)
+    List<CommentResponseDTO> allComments = new ArrayList<>();
+    collectComments(comments, allComments);
+
+    // Cargar conteo de reacciones y likes del usuario por comentario
+    Map<Long, Integer> reactionCounts = new HashMap<>();
+    Set<Long> userLikedCommentIds = new HashSet<>();
+
+    for (CommentResponseDTO comment : allComments) {
+      try {
+        reactionCounts.put(comment.getId(), reactionService.getReactionCount(comment.getId()));
+      } catch (Exception e) {
+        reactionCounts.put(comment.getId(), 0);
+      }
+      if (loggedIn) {
+        try {
+          List<ReactionResponseDTO> reactions = reactionService.getReactionsByComment(comment.getId());
+          boolean liked = reactions.stream()
+              .anyMatch(r -> userId.equals(r.getUserId()) && Boolean.TRUE.equals(r.getLiked()));
+          if (liked)
+            userLikedCommentIds.add(comment.getId());
+        } catch (Exception e) {
+          log.warn("[WORK_DETAIL] Error al cargar reacciones del comentario id={}: {}", comment.getId(), e.getMessage());
+        }
+      }
+    }
+
+    // Tracking del usuario para esta obra (biblioteca / wishlist)
+    TrackingWorkResponseDTO userTracking = null;
+    if (loggedIn) {
+      try {
+        userTracking = trackingService.getByUser(userId).stream()
+            .filter(t -> id.equals(t.getWorkId()))
+            .findFirst()
+            .orElse(null);
+      } catch (Exception e) {
+        log.warn("[WORK_DETAIL] Error al cargar tracking para userId={} workId={}: {}", userId, id, e.getMessage());
+      }
+    }
+
+    // Map author name → id for clickable links in the template
+    Map<String, Long> authorIds = new HashMap<>();
+    try {
+      authorService.getAllAuthors().forEach(a -> {
+        if (a.getName() != null && a.getId() != null) authorIds.put(a.getName(), a.getId());
+      });
+    } catch (Exception e) {
+      log.warn("[WORK_DETAIL] Error al cargar autores: {}", e.getMessage());
+    }
+
+    model.addAttribute("work", work);
+    model.addAttribute("authorIds", authorIds);
+    model.addAttribute("editions", editions);
+    model.addAttribute("comments", comments);
+    model.addAttribute("commentCount", totalCommentCount);
+    model.addAttribute("productsByEdition", productsByEdition);
+    model.addAttribute("loggedIn", loggedIn);
+    model.addAttribute("sessionUserId", userId);
+    model.addAttribute("sessionRole", role);
+    model.addAttribute("reactionCounts", reactionCounts);
+    model.addAttribute("userLikedCommentIds", userLikedCommentIds);
+    model.addAttribute("userTracking", userTracking);
+
+    return "work/detail";
+  }
+
+  // POST: Añadir / quitar de biblioteca
+  /**
+   * Anade o quita la obra de la biblioteca del usuario.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @PostMapping("/{workId}/library")
+  public String toggleLibrary(@PathVariable Long workId, HttpSession session, RedirectAttributes ra) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null)
+      return "redirect:/auth/login";
+
+    try {
+      TrackingWorkResponseDTO existing = trackingService.getByUser(userId).stream()
+          .filter(t -> workId.equals(t.getWorkId()))
+          .findFirst().orElse(null);
+
+      if (existing != null && !"PENDING".equals(existing.getStatus())) {
+        // Ya está en biblioteca → eliminar
+        trackingService.delete(existing.getId());
+      } else if (existing != null) {
+        // Está en wishlist → mover a biblioteca
+        trackingService.update(existing.getId(),
+            new TrackingWorkRequestDTO(userId, workId, "READING"));
+      } else {
+        // No existe → crear en biblioteca
+        trackingService.create(new TrackingWorkRequestDTO(userId, workId, "READING"));
+      }
+    } catch (Exception e) {
+      ra.addFlashAttribute("trackingError", "No se pudo actualizar la biblioteca.");
+    }
+    return "redirect:/work/" + workId;
+  }
+
+  // ── POST: Añadir / quitar de wishlist
+  /**
+   * Anade o quita la obra de la wishlist del usuario.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @PostMapping("/{workId}/wishlist")
+  public String toggleWishlist(@PathVariable Long workId, HttpSession session, RedirectAttributes ra) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null)
+      return "redirect:/auth/login";
+
+    try {
+      TrackingWorkResponseDTO existing = trackingService.getByUser(userId).stream()
+          .filter(t -> workId.equals(t.getWorkId()))
+          .findFirst().orElse(null);
+
+      if (existing != null && "PENDING".equals(existing.getStatus())) {
+        // Ya está en wishlist → eliminar
+        trackingService.delete(existing.getId());
+      } else if (existing != null) {
+        // Está en biblioteca → mover a wishlist
+        trackingService.update(existing.getId(),
+            new TrackingWorkRequestDTO(userId, workId, "PENDING"));
+      } else {
+        // No existe → crear en wishlist
+        trackingService.create(new TrackingWorkRequestDTO(userId, workId, "PENDING"));
+      }
+    } catch (Exception e) {
+      ra.addFlashAttribute("trackingError", "No se pudo actualizar la wishlist.");
+    }
+    return "redirect:/work/" + workId;
+  }
+
+  // ── POST: Publicar comentario raíz
+  /**
+   * Publica un comentario principal en una obra.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @PostMapping("/{workId}/comment")
+  public String addComment(@PathVariable Long workId,
+      @RequestParam String content,
+      HttpSession session,
+      RedirectAttributes ra) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null)
+      return "redirect:/auth/login";
+
+    try {
+      commentService.createComment(new CommentRequestDTO(content, userId, workId, null));
+    } catch (Exception e) {
+      ra.addFlashAttribute("commentError", "No se pudo publicar el comentario.");
+    }
+    return "redirect:/work/" + workId + "#comments";
+  }
+
+  // ── POST: Responder a un comentario
+  /**
+   * Gestiona la ruta asociada al metodo addReply.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @PostMapping("/{workId}/comment/{parentId}/reply")
+  public String addReply(@PathVariable Long workId,
+      @PathVariable Long parentId,
+      @RequestParam String content,
+      HttpSession session,
+      RedirectAttributes ra) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null)
+      return "redirect:/auth/login";
+
+    try {
+      commentService.replyToComment(parentId, new CommentRequestDTO(content, userId, workId, parentId));
+    } catch (Exception e) {
+      ra.addFlashAttribute("commentError", "No se pudo publicar la respuesta.");
+    }
+    return "redirect:/work/" + workId + "#comments";
+  }
+
+  // POST: Eliminar comentario
+  /**
+   * Elimina un comentario por su identificador.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @PostMapping("/{workId}/comment/{commentId}/delete")
+  public String deleteComment(@PathVariable Long workId,
+      @PathVariable Long commentId,
+      HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null)
+      return "redirect:/auth/login";
+
+    try {
+      commentService.deleteComment(commentId);
+    } catch (Exception ignored) {
+    }
+    return "redirect:/work/" + workId + "#comments";
+  }
+
+  // Contar comentarios
+
+  /**
+   * Cuenta comentarios y respuestas de forma recursiva.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private int countComments(List<CommentResponseDTO> comments) {
+    if (comments == null)
+      return 0;
+    int count = 0;
+    for (CommentResponseDTO c : comments) {
+      count++;
+      count += countComments(c.getReplies());
+    }
+    return count;
+  }
+
+  // comentarios de un padre
+  /**
+   * Agrupa comentarios y respuestas en una lista plana.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private void collectComments(List<CommentResponseDTO> comments, List<CommentResponseDTO> result) {
+    if (comments == null)
+      return;
+    for (CommentResponseDTO c : comments) {
+      result.add(c);
+      collectComments(c.getReplies(), result);
+    }
+  }
+
+  // Crear recursivad para los comentarios
+  /**
+   * Ordena comentarios y respuestas por fecha.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private void sortRecursive(List<CommentResponseDTO> comments) {
+    if (comments == null || comments.isEmpty())
+      return;
+    comments.sort(Comparator.comparing(CommentResponseDTO::getDate,
+        Comparator.nullsLast(Comparator.reverseOrder())));
+    for (CommentResponseDTO c : comments) {
+      sortRecursive(c.getReplies());
+    }
+  }
+
+  // POST: Toggle reacción (like/unlike)
+  /**
+   * Gestiona la ruta asociada al metodo toggleReaction.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @PostMapping("/{workId}/comment/{commentId}/reaction")
+  public String toggleReaction(@PathVariable Long workId,
+      @PathVariable Long commentId,
+      HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null)
+      return "redirect:/auth/login";
+
+    try {
+      reactionService.toggleReaction(userId, commentId);
+    } catch (Exception ignored) {
+    }
+    return "redirect:/work/" + workId + "#comments";
+  }
+}

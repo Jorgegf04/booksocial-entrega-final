@@ -1,0 +1,130 @@
+/* Estilos de la vista publica: profile.css. */
+
+/* Estilos de perfil. */
+.profile-main {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilos de perfil. */
+.profile-stats-divider { border-top: 1px solid var(--color-outline-l); }
+
+/* Estilos de perfil. */
+.profile-stat-clickable { cursor: pointer; }
+
+/* Estilos de boton. */
+.profile-follow-btn { padding: 0.55rem 1.5rem; font-size: 0.875rem; }
+
+/* Estilos de boton. */
+.profile-unfollow-btn {
+  width: 100%;
+  padding: 0.55rem 1.5rem;
+  font-size: 0.875rem;
+  border: 1.5px solid var(--bs-primary);
+  border-radius: 2rem;
+  background: transparent;
+  color: var(--bs-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Estilos de panel de administracion. */
+.profile-admin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.55rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--bs-primary);
+  color: #fff;
+  border-radius: 2rem;
+  text-decoration: none;
+  border: none;
+}
+/* Estilos de panel de administracion. */
+.profile-admin-icon { font-size: 1rem; }
+
+/* Estilos de boton. */
+.profile-subscription-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.5rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+/* Estilos de perfil. */
+.profile-subscription-icon { font-size: 1rem; }
+
+/* Estilos de perfil. */
+.profile-member-since { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos de modal. */
+.profile-modal-content { border-radius: 1rem; }
+/* Estilos de modal. */
+.profile-modal-header  { border-bottom: 1px solid var(--color-outline-l); }
+/* Estilos de modal. */
+.profile-modal-title   { color: var(--bs-primary); }
+/* Estilos de modal. */
+.profile-modal-empty   { color: var(--color-muted); font-size: 0.9rem; }
+/* Estilos de modal. */
+.profile-modal-item    { border-bottom: 1px solid var(--color-outline-l); }
+
+/* Estilos de modal. */
+.profile-modal-avatar  { width: 2.2rem; height: 2.2rem; font-size: 0.9rem; flex-shrink: 0; }
+/* Estilos de modal. */
+.profile-modal-link    { font-weight: 600; color: var(--bs-primary); text-decoration: none; }
+
+/* Estilos de perfil. */
+.profile-img-hint { font-size: 0.72rem; color: var(--color-outline); margin-top: 0.3rem; }
+/* Estilos de boton. */
+.profile-save-btn { padding: 0.7rem; font-size: 0.875rem; }
+
+/* Estilos de perfil. */
+.profile-library-heading { font-size: 1.5rem; color: var(--bs-primary); }
+/* Estilos de perfil. */
+.profile-obras-label     { font-size: 0.85rem; font-weight: 600; color: var(--color-outline); }
+
+/* Estilos de perfil. */
+.profile-tracking-title    { font-weight: 700; font-size: 0.9rem; color: var(--bs-primary); }
+/* Estilos de perfil. */
+.profile-tracking-date     { font-size: 0.75rem; color: var(--color-outline); }
+/* Estilos de navegacion. */
+.profile-tracking-nav-icon { font-size: 1rem; color: var(--color-outline-l); }
+
+/* Estilos de perfil. */
+.profile-empty-state {
+  background: var(--color-surface-l);
+  border-radius: 1rem;
+}
+/* Estilos de perfil. */
+.profile-empty-icon  { font-size: 3.5rem; color: var(--color-outline-l); }
+/* Estilos de perfil. */
+.profile-empty-title { color: var(--bs-primary); font-size: 1.1rem; }
+/* Estilos de perfil. */
+.profile-empty-text  { font-size: 0.85rem; color: var(--color-muted); }
+
+/* Estilos de boton. */
+.profile-catalog-btn { padding: 0.6rem 1.5rem; font-size: 0.875rem; text-decoration: none; }
+
+/* Estilos de perfil. */
+.profile-order-icon  { color: var(--bs-primary); }
+/* Estilos de perfil. */
+.profile-order-id    { color: var(--bs-primary); }
+/* Estilos de perfil. */
+.profile-order-date  { font-size: 0.78rem; color: var(--color-muted); }
+/* Estilos de perfil. */
+.profile-order-items { font-size: 0.72rem; color: var(--color-muted); }
+
+/* Estilos de perfil. */
+.profile-order-line-icon     { font-size: 1rem; color: var(--color-outline); }
+/* Estilos de perfil. */
+.profile-order-line-title    { font-size: 0.875rem; color: var(--bs-primary); }
+/* Estilos de perfil. */
+.profile-order-line-meta     { font-size: 0.75rem; color: var(--color-muted); }
+/* Estilos de perfil. */
+.profile-order-line-subtotal { font-size: 0.875rem; color: var(--bs-primary); }

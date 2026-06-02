@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BookSocial — El Curador Digital</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/home.css}">
+</head>
+
+<body>
+
+  
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  
+  <main class="home-main">
+
+    
+    
+    <section class="home-hero d-flex align-items-center">
+      
+      <div class="home-hero-overlay"></div>
+      
+      <img class="home-hero-bg"
+           src="/images/hero-bg.jpg"
+           alt="Biblioteca moderna con grandes estanterías">
+
+      
+      <div class="container position-relative z-2 px-4 px-lg-5">
+        <div class="home-hero-content">
+          <span class="home-hero-tag">El Curador Digital</span>
+          <h1 class="home-hero-title font-serif">
+            Un Santuario para el<br>
+            <em class="fw-normal">Lector Moderno</em>
+          </h1>
+          <p class="home-hero-sub">
+            Más que una librería. Cubrimos ediciones premium de literatura, manga y novela gráfica para el coleccionista exigente.
+          </p>
+          
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="/catalog" class="btn-primary-pill home-cta-btn">
+              Explorar Catálogo
+            </a>
+            <a href="/auth/register" class="home-cta-ghost">
+              Únete a la Comunidad
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <section class="py-5 home-section-bg">
+      <div class="container px-4 px-lg-5">
+
+        
+        
+        <div class="d-flex justify-content-between align-items-end mb-5">
+          <div>
+            
+            <p class="filter-section-title mb-1">Este mes</p>
+            
+            <h2 class="font-serif mb-0 home-featured-heading">
+              Destacados del Catálogo
+            </h2>
+          </div>
+          
+          <a href="/catalog" class="btn-ghost-pill d-none d-md-flex">
+            Ver todo
+            
+            <span class="material-symbols-outlined home-view-all-icon">arrow_forward</span>
+          </a>
+        </div>
+
+        
+        
+        <div th:if="${featuredWorks != null and !featuredWorks.isEmpty()}"
+             class="row g-4 align-items-end">
+
+          
+          
+          <div th:each="w, stat : ${featuredWorks}"
+               th:classappend="${stat.index == 1 or stat.index == 3} ? 'col-sm-6 col-lg-3 home-work-offset' : 'col-sm-6 col-lg-3'">
+
+            <a th:href="@{'/work/' + ${w.id}}" class="home-work-card">
+              <div class="home-work-cover-wrap">
+                
+                
+                <img th:if="${w.img != null and !w.img.isEmpty()}"
+                     th:src="${w.img}"
+                     th:alt="${w.title}"
+                     class="home-work-cover">
+                <div th:unless="${w.img != null and !w.img.isEmpty()}"
+                     class="home-work-cover-placeholder">
+                  <span class="material-symbols-outlined">menu_book</span>
+                </div>
+
+                
+                
+                <span class="home-work-type-badge"
+                      th:text="${w.type != null ? w.type.name() : ''}"></span>
+              </div>
+
+              <div class="home-work-info">
+                <h3 class="home-work-title font-serif" th:text="${w.title}">Título</h3>
+                
+                <p class="home-work-authors mb-1"
+                   th:text="${w.authors != null and !w.authors.isEmpty()} ? ${#strings.listJoin(w.authors, ', ')} : '—'">
+                </p>
+                
+                
+                <div class="d-flex align-items-center gap-1" th:if="${w.averageRating != null}">
+                  <span class="material-symbols-outlined home-star">star</span>
+                  
+                  <span class="home-work-rating" th:text="${#numbers.formatDecimal(w.averageRating, 1, 1)}">0.0</span>
+                </div>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+        
+        
+        
+        <div th:if="${featuredWorks == null or featuredWorks.isEmpty()}"
+             class="text-center py-5 home-empty-state">
+          <span class="material-symbols-outlined d-block mb-2 home-empty-icon">auto_stories</span>
+          <p class="mb-0">No hay obras disponibles en este momento.</p>
+        </div>
+
+      </div>
+    </section>
+
+    
+    
+    <section class="home-community-section py-5">
+      <div class="container px-4 px-lg-5">
+        <div class="row g-4">
+
+          
+          <div class="col-lg-7">
+            <div class="home-community-card h-100">
+              <div class="position-relative z-2">
+                
+                <h2 class="font-serif mb-3 home-community-heading">
+                  El Círculo de Lectores
+                </h2>
+                
+                <p class="mb-4 home-community-desc">
+                  Conecta con otros bibliófagos, únete a grupos de lectura y lleva un seguimiento de tus obras favoritas. Tu biblioteca personal te espera.
+                </p>
+                <a href="/auth/register" class="home-community-btn">
+                  Crear cuenta gratis
+                </a>
+              </div>
+              
+              <span class="material-symbols-outlined home-community-icon">groups</span>
+            </div>
+          </div>
+
+          
+          <div class="col-lg-5 d-flex flex-column gap-4">
+            <div class="home-feature-card">
+              <div class="home-feature-icon">
+                
+                <span class="material-symbols-outlined">forum</span>
+              </div>
+              <div>
+                
+                <h4 class="font-serif mb-1 home-feature-card__title">Discusiones en vivo</h4>
+                
+                <p class="mb-0 home-feature-card__desc">Clubes de lectura en tiempo real para cada género.</p>
+              </div>
+            </div>
+            <div class="home-feature-card">
+              <div class="home-feature-icon">
+                <span class="material-symbols-outlined">loyalty</span>
+              </div>
+              <div>
+                <h4 class="font-serif mb-1 home-feature-card__title">Recompensas del Curador</h4>
+                <p class="mb-0 home-feature-card__desc">Canjea puntos por ediciones físicas exclusivas.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="py-5 home-section-bg">
+      <div class="container px-4 px-lg-5">
+        
+        <div class="row g-5 align-items-center">
+
+          
+          <div class="col-lg-5 order-lg-2">
+            
+            <p class="filter-section-title mb-2">Explora</p>
+            
+            <h2 class="font-serif mb-4 home-catalog-heading">
+              Descubre las Mentes<br>detrás de las Obras
+            </h2>
+            
+            <p class="mb-5 home-catalog-desc">
+              No solo vendemos libros, celebramos a los creadores. Explora nuestro catálogo por tipo de obra y sumérgete en universos únicos.
+            </p>
+            
+            <div class="d-flex flex-column gap-0">
+              <a href="/catalog?type=BOOK" class="home-category-link">
+                <span class="font-serif fw-bold">Literatura y Novela</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+              <a href="/catalog?type=MANGA" class="home-category-link">
+                <span class="font-serif fw-bold">Manga y Anime</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+              <a href="/catalog?type=COMIC" class="home-category-link">
+                <span class="font-serif fw-bold">Cómics y Novela Gráfica</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+          
+          <div class="col-lg-7 order-lg-1">
+            <div class="home-bento-grid">
+              
+              <div class="home-bento-stat">
+                <span class="font-serif home-bento-num">12k+</span>
+                <p class="home-bento-label">Títulos disponibles</p>
+              </div>
+              
+              <div class="home-bento-tag-card">
+                
+                <span class="material-symbols-outlined mb-2 home-bento-tag-icon">auto_stories</span>
+                
+                <p class="font-serif fw-bold mb-0 home-bento-tag-label">Géneros para todos los gustos</p>
+              </div>
+              
+              <div class="home-bento-stat home-bento-stat--alt">
+                <span class="font-serif home-bento-num">31</span>
+                <p class="home-bento-label">Géneros</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="home-sub-section py-5" th:unless="${session.role == 'SUBSCRIBED'}">
+      <div class="container px-4 px-lg-5">
+        <div class="home-sub-card">
+
+          
+          <div class="text-center mb-5">
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+              <span class="home-sub-separator"></span>
+              
+              <span class="filter-section-title mb-0 home-sub-section-label">Suscripción</span>
+              <span class="home-sub-separator"></span>
+            </div>
+            <h2 class="font-serif mb-3 home-sub-heading">La Caja del Curador</h2>
+            <p class="mb-0 home-sub-desc mx-auto">
+              Una selección mensual curada de títulos premium entregada en tu puerta.
+              Acceso a talleres digitales, entradas anticipadas a eventos exclusivos y envío siempre gratuito.
+            </p>
+          </div>
+
+          
+          <div class="row g-4 mb-5">
+            <div class="col-sm-6 col-lg-3">
+              <div class="home-sub-benefit-card">
+                <span class="material-symbols-outlined home-sub-feature-icon home-sub-benefit-icon">menu_book</span>
+                <p class="fw-bold text-white mb-1">3 Títulos Premium</p>
+                <p class="mb-0 home-sub-feature-text">Selección mensual curada por nuestros editores</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="home-sub-benefit-card">
+                <span class="material-symbols-outlined home-sub-feature-icon home-sub-benefit-icon">local_shipping</span>
+                <p class="fw-bold text-white mb-1">Envío Gratuito</p>
+                <p class="mb-0 home-sub-feature-text">A toda España sin coste adicional</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="home-sub-benefit-card">
+                <span class="material-symbols-outlined home-sub-feature-icon home-sub-benefit-icon">event</span>
+                <p class="fw-bold text-white mb-1">Eventos Exclusivos</p>
+                <p class="mb-0 home-sub-feature-text">Q&amp;A con autores internacionales</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="home-sub-benefit-card">
+                <span class="material-symbols-outlined home-sub-feature-icon home-sub-benefit-icon">cancel</span>
+                <p class="fw-bold text-white mb-1">Cancela cuando quieras</p>
+                <p class="mb-0 home-sub-feature-text">Sin permanencia ni compromisos</p>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="text-center">
+            <p class="mb-4">
+              <span class="home-sub-price-num">29</span><span class="home-sub-price-cur">€</span><span class="home-sub-price-per">/mes</span>
+            </p>
+            <a href="/subscription/premium" class="home-sub-btn">
+              Descubrir la suscripción
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

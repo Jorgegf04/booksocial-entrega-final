@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta — BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap">
+  
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/auth.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/messages :: backendStatus}"></div>
+
+<div class="auth-wrapper">
+
+  
+  <div class="auth-panel">
+    <div class="auth-brand"><span>Book</span>Social</div>
+
+    <div class="auth-panel-middle">
+      <p class="auth-panel-quote">
+        "Hay tantos libros aún sin leer. Únete y nunca leas solo."
+      </p>
+      <p class="auth-panel-sub">BookSocial Community</p>
+
+      
+      <div class="auth-panel-perks">
+        <div class="auth-perk">
+          
+          <div class="auth-perk-icon">📚</div>
+          <span>Acceso al catálogo completo de obras</span>
+        </div>
+        <div class="auth-perk">
+          <div class="auth-perk-icon">🔖</div>
+          <span>Crea tu lista de lectura personalizada</span>
+        </div>
+        <div class="auth-perk">
+          <div class="auth-perk-icon">💬</div>
+          <span>Participa en debates y eventos exclusivos</span>
+        </div>
+        <div class="auth-perk">
+          <div class="auth-perk-icon">⭐</div>
+          <span>Puntúa y descubre nuevas obras</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="auth-panel-footer">© 2026 BookSocial — El Curador Digital</p>
+  </div>
+
+  
+  
+  <div class="auth-form-side auth-form-side--scroll">
+    
+    <div class="auth-card auth-card--wide">
+
+      <h1 class="auth-card-title">Crear cuenta</h1>
+      
+      <p class="auth-card-sub auth-card-sub--tight">Únete a la comunidad lectora más exigente</p>
+
+      
+      
+      <div th:if="${error}"
+           class="alert alert-danger py-2 mb-3 auth-alert-text">
+        <div th:text="${error}"></div>
+        <ul th:if="${errorDetails != null and !errorDetails.isEmpty()}" class="mb-0 mt-2 ps-3">
+          
+          <li th:each="detail : ${errorDetails}" th:text="${detail}"></li>
+        </ul>
+      </div>
+
+      
+      
+      <form th:action="@{/auth/register}" th:object="${registerRequest}" method="post" novalidate>
+
+        
+        
+        <p class="auth-section-label">Datos de cuenta</p>
+
+        
+        <div class="row g-3 mb-3">
+          <div class="col-12">
+            
+            <label class="auth-label">Nombre de usuario <span class="text-danger">*</span></label>
+            <input type="text"
+                   th:field="*{username}"
+                   class="form-control auth-input"
+                   placeholder="mi_usuario"
+                   autocomplete="username"
+                   required
+                   minlength="3">
+            
+            
+            <div class="form-text auth-form-hint">Mínimo 3 caracteres. Sin espacios.</div>
+          </div>
+
+          <div class="col-12">
+            <label class="auth-label">Correo electrónico <span class="text-danger">*</span></label>
+            <input type="email"
+                   th:field="*{email}"
+                   class="form-control auth-input"
+                   placeholder="correo@ejemplo.com"
+                   autocomplete="email"
+                   required>
+          </div>
+
+          <div class="col-12">
+            <label class="auth-label">Contraseña <span class="text-danger">*</span></label>
+            <div class="auth-input-group">
+              
+              <input type="password"
+                     id="regPassword"
+                     th:field="*{password}"
+                     class="form-control auth-input"
+                     placeholder="••••••••"
+                     autocomplete="new-password"
+                     required
+                     minlength="6"
+                     oninput="checkStrength(this.value)">
+              <button type="button" class="auth-pw-toggle" onclick="togglePw('regPassword', this)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            
+            <div id="pwStrength" class="pw-strength"></div>
+            <div class="form-text auth-form-hint">Mínimo 6 caracteres.</div>
+          </div>
+
+          <div class="col-12">
+            <label class="auth-label">Confirmar contraseña <span class="text-danger">*</span></label>
+            <div class="auth-input-group">
+              
+              <input type="password"
+                     id="confirmPassword"
+                     class="form-control auth-input"
+                     placeholder="••••••••"
+                     autocomplete="new-password"
+                     required
+                     oninput="checkMatch()">
+              <button type="button" class="auth-pw-toggle" onclick="togglePw('confirmPassword', this)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            
+            <div id="matchMsg" class="form-text auth-form-hint"></div>
+          </div>
+        </div>
+
+        
+        
+        <p class="auth-section-label">Datos personales <span class="auth-optional-tag">(opcional)</span></p>
+
+        <div class="row g-3 mb-3">
+          
+          <div class="col-md-6">
+            <label class="auth-label">Nombre <span class="auth-optional-tag">opcional</span></label>
+            
+            <input type="text"
+                   th:field="*{name}"
+                   class="form-control auth-input optional"
+                   placeholder="María">
+          </div>
+
+          <div class="col-md-6">
+            <label class="auth-label">Apellido <span class="auth-optional-tag">opcional</span></label>
+            <input type="text"
+                   th:field="*{secondName}"
+                   class="form-control auth-input optional"
+                   placeholder="García">
+          </div>
+
+          <div class="col-12">
+            <label class="auth-label">URL de avatar <span class="auth-optional-tag">opcional</span></label>
+            <input type="url"
+                   th:field="*{img}"
+                   class="form-control auth-input optional"
+                   placeholder="https://ejemplo.com/mi-foto.jpg">
+            <div class="form-text auth-form-hint">Puedes añadirlo después desde tu perfil.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn" id="submitBtn">Crear cuenta</button>
+      </form>
+
+      <div class="auth-divider">o</div>
+
+      <p class="text-center mb-0 auth-switch-text">
+        ¿Ya tienes cuenta?
+        <a href="/auth/login" class="auth-link ms-1">Iniciar sesión</a>
+      </p>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /**
+   * Alterna visibilidad de la contraseña.
+   * @param {string} inputId - ID del input password a alternar
+   */
+  function togglePw(inputId, btn) {
+    const input = document.getElementById(inputId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  /**
+   * Actualiza la clase de la barra de fortaleza según la longitud de la contraseña.
+   * @param {string} val - Valor actual del input de contraseña
+   */
+  function checkStrength(val) {
+    const bar = document.getElementById('pwStrength');
+    if (!val) { bar.className = 'pw-strength'; return; }
+    if (val.length < 6) bar.className = 'pw-strength weak';
+    else if (val.length < 10) bar.className = 'pw-strength medium';
+    else bar.className = 'pw-strength strong';
+  }
+
+  /**
+   * Compara contraseña y confirmación, mostrando feedback en #matchMsg.
+   */
+  function checkMatch() {
+    const pw      = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    const msg     = document.getElementById('matchMsg');
+    if (!confirm) { msg.textContent = ''; return; }
+    if (pw === confirm) {
+      msg.textContent   = '✓ Las contraseñas coinciden';
+      msg.style.color   = '#2d7a4f';
+    } else {
+      msg.textContent   = '✗ Las contraseñas no coinciden';
+      msg.style.color   = '#e05252';
+    }
+  }
+
+  // Bloquea el envío del formulario si las contraseñas no coinciden
+  document.querySelector('form').addEventListener('submit', function (e) {
+    const pw      = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    if (pw !== confirm) {
+      e.preventDefault();
+      document.getElementById('matchMsg').textContent = '✗ Las contraseñas no coinciden';
+      document.getElementById('matchMsg').style.color = '#e05252';
+      document.getElementById('confirmPassword').focus();
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+/* Estilos de la vista publica: detail.css. */
+
+/* Estilos del selector .detail-main. */
+.detail-main {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilos de seccion. */
+.detail-section--spaced { margin-bottom: 5rem !important; }
+
+/* Estilos de portada. */
+.detail-cover-placeholder {
+  color: var(--color-outline);
+  min-height: 20rem;
+}
+
+/* Estilos de portada. */
+.detail-cover-icon { font-size: 5rem; }
+
+/* Estilos del selector .detail-pub-date. */
+.detail-pub-date { font-size: 0.85rem; color: var(--color-outline); }
+
+/* Estilos de titulo. */
+.detail-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--bs-primary);
+  line-height: 1.1;
+}
+
+/* Estilos del selector .detail-genre. */
+.detail-genre { font-size: 1.05rem; color: var(--bs-primary); }
+
+/* Estilos de texto secundario. */
+.detail-meta-divider { border-bottom: 1px solid var(--color-outline-l); }
+
+/* Estilos de autor. */
+.detail-author-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Estilos de valoracion. */
+.detail-rating-star { font-size: 1rem; color: var(--bs-primary); }
+
+/* Estilos del selector .detail-description. */
+.detail-description {
+  font-size: 1rem;
+  color: var(--color-muted);
+  line-height: 1.8;
+  max-width: 52ch;
+}
+
+/* Estilos del selector .detail-action-icon. */
+.detail-action-icon { font-size: 1.1rem; vertical-align: middle; }
+
+/* Estilos de boton. */
+.detail-btn-library--active { opacity: 0.85; }
+
+/* Estilos de boton. */
+.detail-btn-buy { background-color: #163528; }
+
+/* Estilos de stock. */
+.detail-no-stock { font-size: 0.85rem; color: var(--color-outline); }
+
+/* Estilos del selector .detail-editions-wrapper. */
+.detail-editions-wrapper {
+  background: var(--color-surface-l);
+  border-radius: 1rem;
+}
+
+/* Estilos de tarjeta. */
+.detail-edition-card {
+  background: white;
+  border: 1px solid var(--color-outline-l);
+}
+
+/* Estilos de titulo. */
+.detail-edition-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--bs-primary);
+}
+
+/* Estilos de texto secundario. */
+.detail-edition-meta { font-size: 0.78rem; color: var(--color-muted); }
+
+/* Estilos de comentario. */
+.detail-comments-section {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+/* Estilos de comentario. */
+.detail-comments-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-outline-l);
+}
+
+/* Estilos de comentario. */
+.detail-comments-heading { font-size: 1.8rem; color: var(--bs-primary); }
+
+/* Estilos de comentario. */
+.detail-comments-meta { color: var(--color-outline); }
+
+/* Estilos de comentario. */
+.detail-comments-count { font-weight: 700; font-size: 0.875rem; }
+
+/* Estilos de comentario. */
+.detail-comment-error {
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Estilos de comentario. */
+.detail-comment-textarea { width: 100%; resize: vertical; }
+
+/* Estilos de comentario. */
+.detail-comment-submit {
+  padding: 0.6rem 1.75rem;
+  font-size: 0.875rem;
+}
+
+/* Estilos de comentario. */
+.detail-comment-guest { color: var(--color-muted); font-size: 0.9rem; }
+
+/* Estilos del selector .detail-lock-icon. */
+.detail-lock-icon { font-size: 2rem; color: var(--color-outline); }
+
+/* Estilos de inicio de sesion. */
+.detail-login-link { color: var(--bs-primary); font-weight: 600; }
+
+/* Estilos de comentario. */
+.detail-empty-comments      { color: var(--color-outline); }
+/* Estilos de comentario. */
+.detail-empty-comments-icon { font-size: 3rem; }
+/* Estilos de comentario. */
+.detail-empty-comments-text { font-size: 0.9rem; }

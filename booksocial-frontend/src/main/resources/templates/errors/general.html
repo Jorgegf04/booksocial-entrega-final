@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${errorTitle} + ' — BookSocial'">Error — BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/error.css}">
+</head>
+
+<body class="error-body">
+
+<div th:replace="~{fragments/messages :: backendStatus}"></div>
+
+<div class="error-box">
+
+  
+  
+  <div class="error-code" th:text="${errorStatus}">500</div>
+
+  
+  
+  <h1 class="error-title" th:text="${errorTitle}">Error inesperado</h1>
+
+  
+  
+  <p class="error-msg" th:text="${errorMessage}">Ha ocurrido un error. Por favor, inténtelo más tarde.</p>
+
+  
+  
+  <div th:if="${errorPath != null}" class="error-path" th:text="'Ruta: ' + ${errorPath}"></div>
+
+  
+  
+  
+  <div>
+    <a href="javascript:history.back()" class="btn-back">← Volver</a>
+    <a href="/catalog" class="btn-secondary-link">Ir al catálogo</a>
+  </div>
+
+  
+  
+  <p class="error-branding">
+    <strong>BookSocial</strong> — El Curador Digital
+  </p>
+
+</div>
+</body>
+</html>

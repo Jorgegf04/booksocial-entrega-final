@@ -1,0 +1,88 @@
+/* Estilos de la vista publica: error.css. */
+
+/* Estilos de cuerpo de pagina. */
+.error-body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos del selector .error-box. */
+.error-box {
+  max-width: 520px;
+  width: 100%;
+  background: #fff;
+  border-radius: 1.25rem;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 4px 32px rgba(45, 76, 62, 0.09);
+  text-align: center;
+}
+
+/* Estilos del selector .error-code. */
+.error-code {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #2D4C3E;
+  letter-spacing: -0.04em;
+}
+
+/* Estilos de titulo. */
+.error-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1c1c18;
+  margin: 0.75rem 0 0.5rem;
+}
+
+/* Estilos del selector .error-msg. */
+.error-msg {
+  font-size: 0.9rem;
+  color: #414844;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Estilos del selector .error-path. */
+.error-path {
+  font-size: 0.75rem;
+  color: #727974;
+  background: #f0eee8;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  display: inline-block;
+  margin-bottom: 1.75rem;
+  font-family: monospace;
+}
+
+/* Estilos de boton. */
+.btn-back {
+  background: #2D4C3E;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s;
+}
+/* Estilos de boton. */
+.btn-back:hover { background: #1e3a2f; color: #fff; }
+
+/* Estilos de boton. */
+.btn-secondary-link {
+  font-size: 0.85rem;
+  color: #414844;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+/* Estilos de boton. */
+.btn-secondary-link:hover { color: #2D4C3E; text-decoration: underline; }
+
+/* Estilos del selector .error-branding. */
+.error-branding        { margin-top: 2.5rem; font-size: 0.75rem; color: #727974; }
+/* Estilos del selector .error-branding strong. */
+.error-branding strong { color: #2D4C3E; }

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="messages">
+
+  
+  <div th:if="${successMsg}"
+       class="alert d-flex align-items-center gap-2 mb-4 alert-success-msg"
+       role="alert">
+    
+    <span class="material-symbols-outlined alert-msg-icon">check_circle</span>
+    
+    <span th:text="${successMsg}"></span>
+  </div>
+
+  
+  <div th:if="${errorMsg}"
+       class="alert d-flex align-items-center gap-2 mb-4 alert-error-msg"
+       role="alert">
+    <span class="material-symbols-outlined alert-msg-icon">error</span>
+    <span th:text="${errorMsg}"></span>
+  </div>
+
+</div>
+
+
+<div th:fragment="backendStatus"
+     th:if="${apiError}"
+     class="global-api-alert">
+  <div class="container">
+    <div class="alert alert-warning mb-0" role="alert" th:text="${apiError}"></div>
+  </div>
+</div>
+</body>
+</html>

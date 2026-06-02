@@ -1,0 +1,114 @@
+/* Estilos compartidos de las vistas admin Vue. */
+
+/* Estilos de cabecera admin. */
+.admin-topbar-btn-icon { font-size: 1rem; }
+
+/* Estilos de tablas admin. */
+.admin-table-count {
+  font-size: 0.8rem;
+  color: var(--color-outline);
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+/* Estilos de tablas admin. */
+.admin-table-empty { color: var(--color-outline); font-size: 0.85rem; }
+
+/* Estilos de tablas admin. */
+.admin-table-name { font-size: 0.85rem; font-weight: 600; color: var(--bs-primary); }
+
+/* Estilos de tablas admin. */
+.admin-table-meta { font-size: 0.82rem; }
+
+/* Estilos de tablas admin. */
+.admin-table-id { font-size: 0.8rem; color: var(--color-outline); }
+
+/* Estilos de tablas admin. */
+.admin-table-thumb-icon { font-size: 1rem; color: var(--color-outline); }
+
+/* Estilos de tablas admin. */
+.admin-table-action-icon { font-size: 0.9rem; }
+
+/* Estilos de modales. */
+.admin-modal-confirm { font-size: 0.9rem; }
+
+/* Estilos del selector .admin-img-preview. */
+.admin-img-preview { font-size: 0.75rem; color: var(--color-muted); }
+
+/* Estilos de datos de obras. */
+.admin-work-rating       { font-size: 0.82rem; font-weight: 600; color: #2d7a4f; }
+/* Estilos de datos de obras. */
+.admin-work-rating-empty { color: var(--color-outline); }
+
+/* Estilos de inventario. */
+.admin-inv-edition { font-size: 0.75rem; color: var(--color-outline); }
+/* Estilos de inventario. */
+.admin-inv-isbn    { font-size: 0.78rem; font-family: monospace; color: var(--color-muted); }
+/* Estilos de inventario. */
+.admin-inv-price   { font-weight: 700; color: #2d7a4f; }
+
+/* Estilos de autores. */
+.admin-author-photo {
+  width: 2.2rem;
+  height: 2.2rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--color-outline-variant);
+}
+/* Estilos de avatar. */
+.admin-author-avatar-sm {
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 0.75rem;
+}
+
+/* Estilos de pedidos. */
+.admin-order-id       { font-weight: 700; color: var(--bs-primary); }
+/* Estilos de pedidos. */
+.admin-order-lines    { font-size: 0.75rem; color: var(--color-muted); }
+/* Estilos de pedidos. */
+.admin-tracking-order    { font-size: 0.9rem; }
+/* Estilos del selector .admin-tracking-note. */
+.admin-tracking-note     { font-size: 0.82rem; color: var(--color-muted); }
+/* Estilos del selector .admin-tracking-username. */
+.admin-tracking-username { color: var(--bs-primary); }
+
+/* Estilos del selector .admin-label-hint. */
+.admin-label-hint   { font-weight: 400; font-size: 0.75rem; color: var(--color-muted); }
+/* Estilos de modales. */
+.admin-modal-divider { margin: 4px 0 8px; border-color: #e8e0d0; }
+/* Estilos de modales. */
+.admin-modal-note    { font-size: 0.78rem; color: var(--color-muted); }
+
+/* Estilos de usuario del panel admin. */
+.admin-user-status-active   { font-size: 0.75rem; font-weight: 600; color: #2d7a4f; }
+/* Estilos de usuario del panel admin. */
+.admin-user-status-inactive { font-size: 0.75rem; font-weight: 600; color: #a94442; }
+
+/* Estilos de comentarios. */
+.admin-comment-username   { font-size: 0.82rem; font-weight: 600; color: var(--bs-primary); }
+/* Estilos de comentarios. */
+.admin-comment-date       { font-size: 0.78rem; color: var(--color-outline); white-space: nowrap; }
+/* Estilos de comentarios. */
+.admin-comment-edited     { font-size: 0.75rem; font-weight: 600; color: #a07000; }
+/* Estilos de comentarios. */
+.admin-comment-not-edited { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos de eventos. */
+.admin-event-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--color-outline-variant);
+}
+/* Estilos de eventos. */
+.admin-event-no-img          { font-size: 0.75rem; color: var(--color-outline); }
+/* Estilos de eventos. */
+.admin-event-date-cell       { font-size: 0.82rem; white-space: nowrap; }
+/* Estilos de eventos. */
+.admin-event-status-upcoming { font-size: 0.75rem; font-weight: 600; color: #2d7a4f; }
+/* Estilos de eventos. */
+.admin-event-status-past     { font-size: 0.75rem; font-weight: 600; color: var(--color-outline); }
+/* Estilos de eventos. */
+.admin-event-status-none     { font-size: 0.75rem; color: var(--color-outline); }

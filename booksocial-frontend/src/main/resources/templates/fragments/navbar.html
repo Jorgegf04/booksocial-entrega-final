@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="navbar">
+<nav class="navbar navbar-expand-lg fixed-top nav-glass py-3">
+  <div class="container">
+
+    
+    <a class="navbar-brand" href="/" aria-label="BookSocial">
+      <img class="navbar-brand-logo" th:src="@{/images/booksocial-icon.svg}" alt="" aria-hidden="true">
+      <span>BookSocial</span>
+    </a>
+
+    
+    <button class="navbar-toggler border-0" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto ms-4 gap-1">
+        <li class="nav-item">
+          <a class="nav-link" href="/catalog">
+            Catálogo
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/events">Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/community">Comunidad</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/authors">Autores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/subscription/premium">Suscripci&oacute;n</a>
+        </li>
+      </ul>
+
+      
+      <form class="d-flex me-3 navbar-search-form" action="/catalog/filter" method="get">
+        <input type="hidden" name="page" value="0">
+        
+        <div class="input-group navbar-search-group">
+          
+          <input class="form-control form-control-sm navbar-search-input"
+                 type="search" name="title" placeholder="Buscar obras..."
+                 autocomplete="off">
+          
+          <button class="btn btn-sm navbar-search-btn"
+                  type="submit"
+                  aria-label="Buscar">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+        </div>
+      </form>
+
+      
+      
+      <a href="/cart" class="position-relative text-decoration-none navbar-cart-link">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        
+        <span th:if="${session.cart != null and !session.cart.isEmpty()}"
+              class="cart-badge"
+              th:text="${#lists.size(session.cart)}"></span>
+      </a>
+
+      
+      <div class="d-flex align-items-center gap-2 navbar-actions">
+
+        
+        
+        <th:block th:if="${session.userId == null}">
+          
+          <a href="/auth/login" class="btn btn-sm navbar-btn-login">
+            Iniciar sesión
+          </a>
+          
+          <a href="/auth/register" class="btn btn-sm rounded-pill px-3 navbar-btn-register">
+            Registrarse
+          </a>
+        </th:block>
+
+        
+        
+        <th:block th:if="${session.userId != null}">
+          
+          <a th:href="@{/user/me}"
+             class="d-flex align-items-center gap-2 text-decoration-none navbar-user-link">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span th:text="${session.username}">usuario</span>
+          </a>
+          
+          <a href="/auth/logout" class="btn btn-sm navbar-btn-logout" aria-label="Cerrar sesión">
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+            <span>Cerrar sesión</span>
+          </a>
+        </th:block>
+
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<div th:replace="~{fragments/messages :: backendStatus}"></div>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  (function () {
+    var sessionCart = /*[[${session.cart}]]*/ null;
+
+    if (sessionCart === null) {
+      // Caso 1: sesión sin carrito — intentar restaurar desde localStorage
+      if (!sessionStorage.getItem('bs_cart_synced')) {
+        var saved = localStorage.getItem('bs_cart');
+        if (saved) {
+          try {
+            var items = JSON.parse(saved);
+            if (items && items.length > 0) {
+              sessionStorage.setItem('bs_cart_synced', '1');
+              fetch('/cart/sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: saved
+              }).then(function (r) {
+                if (r.ok) window.location.reload();
+                else localStorage.removeItem('bs_cart');
+              }).catch(function () {});
+            }
+          } catch (e) {
+            localStorage.removeItem('bs_cart');
+          }
+        }
+      }
+
+    } else if (sessionCart.length > 0) {
+      // Caso 2: carrito activo — guardar snapshot en localStorage
+      var snapshot = sessionCart.map(function (item) {
+        return { productId: item.productId, quantity: item.quantity };
+      });
+      localStorage.setItem('bs_cart', JSON.stringify(snapshot));
+      sessionStorage.removeItem('bs_cart_synced');
+
+    } else {
+      // Caso 3: carrito vaciado explícitamente — limpiar localStorage
+      localStorage.removeItem('bs_cart');
+      sessionStorage.removeItem('bs_cart_synced');
+    }
+  })();
+  /*]]>*/
+</script>
+</div>
+
+</body>
+</html>

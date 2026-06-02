@@ -1,0 +1,146 @@
+/* Estilos del panel de administracion: admin-shared.css. */
+
+/* Estilos de panel de administracion. */
+.admin-topbar-btn-icon { font-size: 1rem; }
+
+/* Estilos de panel de administracion. */
+.admin-table-count {
+  font-size: 0.8rem;
+  color: var(--color-outline);
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-table-empty { color: var(--color-outline); font-size: 0.85rem; }
+
+/* Estilos de panel de administracion. */
+.admin-table-name { font-size: 0.85rem; font-weight: 600; color: var(--bs-primary); }
+
+/* Estilos de panel de administracion. */
+.admin-table-meta { font-size: 0.82rem; }
+
+/* Estilos de panel de administracion. */
+.admin-table-id { font-size: 0.8rem; color: var(--color-outline); }
+
+/* Estilos de panel de administracion. */
+.admin-table-thumb-icon { font-size: 1rem; color: var(--color-outline); }
+
+/* Estilos de panel de administracion. */
+.admin-table-action-icon { font-size: 0.9rem; }
+
+/* Estilos de panel de administracion. */
+.admin-modal-confirm { font-size: 0.9rem; }
+
+/* Estilos de panel de administracion. */
+.admin-img-preview { font-size: 0.75rem; color: var(--color-muted); }
+
+/* Estilos de panel de administracion. */
+.admin-work-rating       { font-size: 0.82rem; font-weight: 600; color: #2d7a4f; }
+
+/* Estilos de panel de administracion. */
+.admin-work-rating-empty { color: var(--color-outline); }
+
+/* Estilos de panel de administracion. */
+.admin-inv-edition { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos de panel de administracion. */
+.admin-inv-isbn    { font-size: 0.78rem; font-family: monospace; color: var(--color-muted); }
+
+/* Estilos de panel de administracion. */
+.admin-inv-price   { font-weight: 700; color: #2d7a4f; }
+
+/* Estilos de panel de administracion. */
+.admin-author-photo {
+  width: 2.2rem;
+  height: 2.2rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--color-outline-variant);
+}
+
+/* Estilos de panel de administracion. */
+.admin-author-avatar-sm {
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 0.75rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-order-id       { font-weight: 700; color: var(--bs-primary); }
+
+/* Estilos de panel de administracion. */
+.admin-order-lines    { font-size: 0.75rem; color: var(--color-muted); }
+
+/* Estilos de panel de administracion. */
+.admin-tracking-order    { font-size: 0.9rem; }
+
+/* Estilos de panel de administracion. */
+.admin-tracking-note     { font-size: 0.82rem; color: var(--color-muted); }
+
+/* Estilos de panel de administracion. */
+.admin-tracking-username { color: var(--bs-primary); }
+
+/* Estilos de panel de administracion. */
+.admin-label-hint   { font-weight: 400; font-size: 0.75rem; color: var(--color-muted); }
+
+/* Estilos de panel de administracion. */
+.admin-modal-divider { margin: 4px 0 8px; border-color: #e8e0d0; }
+
+/* Estilos de panel de administracion. */
+.admin-modal-note    { font-size: 0.78rem; color: var(--color-muted); }
+
+/* Estilos de panel de administracion. */
+.admin-user-status-active   { font-size: 0.75rem; font-weight: 600; color: #2d7a4f; }
+/* Estilos de panel de administracion. */
+.admin-user-status-inactive { font-size: 0.75rem; font-weight: 600; color: #a94442; }
+
+/* Estilos de panel de administracion. */
+.admin-comment-username   { font-size: 0.82rem; font-weight: 600; color: var(--bs-primary); }
+
+/* Estilos de panel de administracion. */
+.admin-comment-date       { font-size: 0.78rem; color: var(--color-outline); white-space: nowrap; }
+
+/* Estilos de panel de administracion. */
+.admin-comment-edited     { font-size: 0.75rem; font-weight: 600; color: #a07000; }
+
+/* Estilos de panel de administracion. */
+.admin-comment-not-edited { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos de panel de administracion. */
+.admin-event-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--color-outline-variant);
+}
+
+/* Estilos de panel de administracion. */
+.admin-event-no-img          { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos de panel de administracion. */
+.admin-event-date-cell       { font-size: 0.82rem; white-space: nowrap; }
+
+/* Estilos de panel de administracion. */
+.admin-event-status-upcoming { font-size: 0.75rem; font-weight: 600; color: #2d7a4f; }
+/* Estilos de panel de administracion. */
+.admin-event-status-past     { font-size: 0.75rem; font-weight: 600; color: var(--color-outline); }
+/* Estilos de panel de administracion. */
+.admin-event-status-none     { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos del selector .required-label. */
+.required-label::after {
+  content: " *";
+  color: #dc3545;
+  font-weight: 600;
+}
+
+/* Estilos de panel de administracion. */
+.admin-img-preview-thumb {
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--color-outline-variant);
+}

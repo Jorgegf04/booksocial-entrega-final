@@ -1,0 +1,91 @@
+/* Estilos de la vista publica: community.css. */
+
+/* Estilos del selector .community-main. */
+.community-main {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilos del selector .community-heading. */
+.community-heading { font-size: 2rem; color: var(--bs-primary); }
+
+/* Estilos de busqueda. */
+.community-search-group { max-width: 280px; }
+/* Estilos de campo de formulario. */
+.community-search-input { border-radius: 2rem 0 0 2rem; }
+/* Estilos de boton. */
+.community-search-btn {
+  border-radius: 0 2rem 2rem 0;
+  background: var(--bs-primary);
+  border: none;
+}
+/* Estilos de busqueda. */
+.community-search-icon { font-size: 1rem; color: #fff; }
+
+/* Estilos de mensaje vacio. */
+.community-empty {
+  background: var(--color-surface-l);
+  border-radius: 1rem;
+}
+/* Estilos de mensaje vacio. */
+.community-empty-icon { font-size: 3.5rem; color: var(--color-outline-l); }
+/* Estilos de mensaje vacio. */
+.community-empty-text { color: var(--bs-primary); font-size: 1.1rem; }
+
+/* Estilos de tarjeta. */
+.community-user-card {
+  border-radius: 1rem;
+  border: 1px solid var(--color-outline-l);
+  background: var(--color-surface-l);
+  transition: box-shadow .2s;
+}
+
+/* Estilos de avatar. */
+.community-user-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Estilos de avatar. */
+.community-avatar-placeholder {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.4rem;
+}
+
+/* Estilos del selector .community-user-name. */
+.community-user-name {
+  color: var(--bs-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+/* Estilos del selector .community-user-fullname. */
+.community-user-fullname {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+/* Estilos de boton. */
+.community-follow-btn { padding: 0.45rem; font-size: 0.8rem; }
+
+/* Estilos de boton. */
+.community-unfollow-btn {
+  padding: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1.5px solid var(--bs-primary);
+  border-radius: 2rem;
+  background: transparent;
+  color: var(--bs-primary);
+  cursor: pointer;
+}
+
+/* Estilos de boton. */
+.community-view-profile-btn { padding: 0.45rem; font-size: 0.8rem; }
+
+/* Estilos de mensaje vacio. */
+.community-search-empty-icon { font-size: 3rem; color: var(--color-outline-l); }
+/* Estilos de mensaje vacio. */
+.community-search-empty-text { color: var(--color-muted); }

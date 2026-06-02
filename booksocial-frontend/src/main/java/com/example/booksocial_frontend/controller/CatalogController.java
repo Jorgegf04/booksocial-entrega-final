@@ -1,0 +1,240 @@
+package com.example.booksocial_frontend.controller;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.booksocial_frontend.dto.WorkFilterDTO;
+import com.example.booksocial_frontend.dto.WorkResponseDTO;
+import com.example.booksocial_frontend.service.WorkClientService;
+
+import lombok.RequiredArgsConstructor;
+
+/**
+ * Controlador del catalogo de obras. Muestra el listado, aplica filtros, ordena resultados y prepara la paginacion.
+ * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+ *
+ * @author Jorge
+ * @version 3
+ * @since 01/06/2026
+ */
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/catalog")
+public class CatalogController {
+
+  private static final int PAGE_SIZE = 12;
+
+  private final WorkClientService workService;
+
+  /**
+   * Muestra el catalogo completo de obras con paginacion.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @GetMapping
+  public String showCatalog(@RequestParam(defaultValue = "0") int page, Model model) {
+
+    List<WorkResponseDTO> works = List.of();
+    try {
+      works = workService.getAllWorks();
+    } catch (Exception e) {
+      model.addAttribute("apiError", "No se pudo conectar con el servidor. Verifica que el backend esté activo.");
+    }
+
+    applyPaginationToModel(works, page, new WorkFilterDTO(), model);
+    return "work/catalog";
+  }
+
+  /**
+   * Aplica filtros y ordenacion al catalogo antes de mostrar resultados.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  @GetMapping("/filter")
+  public String filterCatalog(@ModelAttribute WorkFilterDTO filter,
+      @RequestParam(defaultValue = "0") int page,
+      Model model) {
+
+    // Normalizar título: trim + null si vacío
+    normalizeFilter(filter);
+
+    List<WorkResponseDTO> works = List.of();
+    try {
+      works = workService.getAllWorks();
+      works = applyAllFilters(works, filter);
+      works = applySorting(works, filter.getSort());
+    } catch (Exception e) {
+      model.addAttribute("apiError", "No se pudo conectar con el servidor. Verifica que el backend esté activo.");
+    }
+
+    applyPaginationToModel(works, page, filter, model);
+    return "work/catalog";
+  }
+
+  // ==========================================
+  // FILTRADO LOCAL COMPLETO
+  // ==========================================
+
+  /**
+   * Filtra obras por titulo, genero, tipo, demografia, nota y fecha.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private List<WorkResponseDTO> applyAllFilters(List<WorkResponseDTO> works, WorkFilterDTO filter) {
+    String titleLower = filter.getTitle() != null ? filter.getTitle().toLowerCase() : null;
+
+    return works.stream()
+        .filter(w -> titleLower == null
+            || (w.getTitle() != null && w.getTitle().toLowerCase().contains(titleLower)))
+        .filter(w -> filter.getGenres() == null || filter.getGenres().isEmpty()
+            || (w.getGenre() != null && filter.getGenres().stream()
+                .anyMatch(g -> g.name().equals(w.getGenre().name()))))
+        .filter(w -> filter.getType() == null
+            || (w.getType() != null && w.getType().name().equals(filter.getType().name())))
+        .filter(w -> filter.getDemographic() == null
+            || (w.getDemographic() != null && w.getDemographic().name().equals(filter.getDemographic().name())))
+        .filter(w -> filter.getMinRating() == null || filter.getMinRating() == 0
+            || (w.getAverageRating() != null && w.getAverageRating() >= filter.getMinRating()))
+        .filter(w -> filter.getPublishedAfter() == null
+            || (w.getPublicationDate() != null && !w.getPublicationDate().isBefore(filter.getPublishedAfter())))
+        .filter(w -> filter.getPublishedBefore() == null
+            || (w.getPublicationDate() != null && !w.getPublicationDate().isAfter(filter.getPublishedBefore())))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Limpia filtros para evitar valores vacios o fuera de rango.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private void normalizeFilter(WorkFilterDTO filter) {
+    String title = filter.getTitle();
+    if (title != null) {
+      title = title.trim();
+      filter.setTitle(title.isEmpty() ? null : title);
+    }
+
+    Double minRating = filter.getMinRating();
+    if (minRating != null) {
+      filter.setMinRating(Math.max(0, Math.min(10, minRating)));
+    }
+
+    String sort = filter.getSort();
+    if (sort != null) {
+      sort = sort.trim();
+      filter.setSort(sort.isEmpty() ? null : sort);
+    }
+  }
+
+  /**
+   * Ordena obras por relevancia, nota, fecha o titulo.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private List<WorkResponseDTO> applySorting(List<WorkResponseDTO> works, String sort) {
+    if (sort == null || sort.isBlank() || "relevance".equals(sort)) {
+      return works;
+    }
+
+    Comparator<WorkResponseDTO> comparator = switch (sort) {
+      case "rating" -> Comparator.comparing(
+          WorkResponseDTO::getAverageRating,
+          Comparator.nullsLast(Comparator.reverseOrder()));
+      case "newest" -> Comparator.comparing(
+          WorkResponseDTO::getPublicationDate,
+          Comparator.nullsLast(Comparator.reverseOrder()));
+      case "title" -> Comparator.comparing(
+          w -> w.getTitle() == null ? "" : w.getTitle().toLowerCase());
+      default -> null;
+    };
+
+    if (comparator == null) {
+      return works;
+    }
+
+    return works.stream()
+        .sorted(comparator)
+        .collect(Collectors.toList());
+  }
+
+  // ==========================================
+  // PAGINACIÓN
+  // ==========================================
+
+  /**
+   * Calcula la pagina actual y anade datos al modelo.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private void applyPaginationToModel(List<WorkResponseDTO> allWorks, int page,
+      WorkFilterDTO filter, Model model) {
+
+    int total = allWorks.size();
+    int totalPages = Math.max(1, (int) Math.ceil((double) total / PAGE_SIZE));
+    int safePage = Math.max(0, Math.min(page, totalPages - 1));
+
+    int fromIndex = safePage * PAGE_SIZE;
+    int toIndex = Math.min(fromIndex + PAGE_SIZE, total);
+    List<WorkResponseDTO> pageWorks = total == 0 ? List.of() : allWorks.subList(fromIndex, toIndex);
+
+    model.addAttribute("works", pageWorks);
+    model.addAttribute("total", total);
+    model.addAttribute("currentPage", safePage);
+    model.addAttribute("totalPages", totalPages);
+    model.addAttribute("pageNumbers", buildPageNumbers(safePage, totalPages));
+    model.addAttribute("filter", filter);
+  }
+
+  /**
+   * Construye los numeros y separadores de la paginacion.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   *
+   * @author Jorge
+   * @version 3
+   * @since 01/06/2026
+   */
+  private List<Integer> buildPageNumbers(int current, int total) {
+    List<Integer> pages = new ArrayList<>();
+    if (total <= 7) {
+      for (int i = 0; i < total; i++) {
+        pages.add(i);
+      }
+      return pages;
+    }
+
+    pages.add(0);
+    int start = Math.max(1, current - 2);
+    int end = Math.min(total - 2, current + 2);
+
+    if (start > 1) pages.add(-1);
+    for (int i = start; i <= end; i++) pages.add(i);
+    if (end < total - 2) pages.add(-1);
+    pages.add(total - 1);
+
+    return pages;
+  }
+}

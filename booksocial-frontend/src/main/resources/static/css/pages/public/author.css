@@ -1,0 +1,181 @@
+/* Estilos de la vista publica: author.css. */
+
+/* Estilos de autor. */
+.author-main {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilos de autor. */
+.author-list-heading { font-size: 2rem; color: var(--bs-primary); }
+
+/* Estilos de autor. */
+.author-search-group  { max-width: 280px; }
+/* Estilos de campo de formulario. */
+.author-search-input  { border-radius: 2rem 0 0 2rem; }
+/* Estilos de boton. */
+.author-search-btn {
+  border-radius: 0 2rem 2rem 0;
+  background: var(--bs-primary);
+  border: none;
+  cursor: pointer;
+}
+/* Estilos de autor. */
+.author-search-icon { font-size: 1rem; color: #fff; }
+
+/* Estilos de autor. */
+.author-empty {
+  background: var(--color-surface-l);
+  border-radius: 1rem;
+}
+/* Estilos de autor. */
+.author-empty-icon      { font-size: 3.5rem; color: var(--color-outline-l); }
+/* Estilos de autor. */
+.author-empty-text      { color: var(--bs-primary); font-size: 1.1rem; }
+/* Estilos de autor. */
+.author-works-empty-text { color: var(--bs-primary); font-size: 1rem; }
+
+/* Estilos de tarjeta. */
+.author-card-img-wrap {
+  aspect-ratio: 3/4;
+  background: var(--color-surface-l);
+  border-radius: .5rem;
+}
+/* Estilos de tarjeta. */
+.author-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+
+/* Estilos de tarjeta. */
+.author-card-placeholder-icon { font-size: 4rem; color: var(--color-outline-l); }
+
+/* Estilos de tarjeta. */
+.author-card-name      { font-size: 1rem; color: var(--bs-primary); }
+/* Estilos de tarjeta. */
+.author-card-meta      { font-size: .75rem; color: var(--color-muted); margin: .2rem 0 0; }
+/* Estilos de tarjeta. */
+.author-card-followers { font-size: .72rem; color: var(--color-muted); }
+
+/* Estilos de tarjeta. */
+.author-card:hover img { transform: scale(1.04); }
+/* Estilos de titulos de la pagina. */
+.author-card:hover h3  { opacity: .75; }
+
+/* Estilos de autor. */
+.author-detail-sticky { top: 6rem; }
+
+/* Estilos de autor. */
+.author-detail-photo {
+  aspect-ratio: 3/4;
+  background: var(--color-surface-l);
+}
+/* Estilos de autor. */
+.author-detail-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Estilos de autor. */
+.author-detail-photo-placeholder { background: var(--color-surface-l); }
+/* Estilos de autor. */
+.author-detail-placeholder-icon  { font-size: 6rem; color: var(--color-outline-l); }
+
+/* Estilos de autor. */
+.author-detail-name { font-size: 2rem; color: var(--bs-primary); }
+/* Estilos de autor. */
+.author-detail-nationality {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Estilos de autor. */
+.author-detail-stats {
+  border-top: 1px solid var(--color-outline-l);
+  border-bottom: 1px solid var(--color-outline-l);
+}
+/* Estilos de autor. */
+.author-stat-num {
+  font-size: 1.5rem;
+  color: var(--bs-primary);
+}
+/* Estilos de autor. */
+.author-stat-label {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* Estilos de boton. */
+.author-action-btn { padding: .75rem; }
+
+/* Estilos de boton. */
+.author-unfollow-btn {
+  padding: .75rem;
+  font-weight: 600;
+  border: 1.5px solid var(--bs-primary);
+  border-radius: 2rem;
+  background: transparent;
+  color: var(--bs-primary);
+  cursor: pointer;
+}
+
+/* Estilos de autor. */
+.author-works-heading { font-size: 1.8rem; color: var(--bs-primary); }
+/* Estilos de autor. */
+.author-works-divider { border-bottom: 1px solid var(--color-outline-l); margin-bottom: 4px; }
+
+/* Estilos de portada. */
+.author-work-cover {
+  aspect-ratio: 2/3;
+  background: var(--color-surface-l);
+  border-radius: .25rem;
+  position: relative;
+}
+/* Estilos de portada. */
+.author-work-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+/* Estilos de portada. */
+.author-work-cover-icon { font-size: 4rem; color: var(--color-outline-l); }
+
+/* Estilos de autor. */
+.author-work-genre-badge {
+  top: .75rem;
+  right: .75rem;
+  background: var(--color-surface-l);
+  color: var(--bs-primary);
+  font-size: .65rem;
+  font-weight: 700;
+  padding: .25rem .6rem;
+  border-radius: .25rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* Estilos de autor. */
+.author-work-title {
+  font-size: 1.1rem;
+  color: var(--bs-primary);
+  transition: opacity .2s;
+}
+/* Estilos de autor. */
+.author-work-meta {
+  font-size: .75rem;
+  color: var(--color-muted);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+/* Estilos de imagen. */
+.group-work:hover img { transform: scale(1.04); }
+/* Estilos de titulos de la pagina. */
+.group-work:hover h3  { opacity: .75; }

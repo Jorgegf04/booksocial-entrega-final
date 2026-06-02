@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ediciones — Admin BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/admin/admin-shared.css}">
+</head>
+<body class="admin-body">
+<div class="admin-layout">
+
+  
+  
+  <div th:replace="~{admin/fragments/sidebar :: sidebar('editions')}"></div>
+
+  
+  <main class="admin-main">
+
+    
+    
+    <div class="admin-topbar">
+      <div>
+        <h1 class="admin-page-title">Ediciones</h1>
+        <p class="admin-page-subtitle">Gestión de ediciones físicas y digitales</p>
+      </div>
+      <button class="btn btn-sm btn-primary d-flex align-items-center gap-1"
+              data-bs-toggle="modal" data-bs-target="#createEditionModal">
+        
+        <span class="material-symbols-outlined admin-topbar-btn-icon">add</span>
+        Nueva Edición
+      </button>
+    </div>
+
+    
+    
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show mx-0 mb-3" role="alert">
+      <span th:text="${success}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mx-0 mb-3" role="alert">
+      <span th:text="${error}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <p class="admin-card-title">
+          Todas las ediciones
+          
+          <span class="admin-table-count"
+                th:text="'(' + ${#lists.size(editions)} + ' total)'"></span>
+        </p>
+      </div>
+      <div class="table-responsive">
+        
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Título edición</th>
+              <th>ISBN</th>
+              <th>Obra</th>
+              <th>Editorial</th>
+              <th>Tomos</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            
+            <tr th:each="edition : ${editions}">
+              
+              <td class="admin-table-id" th:text="${edition.id}">—</td>
+              <td>
+                
+                <span class="admin-table-name"
+                      th:text="${edition.title != null} ? ${edition.title} : '—'">—</span>
+              </td>
+              
+              <td class="admin-inv-isbn"
+                  th:text="${edition.isbn != null} ? ${edition.isbn} : '—'">—</td>
+              
+              <td class="admin-table-meta" th:text="${edition.workTitle != null} ? ${edition.workTitle} : '—'">—</td>
+              <td class="admin-table-meta" th:text="${edition.editorialName != null} ? ${edition.editorialName} : '—'">—</td>
+              <td>
+                <span class="admin-badge"
+                      th:text="${edition.totalTomes != null} ? ${edition.totalTomes} + ' tomos' : '—'">—</span>
+              </td>
+              <td class="admin-table-meta"
+                  th:text="${edition.editionDate != null} ? ${#temporals.format(edition.editionDate, 'dd/MM/yyyy')} : '—'">—</td>
+              <td>
+                <div class="d-flex gap-1">
+                  <button type="button" class="btn btn-sm btn-outline-secondary p-1"
+                          title="Editar"
+                          data-bs-toggle="modal" data-bs-target="#editEditionModal"
+                          th:data-id="${edition.id}"
+                          th:data-isbn="${edition.isbn}"
+                          th:data-editiondate="${edition.editionDate}"
+                          th:data-workid="${edition.workId}"
+                          th:data-editorialid="${edition.editorialId}"
+                          th:data-title="${edition.title}"
+                          th:data-totaltomes="${edition.totalTomes}"
+                          onclick="openEditEditionModal(this)">
+                    
+                    <span class="material-symbols-outlined admin-table-action-icon">edit</span>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-danger p-1"
+                          title="Eliminar"
+                          data-bs-toggle="modal" data-bs-target="#deleteEditionModal"
+                          th:data-id="${edition.id}"
+                          th:data-title="${edition.title}"
+                          onclick="openDeleteEditionModal(this)">
+                    <span class="material-symbols-outlined admin-table-action-icon">delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            
+            
+            <tr th:if="${editions == null or editions.isEmpty()}">
+              
+              <td colspan="8" class="text-center py-4 admin-table-empty">
+                No hay ediciones registradas
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<div class="modal fade" id="createEditionModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Nueva Edición</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      
+      <form method="post" th:action="@{/admin/editions/create}">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label fw-semibold">Título de la edición</label>
+              <input type="text" name="title" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-4">
+              
+              <label class="form-label fw-semibold">Nº Tomos <span class="admin-label-hint">(manga/cómic)</span></label>
+              <input type="number" name="totalTomes" class="form-control form-control-sm" min="0" placeholder="—">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">ISBN</label>
+              <input type="text" name="isbn" class="form-control form-control-sm"
+                     placeholder="978-...">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Fecha de edición</label>
+              <input type="date" name="editionDate" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Obra</label>
+              <select name="workId" class="form-select form-select-sm">
+                <option value="">— Seleccionar obra —</option>
+                
+                <option th:each="w : ${works}" th:value="${w.id}" th:text="${w.title}"></option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Editorial</label>
+              <select name="editorialId" class="form-select form-select-sm">
+                <option value="">— Seleccionar editorial —</option>
+                
+                <option th:each="e : ${editorials}" th:value="${e.id}" th:text="${e.name}"></option>
+              </select>
+            </div>
+            <div class="col-12">
+              
+              <hr class="admin-modal-divider">
+              <p class="admin-modal-note mb-2">
+                Producto (opcional) — si rellenas precio y stock se creará automáticamente el producto para esta edición.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Precio (€)</label>
+              <input type="number" name="price" class="form-control form-control-sm" step="0.01" min="0" placeholder="ej: 12.99">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Stock</label>
+              <input type="number" name="stock" class="form-control form-control-sm" min="0" placeholder="ej: 50">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-sm btn-primary">Crear Edición</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editEditionModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Edición</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form id="editEditionForm" method="post">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label fw-semibold">Título de la edición</label>
+              <input type="text" id="editEditionTitle" name="title" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Nº Tomos <span class="admin-label-hint">(manga/cómic)</span></label>
+              <input type="number" id="editEditionTotalTomes" name="totalTomes" class="form-control form-control-sm" min="0" placeholder="—">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">ISBN</label>
+              <input type="text" id="editEditionIsbn" name="isbn" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Fecha de edición</label>
+              <input type="date" id="editEditionDate" name="editionDate" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Obra</label>
+              <select id="editEditionWorkId" name="workId" class="form-select form-select-sm">
+                <option value="">— Seleccionar obra —</option>
+                <option th:each="w : ${works}" th:value="${w.id}" th:text="${w.title}"></option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Editorial</label>
+              <select id="editEditionEditorialId" name="editorialId" class="form-select form-select-sm">
+                <option value="">— Seleccionar editorial —</option>
+                <option th:each="e : ${editorials}" th:value="${e.id}" th:text="${e.name}"></option>
+              </select>
+            </div>
+            <div class="col-12">
+              <hr class="admin-modal-divider">
+              <p class="admin-modal-note mb-2">
+                Producto — si rellenas precio y stock se creará o actualizará el producto de esta edición.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Precio (€)</label>
+              <input type="number" id="editEditionPrice" name="price" class="form-control form-control-sm" step="0.01" min="0" placeholder="ej: 12.99">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Stock</label>
+              <input type="number" id="editEditionStock" name="stock" class="form-control form-control-sm" min="0" placeholder="ej: 50">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-sm btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteEditionModal" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar Edición</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        
+        <p class="admin-modal-confirm">¿Seguro que quieres eliminar la edición
+          <strong id="deleteEditionName"></strong>?
+          Esta acción no se puede deshacer.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form id="deleteEditionForm" method="post" class="d-inline">
+          <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function openEditEditionModal(btn) {
+    document.getElementById('editEditionForm').action = '/admin/editions/' + btn.dataset.id + '/update';
+    document.getElementById('editEditionIsbn').value = btn.dataset.isbn || '';
+    document.getElementById('editEditionDate').value = btn.dataset.editiondate || '';
+    document.getElementById('editEditionTitle').value = btn.dataset.title || '';
+    document.getElementById('editEditionTotalTomes').value = btn.dataset.totaltomes || '';
+    const editSel = document.getElementById('editEditionEditorialId');
+    for (let opt of editSel.options) {
+      opt.selected = (opt.value === btn.dataset.editorialid);
+    }
+    const workSel = document.getElementById('editEditionWorkId');
+    for (let opt of workSel.options) {
+      opt.selected = (opt.value === btn.dataset.workid);
+    }
+  }
+
+  function openDeleteEditionModal(btn) {
+    document.getElementById('deleteEditionForm').action = '/admin/editions/' + btn.dataset.id + '/delete';
+    document.getElementById('deleteEditionName').textContent = '"' + (btn.dataset.title || 'esta edición') + '"';
+  }
+</script>
+</body>
+</html>

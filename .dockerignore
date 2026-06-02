@@ -1,0 +1,33 @@
+# Control de versiones
+.git
+.gitignore
+.gitattributes
+
+# Entornos y secretos — nunca incluir en la imagen
+.env
+.env.local
+.env.*.local
+
+# Artefactos de build que se regeneran dentro del contenedor
+booksocial-backend/booksocial-backend/target/
+booksocial-frontend/target/
+booksocial-vue/node_modules/
+booksocial-vue/dist/
+
+# Certificados locales (se montan como volumen, no se copian)
+nginx/ssl/
+
+# IDEs y sistemas operativos
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs locales
+*.log
+logs/
+
+# Docker (evita recursión)
+docker-compose*.yml
+.dockerignore

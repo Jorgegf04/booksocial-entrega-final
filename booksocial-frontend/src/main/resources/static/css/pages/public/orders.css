@@ -1,0 +1,56 @@
+/* Estilos de la vista publica: orders.css. */
+
+/* Estilos de pedido. */
+.orders-main {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilos de pedido. */
+.orders-confirm-alert {
+  background: rgba(45, 76, 62, 0.08);
+  border: 1px solid rgba(45, 76, 62, 0.2);
+  border-radius: 0.75rem;
+  color: var(--bs-primary);
+}
+
+/* Estilos de pedido. */
+.orders-heading {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: var(--bs-primary);
+}
+/* Estilos de pedido. */
+.orders-subheading { color: var(--color-muted); }
+
+/* Estilos de pedido. */
+.orders-empty {
+  background: var(--color-surface-l);
+  border-radius: 1.25rem;
+}
+/* Estilos de pedido. */
+.orders-empty-icon  { font-size: 4rem; color: var(--color-outline-l); }
+/* Estilos de pedido. */
+.orders-empty-title { font-size: 1.2rem; color: var(--bs-primary); }
+/* Estilos de pedido. */
+.orders-empty-text  { color: var(--color-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+/* Estilos de boton. */
+.orders-empty-btn   { text-decoration: none; padding: 0.7rem 1.75rem; font-size: 0.875rem; }
+
+/* Estilos de pedido. */
+.orders-icon-color  { color: var(--bs-primary); }
+/* Estilos de pedido. */
+.orders-order-id    { color: var(--bs-primary); }
+/* Estilos de pedido. */
+.orders-order-date  { font-size: 0.78rem; color: var(--color-muted); }
+/* Estilos de pedido. */
+.orders-order-items { font-size: 0.72rem; color: var(--color-muted); }
+
+/* Estilos de pedido. */
+.orders-line-icon     { font-size: 1rem; color: var(--color-outline); }
+/* Estilos de pedido. */
+.orders-line-title    { font-size: 0.875rem; color: var(--bs-primary); }
+/* Estilos de pedido. */
+.orders-line-meta     { font-size: 0.75rem; color: var(--color-muted); }
+/* Estilos de pedido. */
+.orders-line-subtotal { font-size: 0.875rem; color: var(--bs-primary); }

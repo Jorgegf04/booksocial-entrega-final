@@ -1,0 +1,96 @@
+package com.example.booksocial_backend.impl;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.example.booksocial_backend.DTO.catalog.ChapterRequestDTO;
+import com.example.booksocial_backend.domain.catalog.Chapter;
+import com.example.booksocial_backend.domain.catalog.Edition;
+import com.example.booksocial_backend.domain.catalog.Tome;
+import com.example.booksocial_backend.repository.ChapterRepository;
+import com.example.booksocial_backend.repository.TomeRepository;
+import com.example.booksocial_backend.service.impl.ChapterServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
+
+class ChapterServiceImplTest {
+
+  @Mock
+  private ChapterRepository chapterRepository;
+
+  @Mock
+  private TomeRepository tomeRepository;
+
+  @Mock
+  private ModelMapper modelMapper;
+
+  @InjectMocks
+  private ChapterServiceImpl chapterService;
+
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
+
+  @Test
+  void shouldThrowExceptionWhenTomeNotFound() {
+    ChapterRequestDTO request = new ChapterRequestDTO(1, "Capitulo 1", 1L);
+
+    when(modelMapper.map(request, Chapter.class)).thenReturn(new Chapter());
+    when(tomeRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThrows(RuntimeException.class, () -> chapterService.createChapter(request));
+  }
+
+  @Test
+  void shouldThrowExceptionWhenInvalidChapterNumber() {
+    ChapterRequestDTO request = new ChapterRequestDTO(0, "Capitulo", 1L);
+    Chapter chapter = Chapter.builder().chapterNumber(0).title("Capitulo").build();
+    Tome tome = Tome.builder().id(1L).build();
+
+    when(modelMapper.map(request, Chapter.class)).thenReturn(chapter);
+    when(tomeRepository.findById(1L)).thenReturn(Optional.of(tome));
+
+    assertThrows(IllegalArgumentException.class, () -> chapterService.createChapter(request));
+  }
+
+  @Test
+  void shouldReturnAllChapters() {
+    Tome tome = Tome.builder()
+        .id(1L)
+        .title("Tomo")
+        .edition(Edition.builder().title("Edicion").build())
+        .build();
+
+    Chapter chapter = Chapter.builder()
+        .id(1L)
+        .chapterNumber(1)
+        .title("Capitulo")
+        .tome(tome)
+        .build();
+
+    when(chapterRepository.findAll()).thenReturn(List.of(chapter));
+
+    var result = chapterService.getAllChapters();
+
+    assertEquals(1, result.size());
+  }
+
+  @Test
+  void shouldDeleteChapter() {
+    Chapter chapter = Chapter.builder().id(1L).build();
+
+    when(chapterRepository.findById(1L)).thenReturn(Optional.of(chapter));
+
+    chapterService.deleteChapter(1L);
+
+    verify(chapterRepository).delete(chapter);
+  }
+}

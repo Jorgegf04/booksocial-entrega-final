@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${user.username} + ' — BookSocial'">Perfil — BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/profile.css}">
+</head>
+<body>
+
+  
+  
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  
+  
+  <main class="container profile-main">
+
+    
+    <div th:replace="~{fragments/messages :: messages}"></div>
+
+    
+    <div class="row g-4 align-items-start">
+
+      
+      <div class="col-lg-4">
+
+        
+        
+        <div class="profile-hero text-center">
+
+          
+          <div class="d-flex justify-content-center mb-3">
+            
+            
+            <img th:if="${user.img != null and !user.img.isEmpty()}"
+                 th:src="${user.img}"
+                 th:alt="${user.username}"
+                 class="profile-avatar">
+            
+            <div th:unless="${user.img != null and !user.img.isEmpty()}"
+                 class="profile-avatar-placeholder"
+                 th:text="${user.username != null ? #strings.substring(user.username, 0, 1).toUpperCase() : '?'}">
+            </div>
+          </div>
+
+          
+          
+          <h1 class="profile-username" th:text="${user.username}">username</h1>
+          <p class="profile-fullname mb-2"
+             th:text="${(user.name != null ? user.name : '') + (user.secondName != null ? ' ' + user.secondName : '')}">
+          </p>
+          
+          <span class="profile-badge"
+                th:classappend="${user.role == 'ADMIN'} ? 'admin' : (${user.role == 'SUBSCRIBED'} ? 'subscribed' : '')"
+                th:text="${user.role != null ? user.role : 'USER'}">USER</span>
+
+          
+          
+          <div class="d-flex justify-content-center mt-4 pt-3 profile-stats-divider">
+
+            
+            <div class="profile-stat">
+              <span class="stat-num" th:text="${tracking != null ? tracking.size() : 0}">0</span>
+              <span class="stat-label">Obras</span>
+            </div>
+
+            
+            <div class="profile-stat profile-stat-clickable"
+                 data-bs-toggle="modal" data-bs-target="#followersModal">
+              <span class="stat-num" th:text="${followersCount}">0</span>
+              <span class="stat-label">Seguidores</span>
+            </div>
+
+            <div class="profile-stat profile-stat-clickable"
+                 data-bs-toggle="modal" data-bs-target="#followingModal">
+              <span class="stat-num" th:text="${followingCount}">0</span>
+              <span class="stat-label">Siguiendo</span>
+            </div>
+          </div>
+
+          
+          
+          <div th:if="${!isOwnProfile and sessionUserId != null}" class="mt-3">
+            
+            
+            <form th:if="${!isFollowing}"
+                  th:action="@{'/user/' + ${user.id} + '/follow'}" method="post">
+              <button type="submit" class="btn-primary-pill w-100 profile-follow-btn">
+                Seguir
+              </button>
+            </form>
+            
+            
+            <form th:if="${isFollowing}"
+                  th:action="@{'/user/' + ${user.id} + '/unfollow'}" method="post">
+              <button type="submit" class="profile-unfollow-btn">
+                Siguiendo ✓
+              </button>
+            </form>
+          </div>
+
+          
+          
+          
+          <div th:if="${isOwnProfile and user.role == 'ADMIN'}" class="mt-3">
+            <a href="/admin" class="profile-admin-btn">
+              <span class="material-symbols-outlined profile-admin-icon">admin_panel_settings</span>
+              Panel de Administrador
+            </a>
+          </div>
+
+          
+          
+          <div th:if="${isOwnProfile and user.role != 'ADMIN'}" class="mt-3">
+
+            
+            
+            <div th:if="${subscription != null and subscription.activated}">
+              <span class="badge bg-success mb-1">Suscripción activa</span>
+              <small class="d-block text-muted mb-2"
+                     
+                     th:if="${subscription.endDate != null}"
+                     th:text="'Válida hasta: ' + ${#temporals.format(subscription.endDate, 'dd/MM/yyyy')}"></small>
+              <button type="button"
+                      class="btn btn-sm btn-outline-danger w-100"
+                      data-bs-toggle="modal" data-bs-target="#cancelSubscriptionModal">
+                <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle">cancel</span>
+                Cancelar suscripción
+              </button>
+            </div>
+
+            
+            <div th:if="${subscription == null}">
+              <small class="d-block text-muted mb-2">Activa tu suscripci&oacute;n para acceder a ventajas premium.</small>
+              
+              <form th:action="@{/subscription/activate}" method="post">
+                <button type="submit" class="btn-primary-pill w-100 profile-subscription-btn">
+                  <span class="material-symbols-outlined profile-subscription-icon">workspace_premium</span>
+                  Activar suscripci&oacute;n
+                </button>
+              </form>
+            </div>
+
+            
+            
+            <div th:if="${subscription != null and !subscription.activated}">
+              <span class="badge bg-warning text-dark d-block mb-1">Suscripción pausada</span>
+              <small class="d-block text-muted mb-2">Tu suscripción está pausada.</small>
+              
+              <form th:action="@{'/subscription/reactivate'}" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-success w-100">
+                  <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle">refresh</span>
+                  Reactivar suscripción
+                </button>
+              </form>
+            </div>
+
+          </div>
+
+          
+          
+          <p class="mt-3 mb-0 profile-member-since">
+            Miembro desde
+            <span th:text="${user.registrationDate != null ? #temporals.format(user.registrationDate, 'MMMM yyyy') : '—'}"></span>
+          </p>
+
+        </div>
+
+        
+        
+        
+        <div class="modal fade" id="followersModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-scrollable">
+            
+            <div class="modal-content profile-modal-content">
+              
+              <div class="modal-header profile-modal-header">
+                
+                <h5 class="modal-title font-serif profile-modal-title">Seguidores</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body p-0">
+                
+                <div th:if="${followers == null or followers.isEmpty()}"
+                     class="text-center py-4 profile-modal-empty">
+                  Sin seguidores aún.
+                </div>
+                <ul th:if="${followers != null and !followers.isEmpty()}"
+                    class="list-unstyled mb-0">
+                  
+                  <li th:each="u : ${followers}"
+                      class="d-flex align-items-center gap-3 px-4 py-3 profile-modal-item">
+                    
+                    <div class="profile-avatar-placeholder profile-modal-avatar"
+                         th:text="${u.username != null ? #strings.substring(u.username,0,1).toUpperCase() : '?'}"></div>
+                    
+                    <a th:href="@{'/user/' + ${u.id}}"
+                       class="profile-modal-link"
+                       th:text="${u.username}">username</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="modal fade" id="followingModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content profile-modal-content">
+              <div class="modal-header profile-modal-header">
+                <h5 class="modal-title font-serif profile-modal-title">Siguiendo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body p-0">
+                <div th:if="${following == null or following.isEmpty()}"
+                     class="text-center py-4 profile-modal-empty">
+                  No sigue a nadie aún.
+                </div>
+                <ul th:if="${following != null and !following.isEmpty()}"
+                    class="list-unstyled mb-0">
+                  <li th:each="u : ${following}"
+                      class="d-flex align-items-center gap-3 px-4 py-3 profile-modal-item">
+                    <div class="profile-avatar-placeholder profile-modal-avatar"
+                         th:text="${u.username != null ? #strings.substring(u.username,0,1).toUpperCase() : '?'}"></div>
+                    <a th:href="@{'/user/' + ${u.id}}"
+                       class="profile-modal-link"
+                       th:text="${u.username}">username</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="modal fade" id="cancelSubscriptionModal" tabindex="-1">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content profile-modal-content">
+              <div class="modal-header profile-modal-header">
+                <h5 class="modal-title font-serif profile-modal-title">¿Cancelar suscripción?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-danger py-2 px-3 mb-3 d-flex align-items-start gap-2">
+                  <span class="material-symbols-outlined flex-shrink-0" style="font-size:1.1rem;margin-top:2px">warning</span>
+                  <span style="font-size:0.85rem">Perderás el acceso a eventos exclusivos, talleres digitales y envío gratuito.</span>
+                </div>
+                <p class="small text-muted mb-0">Esta acción no se puede deshacer.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        data-bs-dismiss="modal">No, mantener</button>
+                <form th:action="@{'/user/' + ${user.id} + '/subscription/cancel'}" method="post">
+                  <button type="submit" class="btn btn-sm btn-danger">Sí, cancelar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        
+        <div class="profile-form-card" th:if="${isOwnProfile}">
+          <p class="filter-section-title mb-4">Editar perfil</p>
+
+          
+          <form th:action="@{'/user/' + ${user.id} + '/update'}"
+                th:object="${updateForm}" method="post" enctype="multipart/form-data">
+
+            <div class="mb-3">
+              <label class="form-label">Foto de perfil</label>
+              
+              <input type="hidden" th:field="*{img}">
+              <input type="file" name="avatarFile" accept="image/*" class="form-control">
+              
+              <div th:if="${user.img != null and !user.img.isEmpty()}"
+                   class="profile-img-hint">
+                Imagen actual guardada. Selecciona un archivo para cambiarla.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Nombre de usuario</label>
+              <input type="text" class="form-control" th:field="*{username}">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" th:field="*{email}">
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" th:field="*{name}">
+              </div>
+              <div class="col">
+                <label class="form-label">Apellido</label>
+                <input type="text" class="form-control" th:field="*{secondName}">
+              </div>
+            </div>
+
+            
+            <button type="submit" class="btn-primary-pill w-100 profile-save-btn">
+              Guardar cambios
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+
+      
+      <div class="col-lg-8">
+
+        
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+          <div>
+            <p class="filter-section-title mb-1">Biblioteca personal</p>
+            
+            <h2 class="font-serif mb-0 profile-library-heading"
+                th:text="${user.username}">username</h2>
+          </div>
+
+          
+          <ul class="nav gap-1 profile-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="profile-tab-btn active" id="tab-biblioteca"
+                      data-bs-toggle="pill" data-bs-target="#pane-biblioteca"
+                      type="button" role="tab">
+                Biblioteca
+              </button>
+            </li>
+            
+            <li class="nav-item" th:if="${isOwnProfile}" role="presentation">
+              <button class="profile-tab-btn" id="tab-pedidos"
+                      data-bs-toggle="pill" data-bs-target="#pane-pedidos"
+                      type="button" role="tab">
+                Mis Pedidos
+                
+                <span th:if="${orders != null and !orders.isEmpty()}"
+                      class="ms-1 profile-tab-badge"
+                      th:text="${orders.size()}">0</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        
+        <div class="tab-content">
+
+          
+          <div class="tab-pane fade show active" id="pane-biblioteca" role="tabpanel">
+
+            
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+              
+              <p class="mb-0 profile-obras-label">Obras seguidas</p>
+
+              
+              <div class="d-flex gap-2 flex-wrap" id="filterBar">
+                <button type="button" class="tracking-status-pill READING filter-btn" data-filter="READING">Leyendo</button>
+                <button type="button" class="tracking-status-pill COMPLETED filter-btn" data-filter="COMPLETED">Completadas</button>
+                <button type="button" class="tracking-status-pill PENDING filter-btn" data-filter="PENDING">Pendientes</button>
+              </div>
+            </div>
+
+            
+            <div class="d-flex flex-column gap-2" id="trackingList"
+                 th:if="${tracking != null and !tracking.isEmpty()}">
+
+              
+              <div th:each="t : ${tracking}"
+                   class="tracking-card"
+                   th:classappend="${isOwnProfile} ? ' tracking-card-interactive' : ''"
+                   th:attr="data-status=${t.status}, data-form-id=${'form-cycle-' + t.id}">
+
+                
+                <form th:if="${isOwnProfile}"
+                      th:id="'form-cycle-' + ${t.id}"
+                      th:action="@{'/user/' + ${user.id} + '/tracking/' + ${t.id} + '/next-status'}"
+                      method="post"
+                      style="display:none;">
+                </form>
+
+                
+                <div class="tracking-status-dot" th:classappend="${t.status}"></div>
+
+                <div class="flex-grow-1">
+                  
+                  <p class="mb-0 profile-tracking-title"
+                     th:text="${t.workTitle}">Título</p>
+                  
+                  <p class="mb-0 profile-tracking-date"
+                     th:text="${t.date != null ? #temporals.format(t.date, 'dd MMM yyyy') : '—'}"></p>
+                </div>
+
+                
+                <span class="tracking-status-pill"
+                      th:classappend="${t.status}"
+                      th:text="${t.statusLabel != null ? t.statusLabel : t.status}">
+                </span>
+
+                <form th:if="${isOwnProfile}"
+                      th:action="@{'/user/' + ${user.id} + '/tracking/' + ${t.id} + '/delete'}"
+                      method="post"
+                      class="m-0"
+                      onclick="event.stopPropagation();">
+                  <button type="submit"
+                          class="tracking-remove-btn"
+                          title="Quitar seguimiento"
+                          onclick="event.stopPropagation(); return confirm('¿Quitar esta obra de tu biblioteca?');">
+                    <span class="material-symbols-outlined">delete</span>
+                    <span>Quitar</span>
+                  </button>
+                </form>
+
+                
+                <a th:href="@{'/work/' + ${t.workId}}"
+                   class="text-decoration-none"
+                   title="Ver obra"
+                   onclick="event.stopPropagation();">
+                  
+                  <span class="material-symbols-outlined profile-tracking-nav-icon">
+                    chevron_right
+                  </span>
+                </a>
+
+              </div>
+
+            </div>
+
+            
+            
+            <div th:if="${tracking == null or tracking.isEmpty()}"
+                 id="emptyState"
+                 class="text-center py-5 profile-empty-state">
+              <span class="material-symbols-outlined d-block mb-2 profile-empty-icon">bookmarks</span>
+              <p class="font-serif mb-1 profile-empty-title">
+                Sin obras seguidas aún
+              </p>
+              <p class="profile-empty-text">
+                Explora el catálogo y añade obras a tu biblioteca.
+              </p>
+              <a th:href="@{/catalog}" class="btn-primary-pill d-inline-block mt-2 profile-catalog-btn">
+                Ver catálogo
+              </a>
+            </div>
+
+            
+            <div id="emptyFilter"
+                 class="text-center py-5 profile-empty-state"
+                 style="display:none;">
+              <span class="material-symbols-outlined d-block mb-2 profile-empty-icon">filter_list_off</span>
+              <p class="font-serif mb-1 profile-empty-title">
+                Sin obras con este estado
+              </p>
+              <p class="profile-empty-text">
+                Prueba otro filtro o quita el filtro activo.
+              </p>
+            </div>
+
+          </div>
+          
+
+          
+          
+          <div class="tab-pane fade" id="pane-pedidos" role="tabpanel"
+               th:if="${isOwnProfile}">
+
+            
+            <div th:if="${orders == null or orders.isEmpty()}"
+                 class="text-center py-5 profile-empty-state">
+              <span class="material-symbols-outlined d-block mb-2 profile-empty-icon">receipt_long</span>
+              <p class="font-serif mb-1 profile-empty-title">
+                Todavía no tienes pedidos
+              </p>
+              <p class="profile-empty-text">
+                Explora el catálogo y haz tu primera compra.
+              </p>
+              <a th:href="@{/catalog}" class="btn-primary-pill d-inline-block mt-2 profile-catalog-btn">
+                Ver catálogo
+              </a>
+            </div>
+
+            
+            <div th:if="${orders != null and !orders.isEmpty()}"
+                 class="d-flex flex-column gap-3">
+
+              
+              <div th:each="order : ${orders}" class="order-card">
+
+                
+                <div class="order-card-header">
+                  <div class="d-flex align-items-center gap-3">
+                    
+                    <div class="order-card-icon">
+                      <span class="material-symbols-outlined profile-order-icon">package_2</span>
+                    </div>
+                    <div>
+                      
+                      <p class="fw-bold mb-0 profile-order-id">
+                        Pedido #<span th:text="${order.id}"></span>
+                      </p>
+                      
+                      <p class="mb-0 profile-order-date"
+                         th:text="${#temporals.format(order.date, 'dd MMM yyyy, HH:mm')}"></p>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column align-items-end gap-1">
+                    
+                    <span th:if="${orderTrackings.get(order.id) != null}"
+                          class="order-status-pill"
+                          th:classappend="${orderTrackings.get(order.id).status}"
+                          th:text="${orderTrackings.get(order.id).statusLabel}">Estado</span>
+                    <span th:unless="${orderTrackings.get(order.id) != null}"
+                          class="order-status-pill PREPARING">En preparación</span>
+                    
+                    <span class="order-total-badge"
+                          th:text="'€' + ${#numbers.formatDecimal(order.total, 1, 2)}">€0.00</span>
+                    
+                    <p class="mb-0 profile-order-items"
+                       th:text="${order.totalItems} + ' artículo(s)'"></p>
+                  </div>
+                </div>
+
+                
+                <div class="order-lines"
+                     th:if="${order.orderLines != null and !order.orderLines.isEmpty()}">
+                  <div th:each="line : ${order.orderLines}" class="order-line">
+                    
+                    <div class="order-line-icon">
+                      <span class="material-symbols-outlined profile-order-line-icon">auto_stories</span>
+                    </div>
+                    <div class="flex-grow-1">
+                      
+                      <p class="mb-0 fw-bold profile-order-line-title"
+                         th:text="${line.title}">Título</p>
+                      
+                      <p class="mb-0 profile-order-line-meta"
+                         th:text="'x' + ${line.quantity} + ' · €' + ${#numbers.formatDecimal(line.price, 1, 2)} + ' c/u'"></p>
+                    </div>
+                    
+                    <span class="fw-bold profile-order-line-subtotal"
+                          th:text="'€' + ${#numbers.formatDecimal(line.subtotal, 1, 2)}">€0.00</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          
+
+        </div>
+        
+
+      </div>
+    </div>
+  </main>
+
+  
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function () {
+      // ── Filtro de estado de la biblioteca ───────────────────────────
+      const filterBtns    = document.querySelectorAll('.filter-btn');
+      const trackingCards = document.querySelectorAll('#trackingList .tracking-card');
+      const emptyFilter   = document.getElementById('emptyFilter');
+      const activeFilters = new Set();
+
+      function applyFilters() {
+        let visible = 0;
+        trackingCards.forEach(card => {
+          const show = activeFilters.size === 0 || activeFilters.has(card.dataset.status);
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        if (emptyFilter) {
+          emptyFilter.style.display = (activeFilters.size > 0 && visible === 0) ? '' : 'none';
+        }
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const f = this.dataset.filter;
+          if (activeFilters.has(f)) {
+            activeFilters.delete(f);
+            this.classList.remove('filter-active');
+          } else {
+            activeFilters.add(f);
+            this.classList.add('filter-active');
+          }
+          applyFilters();
+        });
+      });
+
+      // ── Clic en tarjeta para avanzar estado (solo perfil propio) ────
+      trackingCards.forEach(card => {
+        const formId = card.dataset.formId;
+        if (!formId) return;
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        card.addEventListener('click', function (e) {
+          // Si el clic fue sobre el enlace de navegación → no ciclar el estado
+          if (e.target.closest('a')) return;
+          form.submit();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${work.title} + ' — BookSocial'">Obra — BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/detail.css}">
+</head>
+<body>
+
+  
+  
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  
+  
+  <main class="container detail-main">
+
+    
+    <section class="row g-5 mb-5 align-items-start detail-section--spaced">
+
+      
+      <div class="col-lg-4 col-md-5">
+        
+        <div class="detail-cover-wrapper">
+          <div class="detail-cover-blur"></div>
+          
+          
+          <img th:if="${work.img != null and !work.img.isEmpty()}"
+               th:src="${work.img}"
+               th:alt="${work.title}">
+          
+          <div th:unless="${work.img != null and !work.img.isEmpty()}"
+               class="d-flex flex-column align-items-center justify-content-center py-5 detail-cover-placeholder">
+            <span class="material-symbols-outlined detail-cover-icon">menu_book</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col-lg-8 col-md-7">
+
+        
+        <div class="d-flex align-items-center gap-3 mb-3">
+          
+          <span class="book-badge book-badge-new position-static"
+                th:text="${work.type != null ? work.type.name() : ''}"></span>
+          
+          <span class="detail-pub-date"
+                th:text="${work.publicationDate != null ? #temporals.format(work.publicationDate, 'MMMM yyyy') : ''}">
+          </span>
+        </div>
+
+        
+        
+        <h1 class="font-serif mb-2 detail-title"
+            th:text="${work.title}">Título</h1>
+
+        
+        
+        <p class="fst-italic mb-4 detail-genre"
+           th:text="${work.genre != null ? #strings.replace(work.genre.name(), '_', ' ') : ''}">
+        </p>
+
+        
+        
+        <div class="d-flex align-items-center gap-4 flex-wrap mb-4 pb-4 detail-meta-divider">
+
+          
+          <div th:if="${work.authors != null and !work.authors.isEmpty()}">
+            <p class="detail-meta-label mb-1">Autor</p>
+            <p class="detail-meta-value mb-0">
+              
+              
+              <th:block th:each="authorName, iter : ${work.authors}">
+                
+                
+                <a th:if="${authorIds != null and authorIds[authorName] != null}"
+                   th:href="@{'/author/' + ${authorIds[authorName]}}"
+                   th:text="${authorName}"
+                   class="detail-author-link"></a>
+                <span th:unless="${authorIds != null and authorIds[authorName] != null}"
+                      th:text="${authorName}"></span>
+                
+                <span th:if="${!iter.last}">, </span>
+              </th:block>
+            </p>
+          </div>
+
+          
+          
+          <div class="detail-divider" th:if="${work.authors != null and !work.authors.isEmpty()}"></div>
+
+          
+          <div th:if="${work.averageRating != null}">
+            <p class="detail-meta-label mb-1">Valoración</p>
+            <div class="d-flex align-items-center gap-1">
+              
+              <span class="detail-meta-value" th:text="${#numbers.formatDecimal(work.averageRating, 1, 1)}"></span>
+              
+              <span class="material-symbols-outlined material-symbols-filled detail-rating-star">star</span>
+            </div>
+          </div>
+
+          
+          <div class="detail-divider" th:if="${work.demographic != null}"></div>
+
+          
+          <div th:if="${work.demographic != null}">
+            <p class="detail-meta-label mb-1">Demografía</p>
+            <p class="detail-meta-value mb-0" th:text="${work.demographic.name()}"></p>
+          </div>
+
+        </div>
+
+        
+        
+        <p class="mb-4 detail-description"
+           th:text="${work.description}">Descripción</p>
+
+        
+        
+        <div class="mb-4" th:if="${editions != null and !editions.isEmpty()}">
+          
+          <p class="filter-section-title mb-3">Seleccionar edición</p>
+          <div class="d-flex flex-wrap gap-3">
+            
+            
+            <button th:each="edition, iter : ${editions}"
+                    th:classappend="${iter.first} ? 'active'"
+                    class="edition-chip"
+                    th:attr="data-eid=${edition.id},
+                             data-editorial=${edition.editorialName},
+                             data-isbn=${edition.isbn != null ? edition.isbn : ''},
+                             data-tomes=${edition.totalTomes != null ? edition.totalTomes : ''},
+                             data-year=${edition.editionDate != null ? #temporals.format(edition.editionDate,'yyyy') : ''},
+                             data-product-id=${productsByEdition.get(edition.id) != null ? productsByEdition.get(edition.id).id : ''},
+                             data-price=${productsByEdition.get(edition.id) != null ? #numbers.formatDecimal(productsByEdition.get(edition.id).price,1,2) : ''}">
+              <span class="edition-chip-label" th:text="${edition.editorialName}"></span>
+              <span class="edition-chip-value"
+                    th:text="${edition.title != null ? edition.title : 'Edición ' + edition.id}"></span>
+              
+              <span class="edition-chip-label mt-1" th:if="${edition.isbn != null}"
+                    th:text="'ISBN: ' + ${edition.isbn}"></span>
+            </button>
+          </div>
+        </div>
+
+        
+        
+        <div class="d-flex flex-wrap align-items-center gap-3 mt-4"
+             th:with="firstProduct=${editions != null and !editions.isEmpty() ? productsByEdition.get(editions.get(0).id) : null},
+                      inLibrary=${userTracking != null and userTracking.status != 'PENDING'},
+                      inWishlist=${userTracking != null and userTracking.status == 'PENDING'}">
+
+          
+          
+          <th:block th:if="${loggedIn}">
+            
+            <form th:action="@{/work/{wid}/library(wid=${work.id})}" method="post" class="d-inline">
+              
+              <button type="submit" class="btn-primary-pill d-inline-flex align-items-center gap-2"
+                      th:classappend="${inLibrary} ? ' detail-btn-library--active' : ''">
+                
+                <span class="material-symbols-outlined detail-action-icon"
+                      th:text="${inLibrary} ? 'library_books' : 'library_add'"></span>
+                <span th:text="${inLibrary} ? 'En biblioteca' : 'Añadir a biblioteca'"></span>
+              </button>
+            </form>
+          </th:block>
+          <th:block th:unless="${loggedIn}">
+            
+            <a href="/auth/login" class="btn-primary-pill d-inline-flex align-items-center gap-2 text-decoration-none">
+              <span class="material-symbols-outlined detail-action-icon">library_add</span>
+              Añadir a biblioteca
+            </a>
+          </th:block>
+
+          
+          
+          <th:block th:if="${!productsByEdition.isEmpty()}">
+            
+            <form th:action="@{/cart/add}" method="post" class="d-inline" id="buy-form">
+              <input type="hidden" name="productId" id="buy-product-id"
+                     th:value="${firstProduct != null ? firstProduct.id : ''}">
+              
+              <button type="submit" id="buy-btn"
+                      class="btn-primary-pill d-inline-flex align-items-center gap-2 detail-btn-buy"
+                      th:classappend="${firstProduct == null ? 'd-none' : ''}">
+                <span class="material-symbols-outlined detail-action-icon">shopping_cart</span>
+                Comprar · €<span id="buy-price"
+                    th:text="${firstProduct != null ? #numbers.formatDecimal(firstProduct.price,1,2) : ''}"></span>
+              </button>
+            </form>
+            
+            <span id="no-stock-msg"
+                  class="detail-no-stock"
+                  th:classappend="${firstProduct != null ? 'd-none' : ''}">Sin stock en esta edición</span>
+          </th:block>
+
+          
+          <th:block th:if="${loggedIn}">
+            <form th:action="@{/work/{wid}/wishlist(wid=${work.id})}" method="post" class="d-inline">
+              <button type="submit" class="btn-ghost-pill d-inline-flex align-items-center gap-2">
+                <span class="material-symbols-outlined"
+                      th:classappend="${inWishlist} ? ' material-symbols-filled' : ''"
+                      th:text="${inWishlist} ? 'favorite' : 'favorite_border'"></span>
+                <span th:text="${inWishlist} ? 'En wishlist' : 'Guardar en wishlist'"></span>
+              </button>
+            </form>
+          </th:block>
+          <th:block th:unless="${loggedIn}">
+            <a href="/auth/login" class="btn-ghost-pill d-inline-flex align-items-center gap-2 text-decoration-none">
+              <span class="material-symbols-outlined">favorite_border</span>
+              Guardar en wishlist
+            </a>
+          </th:block>
+
+        </div>
+
+      </div>
+    </section>
+
+    
+    <section class="row g-4 mb-5 detail-section--spaced"
+             th:if="${editions != null and !editions.isEmpty()}">
+
+      
+      <div class="col-md-8">
+        
+        <div class="p-4 h-100 detail-editions-wrapper">
+          <p class="filter-section-title mb-4">Ediciones disponibles</p>
+          <div class="row g-3">
+            <div class="col-sm-6" th:each="edition : ${editions}">
+              
+              <div class="p-3 rounded-3 detail-edition-card">
+                
+                <p class="mb-1 detail-edition-title"
+                   th:text="${edition.title != null ? edition.title : edition.editorialName}"></p>
+                <p class="mb-1 detail-edition-meta"
+                   th:text="'Editorial: ' + ${edition.editorialName}"></p>
+                <p class="mb-1 detail-edition-meta"
+                   th:if="${edition.isbn != null}"
+                   th:text="'ISBN: ' + ${edition.isbn}"></p>
+                <p class="mb-0 detail-edition-meta"
+                   th:if="${edition.editionDate != null}"
+                   th:text="'Publicado: ' + ${#temporals.format(edition.editionDate, 'yyyy')}"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col-md-4" th:with="ed=${editions[0]}">
+        <div class="specs-card h-100" id="edition-specs">
+          <p class="specs-title">Ficha técnica</p>
+          
+          <div class="spec-row">
+            <span class="spec-label">Editorial</span>
+            <span class="spec-val" id="spec-editorial" th:text="${ed.editorialName}">—</span>
+          </div>
+          <div class="spec-row" id="spec-row-isbn"
+               th:classappend="${ed.isbn == null ? 'd-none' : ''}">
+            <span class="spec-label">ISBN</span>
+            <span class="spec-val" id="spec-isbn" th:text="${ed.isbn}">—</span>
+          </div>
+          <div class="spec-row" id="spec-row-tomes"
+               th:classappend="${ed.totalTomes == null ? 'd-none' : ''}">
+            <span class="spec-label">Tomos</span>
+            <span class="spec-val" id="spec-tomes" th:text="${ed.totalTomes}">—</span>
+          </div>
+          <div class="spec-row" id="spec-row-year"
+               th:classappend="${ed.editionDate == null ? 'd-none' : ''}">
+            <span class="spec-label">Año edición</span>
+            <span class="spec-val" id="spec-year"
+                  th:text="${ed.editionDate != null ? #temporals.format(ed.editionDate,'yyyy') : '—'}">—</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Tipo</span>
+            <span class="spec-val" th:text="${work.type != null ? work.type.name() : '—'}">—</span>
+          </div>
+          <div class="spec-row" th:if="${work.demographic != null}">
+            <span class="spec-label">Público</span>
+            <span class="spec-val" th:text="${work.demographic.name()}">—</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    
+    
+    <section id="comments" class="detail-comments-section">
+
+      
+      
+      <div class="d-flex align-items-center justify-content-between mb-4 detail-comments-header">
+        
+        <h2 class="font-serif mb-0 detail-comments-heading">
+          Diálogo de la comunidad
+        </h2>
+        
+        <div class="d-flex align-items-center gap-1 detail-comments-meta">
+          
+          <span class="material-symbols-outlined detail-action-icon">forum</span>
+          
+          <span class="detail-comments-count"
+                th:text="${commentCount} + ' comentarios'">0 comentarios</span>
+        </div>
+      </div>
+
+      
+      
+      <div th:if="${commentError}"
+           class="alert alert-danger py-2 px-3 mb-3 detail-comment-error"
+           th:text="${commentError}"></div>
+      <div th:if="${trackingError}"
+           class="alert alert-danger py-2 px-3 mb-3 detail-comment-error"
+           th:text="${trackingError}"></div>
+
+      
+      <div class="comment-input-area mb-4">
+        <p class="filter-section-title mb-3">Únete a la conversación</p>
+
+        
+        <th:block th:if="${loggedIn}">
+          <form th:action="@{/work/{wid}/comment(wid=${work.id})}" method="post">
+            
+            <textarea name="content" rows="3"
+                      placeholder="Comparte tu opinión sobre esta obra..."
+                      required minlength="1" maxlength="1000"
+                      class="detail-comment-textarea"></textarea>
+            <div class="d-flex justify-content-end mt-3">
+              
+              <button type="submit" class="btn-primary-pill detail-comment-submit">
+                Publicar comentario
+              </button>
+            </div>
+          </form>
+        </th:block>
+
+        
+        <th:block th:unless="${loggedIn}">
+          
+          <div class="text-center py-3 detail-comment-guest">
+            
+            <span class="material-symbols-outlined d-block mb-2 detail-lock-icon">lock</span>
+            
+            <a href="/auth/login" class="detail-login-link">Inicia sesión</a>
+            para participar en la conversación.
+          </div>
+        </th:block>
+      </div>
+
+      
+      
+      <div class="d-flex flex-column gap-4"
+           th:if="${comments != null and !comments.isEmpty()}">
+
+        <div th:each="comment : ${comments}">
+          <div th:replace="~{fragments/comment :: comment(${comment}, ${work}, ${loggedIn}, ${sessionUserId}, ${sessionRole}, ${reactionCounts}, ${userLikedCommentIds}, 1)}"></div>
+        </div>
+
+      </div>
+
+      
+      
+      <div th:if="${comments == null or comments.isEmpty()}"
+           class="text-center py-5 detail-empty-comments">
+        <span class="material-symbols-outlined d-block mb-2 detail-empty-comments-icon">chat_bubble_outline</span>
+        <p class="detail-empty-comments-text">Sé el primero en comentar esta obra.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  
+  <script>
+    document.querySelectorAll('.edition-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        // 1. Actualizar chip activo
+        document.querySelectorAll('.edition-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        // 2. Actualizar Ficha técnica
+        const editorial = chip.dataset.editorial || '—';
+        const isbn      = chip.dataset.isbn;
+        const tomes     = chip.dataset.tomes;
+        const year      = chip.dataset.year;
+
+        const elEditorial  = document.getElementById('spec-editorial');
+        const elIsbn       = document.getElementById('spec-isbn');
+        const elTomes      = document.getElementById('spec-tomes');
+        const elYear       = document.getElementById('spec-year');
+        const rowIsbn      = document.getElementById('spec-row-isbn');
+        const rowTomes     = document.getElementById('spec-row-tomes');
+        const rowYear      = document.getElementById('spec-row-year');
+
+        if (elEditorial) elEditorial.textContent = editorial;
+
+        if (rowIsbn && elIsbn) {
+          if (isbn) { elIsbn.textContent = isbn;  rowIsbn.classList.remove('d-none'); }
+          else       { rowIsbn.classList.add('d-none'); }
+        }
+        if (rowTomes && elTomes) {
+          if (tomes) { elTomes.textContent = tomes; rowTomes.classList.remove('d-none'); }
+          else        { rowTomes.classList.add('d-none'); }
+        }
+        if (rowYear && elYear) {
+          if (year) { elYear.textContent = year; rowYear.classList.remove('d-none'); }
+          else       { rowYear.classList.add('d-none'); }
+        }
+
+        // 3. Actualizar botón de compra
+        const productId    = chip.dataset.productId;
+        const price        = chip.dataset.price;
+        const inputId      = document.getElementById('buy-product-id');
+        const priceSpan    = document.getElementById('buy-price');
+        const buyBtn       = document.getElementById('buy-btn');
+        const noStockMsg   = document.getElementById('no-stock-msg');
+
+        if (inputId)   inputId.value = productId || '';
+        if (priceSpan) priceSpan.textContent = price || '';
+
+        if (buyBtn && noStockMsg) {
+          if (productId) {
+            buyBtn.classList.remove('d-none');
+            noStockMsg.classList.add('d-none');
+          } else {
+            buyBtn.classList.add('d-none');
+            noStockMsg.classList.remove('d-none');
+          }
+        }
+      });
+    });
+  </script>
+
+  
+  <script>
+    document.querySelectorAll('[data-reply-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-reply-target');
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.style.display = el.style.display === 'none' ? 'block' : 'none';
+          if (el.style.display === 'block') {
+            el.querySelector('textarea')?.focus();
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,2462 @@
+/* Estilos generales de BookSocial. */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* Variables generales de colores y medidas. */
+:root {
+  --bs-primary:       #2D4C3E;
+  --bs-secondary:     #c0ecda;
+  --color-tertiary:   #472803;
+  --color-bg:         #fcf9f3;
+  --color-surface:    #f0eee8;
+  --color-surface-l:  #f6f3ed;
+  --color-surface-h:  #ebe8e2;
+  --color-surface-hh: #e5e2dc;
+  --color-text:       #1c1c18;
+  --color-muted:      #414844;
+  --color-outline:    #727974;
+  --color-outline-l:  #c1c8c2;
+}
+
+/* Estilos generales del cuerpo de la pagina. */
+body {
+  background-color: var(--color-bg);
+  font-family: 'Manrope', sans-serif;
+  color: var(--color-text);
+}
+
+/* Estilos de titulos de la pagina. */
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: 'Noto Serif', serif;
+}
+
+/* Estilos de navegacion. */
+.nav-glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(252, 249, 243, 0.88) !important;
+  border-bottom: 1px solid rgba(193, 200, 194, 0.4);
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  color: #163528 !important;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-brand-logo {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.65rem;
+  box-shadow: 0 0.35rem 1rem rgba(22, 53, 40, 0.16);
+}
+
+/* Estilos de navegacion. */
+.nav-link {
+  color: var(--color-muted) !important;
+  font-weight: 500;
+}
+/* Estilos de navegacion. */
+.nav-link.active,
+.nav-link:hover {
+  color: var(--bs-primary) !important;
+}
+/* Estilos de navegacion. */
+.nav-link.active {
+  font-weight: 700;
+  border-bottom: 2px solid var(--bs-primary);
+  padding-bottom: 2px;
+}
+
+/* Estilos de filtros. */
+.filter-section-title {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bs-primary);
+  margin-bottom: 0.75rem;
+}
+
+/* Estilos de listado. */
+.genre-list {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+/* Estilos de listado. */
+.genre-list::-webkit-scrollbar { width: 4px; }
+/* Estilos de listado. */
+.genre-list::-webkit-scrollbar-track { background: var(--color-surface); }
+/* Estilos de miniatura. */
+.genre-list::-webkit-scrollbar-thumb {
+  background: var(--bs-primary);
+  border-radius: 10px;
+}
+
+/* Estilos de formulario. */
+.form-check-input:checked {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+/* Estilos de formulario. */
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(45, 76, 62, 0.15);
+}
+
+/* Estilos de boton. */
+.type-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+/* Estilos de boton. */
+.type-btn.active {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border-color: var(--bs-primary);
+}
+/* Estilos de boton. */
+.type-btn:not(.active) {
+  background-color: var(--color-surface-h);
+  color: var(--color-muted);
+}
+/* Estilos de boton. */
+.type-btn:not(.active):hover {
+  background-color: var(--color-surface-hh);
+}
+
+/* Estilos del selector .demographic-pill. */
+.demographic-pill {
+  background: var(--color-surface-l);
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+/* Estilos de campo de formulario. */
+.demographic-pill:hover,
+.demographic-pill:has(input:checked) {
+  border-color: var(--color-outline-l);
+  color: var(--bs-primary);
+}
+
+/* Estilos de tarjeta. */
+.book-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Estilos de obra o libro. */
+.book-cover-wrapper {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.4s;
+  margin-bottom: 1.25rem;
+}
+/* Estilos de obra o libro. */
+.book-cover-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  transition: transform 0.4s ease;
+}
+/* Estilos de tarjeta. */
+.book-card:hover .book-cover-wrapper {
+  background-color: var(--color-surface-h);
+}
+/* Estilos de tarjeta. */
+.book-card:hover .book-cover-wrapper img {
+  transform: scale(1.05);
+}
+
+/* Estilos de obra o libro. */
+.book-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+}
+/* Estilos de obra o libro. */
+.book-badge-new       { background-color: var(--bs-primary);   color: #fff; }
+/* Estilos de obra o libro. */
+.book-badge-collector { background-color: var(--color-tertiary); color: #fff; }
+
+/* Estilos de obra o libro. */
+.book-info { padding: 0 0.5rem; }
+
+/* Estilos de obra o libro. */
+.book-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  line-height: 1.3;
+  transition: opacity 0.2s;
+  margin-bottom: 0.2rem;
+}
+/* Estilos de tarjeta. */
+.book-card:hover .book-title { opacity: 0.75; }
+
+/* Estilos de obra o libro. */
+.book-author {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* Estilos de obra o libro. */
+.book-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+}
+
+/* Estilos de obra o libro. */
+.book-stars {
+  font-size: 0.85rem;
+  color: var(--bs-primary);
+}
+/* Estilos de obra o libro. */
+.book-stars .reviews-count {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+/* Estilos del selector .sort-bar. */
+.sort-bar {
+  background-color: var(--color-surface-l);
+  border: 1px solid rgba(193,200,194,0.3);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.25rem;
+}
+
+/* Estilos de paginacion. */
+.pagination-bs .page-link {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% !important;
+  border: 1px solid var(--color-outline-l);
+  color: var(--bs-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+/* Estilos de paginacion. */
+.pagination-bs .page-link:hover {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border-color: var(--bs-primary);
+}
+/* Estilos de paginacion. */
+.pagination-bs .page-item.active .page-link {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: #fff;
+}
+
+/* Estilos de pie de pagina. */
+.site-footer {
+  background-color: #163528;
+  color: rgba(252, 249, 243, 0.72);
+  padding: 4rem 0;
+  margin-top: 5rem;
+}
+/* Estilos de pie de pagina. */
+.footer-brand {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  color: #c0ecda;
+}
+/* Estilos de pie de pagina. */
+.footer-heading {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+/* Estilos de pie de pagina. */
+.site-footer a {
+  color: rgba(192, 236, 218, 0.72);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+/* Estilos de pie de pagina. */
+.site-footer a:hover { color: #fff; }
+/* Estilos de pie de pagina. */
+.site-footer .social-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(192, 236, 218, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(192, 236, 218, 0.72);
+  transition: all 0.2s;
+}
+/* Estilos de pie de pagina. */
+.site-footer .social-icon:hover {
+  background-color: #c0ecda;
+  color: #163528;
+  border-color: #c0ecda;
+}
+
+/* Estilos de navegacion. */
+.bottom-nav {
+  background-color: rgba(252,249,243,0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(28,28,24,0.08);
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+/* Estilos de navegacion. */
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  text-decoration: none;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* Estilos de navegacion. */
+.bottom-nav-item.active {
+  background-color: #2D4C3E;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 0.35rem 1.1rem;
+}
+
+/* Estilos del selector .material-symbols-outlined. */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+/* Estilos del selector .material-symbols-filled. */
+.material-symbols-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Estilos de portada. */
+.detail-cover-wrapper {
+  background-color: var(--color-surface-l);
+  padding: 2rem;
+  border-radius: 1rem;
+  position: relative;
+}
+/* Estilos de portada. */
+.detail-cover-wrapper img {
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  transition: transform 0.5s ease;
+}
+/* Estilos de portada. */
+.detail-cover-wrapper:hover img {
+  transform: scale(1.02);
+}
+/* Estilos de portada. */
+.detail-cover-blur {
+  position: absolute;
+  top: -2rem; left: -2rem;
+  width: 16rem; height: 16rem;
+  background: rgba(45,76,62,0.1);
+  border-radius: 50%;
+  filter: blur(3rem);
+  z-index: -1;
+}
+
+/* Estilos de texto secundario. */
+.detail-meta-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-outline);
+}
+/* Estilos de texto secundario. */
+.detail-meta-value {
+  font-weight: 700;
+  color: var(--bs-primary);
+  font-size: 0.9rem;
+}
+/* Estilos del selector .detail-divider. */
+.detail-divider {
+  width: 1px;
+  height: 2rem;
+  background-color: var(--color-outline-l);
+}
+
+/* Estilos del selector .edition-chip. */
+.edition-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 1.5rem;
+  border-radius: 9999px;
+  min-width: 130px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+/* Estilos del selector .edition-chip.active. */
+.edition-chip.active {
+  background-color: var(--bs-primary);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(45,76,62,0.25);
+}
+/* Estilos del selector .edition-chip. */
+.edition-chip:not(.active) {
+  background-color: var(--color-surface-h);
+  color: var(--bs-primary);
+}
+/* Estilos del selector .edition-chip. */
+.edition-chip:not(.active):hover {
+  background-color: var(--color-surface-hh);
+}
+/* Estilos del selector .edition-chip-label. */
+.edition-chip-label {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  margin-bottom: 0.1rem;
+}
+/* Estilos del selector .edition-chip-value. */
+.edition-chip-value {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Estilos de tarjeta. */
+.specs-card {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+/* Estilos de tarjeta. */
+.specs-card .specs-title {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #accebc;
+  margin-bottom: 1.5rem;
+}
+/* Estilos de tarjeta. */
+.specs-card .spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(172,206,188,0.2);
+  font-size: 0.875rem;
+}
+/* Estilos de tarjeta. */
+.specs-card .spec-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+/* Estilos de tarjeta. */
+.specs-card .spec-label { opacity: 0.7; }
+/* Estilos de tarjeta. */
+.specs-card .spec-val   { font-weight: 700; }
+
+/* Estilos de tarjeta. */
+.comment-card {
+  display: flex;
+  gap: 1.25rem;
+}
+/* Estilos de comentario. */
+.comment-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background-color: var(--color-surface-hh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--bs-primary);
+  flex-shrink: 0;
+}
+/* Estilos de comentario. */
+.comment-username {
+  font-weight: 700;
+  color: var(--bs-primary);
+  font-size: 0.9rem;
+}
+/* Estilos de comentario. */
+.comment-date {
+  font-size: 0.75rem;
+  color: var(--color-outline);
+}
+/* Estilos de comentario. */
+.comment-body {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin: 0.4rem 0 0.75rem;
+}
+/* Estilos de comentario. */
+.comment-action {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-outline);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+/* Estilos de comentario. */
+.comment-action:hover { color: var(--bs-primary); }
+
+/* Estilos de campo de formulario. */
+.comment-input-area {
+  background-color: var(--color-surface-l);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+/* Estilos de campo de formulario. */
+.comment-input-area textarea {
+  background-color: #fff;
+  border: 1px solid var(--color-outline-l);
+  border-radius: 0.5rem;
+  resize: none;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+/* Estilos de campo de formulario. */
+.comment-input-area textarea:focus {
+  outline: none;
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(45,76,62,0.12);
+}
+
+/* Estilos del selector .reply-thread. */
+.reply-thread {
+  margin-left: 3.75rem;
+  border-left: 2px solid var(--color-outline-l);
+  padding-left: 1.25rem;
+}
+
+/* Estilos de boton. */
+.btn-primary-pill {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 1rem 2.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 8px 24px rgba(45,76,62,0.25);
+  transition: box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+/* Estilos de boton. */
+.btn-primary-pill:hover {
+  box-shadow: 0 12px 32px rgba(45,76,62,0.35);
+}
+/* Estilos de boton. */
+.btn-primary-pill:active { transform: scale(0.97); }
+
+/* Estilos de boton. */
+.btn-ghost-pill {
+  background: none;
+  border: none;
+  color: var(--bs-primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: text-decoration 0.1s;
+  padding: 0;
+  font-size: 0.9rem;
+}
+/* Estilos de boton. */
+.btn-ghost-pill:hover { text-decoration: underline; }
+
+/* Estilos de perfil. */
+.profile-avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--color-surface-l);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+/* Estilos de perfil. */
+.profile-avatar-placeholder {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background-color: var(--color-surface-h);
+  border: 4px solid var(--color-surface-l);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--bs-primary);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Estilos de cabecera principal. */
+.profile-hero {
+  background-color: var(--color-surface-l);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+}
+/* Estilos de perfil. */
+.profile-username {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--bs-primary);
+  margin-bottom: 0.15rem;
+}
+/* Estilos de perfil. */
+.profile-fullname {
+  font-size: 1rem;
+  color: var(--color-muted);
+  margin-bottom: 0;
+}
+/* Estilos de perfil. */
+.profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--bs-primary);
+  color: #fff;
+}
+/* Estilos de panel de administracion. */
+.profile-badge.admin { background-color: var(--color-tertiary); }
+/* Estilos de perfil. */
+.profile-badge.subscribed { background-color: #7c5c0e; }
+/* Estilos de perfil. */
+.profile-stat {
+  text-align: center;
+  padding: 0 1.5rem;
+  border-right: 1px solid var(--color-outline-l);
+}
+/* Estilos de perfil. */
+.profile-stat:last-child { border-right: none; }
+/* Estilos de perfil. */
+.profile-stat .stat-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--bs-primary);
+  display: block;
+}
+/* Estilos de perfil. */
+.profile-stat .stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Estilos de formulario. */
+.profile-form-card {
+  background-color: var(--color-surface-l);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+/* Estilos de formulario. */
+.profile-form-card .form-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.4rem;
+}
+/* Estilos de formulario. */
+.profile-form-card .form-control {
+  background-color: white;
+  border: 1px solid var(--color-outline-l);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  padding: 0.6rem 0.875rem;
+}
+/* Estilos de formulario. */
+.profile-form-card .form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(45,76,62,0.12);
+}
+
+/* Estilos de tarjeta. */
+.tracking-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-outline-l);
+  transition: box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+/* Estilos de tarjeta. */
+.tracking-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  color: inherit;
+}
+/* Estilos de estado. */
+.tracking-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+/* Estilos de estado. */
+.tracking-status-dot.READING    { background-color: #256f85; }
+/* Estilos de estado. */
+.tracking-status-dot.COMPLETED  { background-color: #2f855a; }
+/* Estilos de estado. */
+.tracking-status-dot.PENDING    { background-color: #b7791f; }
+/* Estilos de estado. */
+.tracking-status-dot.DROPPED    { background-color: #b42318; }
+
+/* Estilos de estado. */
+.tracking-status-pill {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+}
+/* Estilos de estado. */
+.tracking-status-pill.READING   { background-color: rgba(37,111,133,0.13); color: #1f5d70; }
+/* Estilos de estado. */
+.tracking-status-pill.COMPLETED { background-color: rgba(47,133,90,0.14); color: #276749; }
+/* Estilos de estado. */
+.tracking-status-pill.PENDING   { background-color: rgba(183,121,31,0.14); color: #8a5a12; }
+/* Estilos de estado. */
+.tracking-status-pill.DROPPED   { background-color: rgba(180,35,24,0.11); color: #b42318; }
+
+/* Estilos de boton. */
+.tracking-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid rgba(180,35,24,0.22);
+  border-radius: 9999px;
+  background-color: rgba(180,35,24,0.06);
+  color: #9f241c;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+/* Estilos de boton. */
+.tracking-remove-btn:hover {
+  background-color: rgba(180,35,24,0.12);
+  border-color: rgba(180,35,24,0.36);
+  color: #7a1b15;
+}
+/* Estilos de boton. */
+.tracking-remove-btn .material-symbols-outlined {
+  font-size: 0.95rem;
+}
+
+/* Estilos de boton. */
+.filter-btn {
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  font: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+/* Estilos de boton. */
+.filter-btn:hover {
+  transform: translateY(-1px);
+}
+/* Estilos de boton. */
+.filter-btn.filter-active {
+  border-color: currentColor;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px currentColor;
+}
+
+/* Estilos de boton. */
+.profile-tab-btn {
+  padding: 0.4rem 1.1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 2rem;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--color-surface-h);
+  color: var(--color-muted);
+  letter-spacing: 0.01em;
+}
+/* Estilos de boton. */
+.profile-tab-btn:hover {
+  background: var(--color-surface-hh);
+  color: var(--bs-primary);
+}
+/* Estilos de boton. */
+.profile-tab-btn.active {
+  background: var(--bs-primary);
+  color: #fff;
+  border-color: var(--bs-primary);
+}
+/* Estilos de perfil. */
+.profile-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.25);
+  color: inherit;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
+  line-height: 1.4;
+}
+/* Estilos de boton. */
+.profile-tab-btn:not(.active) .profile-tab-badge {
+  background: rgba(45,76,62,0.12);
+  color: var(--bs-primary);
+}
+
+/* Estilos de tarjeta. */
+.tracking-card-interactive {
+  cursor: pointer;
+  user-select: none;
+}
+/* Estilos de tarjeta. */
+.tracking-card-interactive:active {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transform: scale(0.995);
+}
+
+/* Estilos de cabecera principal. */
+.home-hero {
+  position: relative;
+  min-height: 86vh;
+  overflow: hidden;
+}
+/* Estilos de cabecera principal. */
+.home-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+/* Estilos de cabecera principal. */
+.home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(22,53,40,0.92) 0%, rgba(22,53,40,0.6) 55%, transparent 100%);
+  z-index: 1;
+}
+/* Estilos de cabecera principal. */
+.home-hero-content {
+  max-width: 38rem;
+  padding: 3rem 0;
+}
+/* Estilos de cabecera principal. */
+.home-hero-tag {
+  display: inline-block;
+  background-color: rgba(192,236,218,0.2);
+  color: var(--bs-secondary);
+  border: 1px solid rgba(192,236,218,0.35);
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  margin-bottom: 1.5rem;
+}
+/* Estilos de cabecera principal. */
+.home-hero-title {
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+/* Estilos de cabecera principal. */
+.home-hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  max-width: 30rem;
+}
+/* Estilos de boton. */
+.home-cta-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.85rem 2.25rem;
+  font-size: 0.95rem;
+}
+/* Estilos del selector .home-cta-ghost. */
+.home-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 2.25rem;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+/* Estilos del selector .home-cta-ghost. */
+.home-cta-ghost:hover {
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+}
+
+/* Estilos del selector .home-work-offset. */
+.home-work-offset { margin-top: 3rem; }
+
+/* Estilos de tarjeta. */
+.home-work-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+/* Estilos de tarjeta. */
+.home-work-card:hover { color: inherit; }
+
+/* Estilos de portada. */
+.home-work-cover-wrap {
+  position: relative;
+  aspect-ratio: 3/4;
+  background-color: var(--color-surface-l);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.25s;
+}
+/* Estilos de tarjeta. */
+.home-work-card:hover .home-work-cover-wrap {
+  box-shadow: 0 16px 40px rgba(45,76,62,0.22);
+}
+/* Estilos de portada. */
+.home-work-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  transition: transform 0.5s;
+}
+/* Estilos de tarjeta. */
+.home-work-card:hover .home-work-cover { transform: scale(1.05); }
+
+/* Estilos de portada. */
+.home-work-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-h);
+}
+/* Estilos de portada. */
+.home-work-cover-placeholder .material-symbols-outlined {
+  font-size: 3.5rem;
+  color: var(--color-outline-l);
+}
+
+/* Estilos de etiqueta. */
+.home-work-type-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background-color: var(--bs-primary);
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+}
+/* Estilos del selector .home-work-info. */
+.home-work-info { padding: 0 0.25rem; }
+/* Estilos de titulo. */
+.home-work-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  margin-bottom: 0.2rem;
+  line-height: 1.3;
+}
+/* Estilos de autor. */
+.home-work-authors {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+/* Estilos de valoracion. */
+.home-work-rating {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+}
+/* Estilos del selector .home-star. */
+.home-star {
+  font-size: 0.9rem !important;
+  color: #c09a1a;
+  font-variation-settings: 'FILL' 1;
+}
+
+/* Estilos de seccion. */
+.home-community-section {
+  background-color: var(--bs-primary);
+}
+/* Estilos de tarjeta. */
+.home-community-card {
+  position: relative;
+  overflow: hidden;
+  background-color: #163528;
+  border-radius: 1.75rem;
+  padding: 3.5rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* Estilos del selector .home-community-icon. */
+.home-community-icon {
+  position: absolute;
+  top: -1.5rem;
+  right: -2rem;
+  font-size: 14rem;
+  color: rgba(192,236,218,0.08);
+  line-height: 1;
+  pointer-events: none;
+}
+/* Estilos de boton. */
+.home-community-btn {
+  display: inline-block;
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+  font-weight: 800;
+  padding: 0.85rem 2rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: filter 0.2s;
+}
+/* Estilos de boton. */
+.home-community-btn:hover { filter: brightness(0.92); color: var(--bs-primary); }
+
+/* Estilos de tarjeta. */
+.home-feature-card {
+  background-color: var(--color-bg);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  border: 1px solid var(--color-outline-l);
+}
+/* Estilos del selector .home-feature-icon. */
+.home-feature-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Estilos del selector .home-category-link. */
+.home-category-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--color-outline-l);
+  color: var(--bs-primary);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: padding-left 0.2s;
+}
+/* Estilos del selector .home-category-link. */
+.home-category-link:hover {
+  padding-left: 0.75rem;
+  color: var(--bs-primary);
+}
+/* Estilos del selector .home-category-link .material-symbols-outlined. */
+.home-category-link .material-symbols-outlined {
+  transition: transform 0.2s;
+}
+/* Estilos del selector .home-category-link .material-symbols-outlined. */
+.home-category-link:hover .material-symbols-outlined { transform: translateX(4px); }
+
+/* Estilos de rejilla. */
+.home-bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+/* Estilos del selector .home-bento-stat. */
+.home-bento-stat {
+  background-color: var(--color-surface);
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  grid-column: 1;
+}
+/* Estilos del selector .home-bento-stat--alt. */
+.home-bento-stat--alt {
+  background-color: var(--color-surface-hh);
+  grid-column: 2;
+  grid-row: 2;
+}
+/* Estilos de tarjeta. */
+.home-bento-tag-card {
+  grid-column: 2;
+  grid-row: 1;
+  background-color: var(--bs-secondary);
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+/* Estilos del selector .home-bento-num. */
+.home-bento-num {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--bs-primary);
+  display: block;
+}
+/* Estilos del selector .home-bento-label. */
+.home-bento-label {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* Estilos de seccion. */
+.home-sub-section { background-color: var(--bs-primary); }
+/* Estilos de tarjeta. */
+.home-sub-card {
+  background-color: #163528;
+  border-radius: 2.5rem;
+  padding: 4rem;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+/* Estilos de boton. */
+.home-sub-btn {
+  display: inline-block;
+  background-color: var(--bs-primary);
+  border: 1.5px solid rgba(192,236,218,0.3);
+  color: #fff;
+  font-weight: 800;
+  padding: 1rem 2.5rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: transform 0.15s;
+}
+/* Estilos de boton. */
+.home-sub-btn:hover { transform: scale(1.04); color: #fff; }
+
+/* Estilos de imagen. */
+.home-sub-img-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 1.75rem;
+  overflow: visible;
+}
+/* Estilos de imagen. */
+.home-sub-img-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 1.75rem;
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos de carrito. */
+.cart-badge {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.5rem;
+  background-color: var(--bs-primary);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Estilos de carrito. */
+.cart-item {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background-color: #fff;
+  border: 1px solid var(--color-outline-l);
+  border-radius: 1rem;
+  transition: box-shadow 0.2s;
+}
+/* Estilos de carrito. */
+.cart-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+
+/* Estilos de portada. */
+.cart-item-cover {
+  flex-shrink: 0;
+  width: 7rem;
+}
+/* Estilos de carrito. */
+.cart-item-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+/* Estilos de carrito. */
+.cart-item-img-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background-color: var(--color-surface);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Estilos de carrito. */
+.cart-item-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+/* Estilos de carrito. */
+.cart-item-sub {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-bottom: 0;
+}
+/* Estilos de carrito. */
+.cart-item-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  white-space: nowrap;
+}
+
+/* Estilos de carrito. */
+.cart-qty-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--color-surface);
+  border-radius: 9999px;
+  padding: 0.3rem 0.75rem;
+}
+/* Estilos de boton. */
+.cart-qty-btn {
+  background: none;
+  border: none;
+  color: var(--bs-primary);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s;
+}
+/* Estilos de boton. */
+.cart-qty-btn:hover { opacity: 0.6; }
+/* Estilos de carrito. */
+.cart-qty-num {
+  font-weight: 700;
+  font-size: 0.875rem;
+  min-width: 1.25rem;
+  text-align: center;
+}
+
+/* Estilos de boton. */
+.cart-remove-btn {
+  background: none;
+  border: none;
+  color: var(--color-outline);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+  transition: color 0.2s;
+}
+/* Estilos de boton. */
+.cart-remove-btn:hover { color: #ba1a1a; }
+
+/* Estilos de carrito. */
+.cart-summary {
+  background-color: var(--color-surface-l);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: sticky;
+  top: 6rem;
+}
+/* Estilos de carrito. */
+.cart-summary-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: rgba(45,76,62,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Estilos de pedido. */
+.order-status-pill {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+/* Estilos de pedido. */
+.order-status-pill.PREPARING  { background-color: rgba(217,119,6,0.12);  color: #b45309; }
+/* Estilos de pedido. */
+.order-status-pill.SHIPPED    { background-color: rgba(37,99,235,0.12);   color: #1d4ed8; }
+/* Estilos de pedido. */
+.order-status-pill.IN_TRANSIT { background-color: rgba(124,58,237,0.12);  color: #6d28d9; }
+/* Estilos de pedido. */
+.order-status-pill.DELIVERED  { background-color: rgba(22,163,74,0.12);   color: #15803d; }
+/* Estilos de pedido. */
+.order-status-pill.CANCELED   { background-color: rgba(220,38,38,0.10);   color: #b91c1c; }
+
+/* Estilos de tarjeta. */
+.order-card {
+  background-color: #fff;
+  border: 1px solid var(--color-outline-l);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+/* Estilos de tarjeta. */
+.order-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-surface);
+  background-color: var(--color-surface-l);
+}
+/* Estilos de tarjeta. */
+.order-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(45,76,62,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+/* Estilos de pedido. */
+.order-total-badge {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+}
+/* Estilos de pedido. */
+.order-lines { padding: 0.75rem 1.5rem; }
+/* Estilos de pedido. */
+.order-line {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-surface);
+}
+/* Estilos de pedido. */
+.order-line:last-child { border-bottom: none; }
+/* Estilos de pedido. */
+.order-line-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Estilos de tarjeta. */
+.event-featured-card {
+  background-color: rgba(45,76,62,0.05);
+  border: 1px solid rgba(45,76,62,0.12);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  /* Estilos de tarjeta. */
+.event-featured-card { flex-direction: row; }
+}
+/* Estilos de evento. */
+.event-featured-img {
+  flex: 0 0 45%;
+  min-height: 280px;
+  background: linear-gradient(135deg, #163528 0%, #2d4c3e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+/* Estilos de evento. */
+.event-editor-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: var(--bs-primary);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+}
+/* Estilos de evento. */
+.event-featured-body {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* Estilos de evento. */
+.event-date-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  letter-spacing: 0.05em;
+}
+
+/* Estilos de boton. */
+.event-join-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+}
+/* Estilos de boton. */
+.event-leave-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.825rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  background: none;
+  border: 1.5px solid var(--color-outline-l);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+/* Estilos de boton. */
+.event-leave-btn:hover {
+  border-color: #ba1a1a;
+  color: #ba1a1a;
+}
+
+/* Estilos de tarjeta. */
+.event-secondary-card {
+  background-color: var(--bs-primary);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+/* Estilos de evento. */
+.event-members-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+}
+/* Estilos de evento. */
+.event-secondary-join {
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+  border: none;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 800;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: filter 0.2s;
+  text-align: center;
+}
+/* Estilos de evento. */
+.event-secondary-join:hover { filter: brightness(0.9); }
+/* Estilos de evento. */
+.event-secondary-leave {
+  background: none;
+  color: rgba(255,255,255,0.6);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+/* Estilos de evento. */
+.event-secondary-leave:hover {
+  border-color: rgba(255,255,255,0.5);
+  color: #fff;
+}
+
+/* Estilos de tarjeta. */
+.event-card {
+  background-color: #fff;
+  border: 1px solid var(--color-outline-l);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+  height: 100%;
+}
+/* Estilos de tarjeta. */
+.event-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+/* Estilos de tarjeta. */
+.event-card-img {
+  height: 180px;
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Estilos de evento. */
+.event-joined-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: rgba(45,76,62,0.9);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+}
+/* Estilos de tarjeta. */
+.event-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+/* Estilos de tarjeta. */
+.event-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+/* Estilos de tarjeta. */
+.event-card-desc {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-bottom: 0;
+  flex: 1;
+}
+/* Estilos de pie de pagina. */
+.event-card-footer {
+  border-top: 1px solid var(--color-outline-l);
+}
+/* Estilos de boton. */
+.event-card-join-btn {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+/* Estilos de boton. */
+.event-card-join-btn:hover { background-color: #163528; color: #fff; }
+/* Estilos de boton. */
+.event-card-leave-btn {
+  background: none;
+  color: var(--color-muted);
+  border: 1px solid var(--color-outline-l);
+  border-radius: 9999px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+/* Estilos de boton. */
+.event-card-leave-btn:hover { border-color: #ba1a1a; color: #ba1a1a; }
+
+/* Estilos de etiqueta. */
+.home-sub-badge {
+  position: absolute;
+  bottom: -1.5rem;
+  left: -1.5rem;
+  background-color: var(--bs-primary);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  max-width: 13rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+/* Estilos de panel de administracion. */
+.admin-body .btn-primary {
+  --bs-btn-bg: #2D4C3E;
+  --bs-btn-border-color: #2D4C3E;
+  --bs-btn-hover-bg: #1e3a2f;
+  --bs-btn-hover-border-color: #1e3a2f;
+  --bs-btn-active-bg: #163528;
+  --bs-btn-active-border-color: #163528;
+  --bs-btn-disabled-bg: #2D4C3E;
+  --bs-btn-disabled-border-color: #2D4C3E;
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+}
+
+/* Estilos de panel de administracion. */
+.admin-body {
+  background-color: #f0ede7;
+  min-height: 100vh;
+}
+
+/* Estilos de panel de administracion. */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Estilos de panel de administracion. */
+.admin-sidebar {
+  width: 240px;
+  min-width: 240px;
+  background-color: var(--bs-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+/* Estilos de panel de administracion. */
+.admin-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #fff;
+  padding: 0.5rem 0.5rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  margin-bottom: 1rem;
+}
+
+/* Estilos de navegacion. */
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+/* Estilos de navegacion. */
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.6rem;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* Estilos de navegacion. */
+.admin-nav-link:hover {
+  background-color: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* Estilos de navegacion. */
+.admin-nav-link.active {
+  background-color: rgba(255,255,255,0.18);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Estilos de navegacion. */
+.admin-nav-link-danger { color: rgba(255,120,120,0.85); }
+/* Estilos de navegacion. */
+.admin-nav-link-danger:hover { background-color: rgba(255,80,80,0.15); color: #ff8a8a; }
+
+/* Estilos de navegacion. */
+.admin-nav-section {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin: 0.9rem 0 0.2rem 1rem;
+  padding: 0;
+}
+
+/* Estilos de panel de administracion. */
+.admin-sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  margin-top: auto;
+}
+
+/* Estilos de panel de administracion. */
+.admin-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-user-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Estilos de panel de administracion. */
+.admin-user-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Estilos de panel de administracion. */
+.admin-user-role {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* Estilos de panel de administracion. */
+.admin-frontend-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  margin: -0.35rem 0 0.9rem;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 0.55rem;
+  background-color: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.78);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Estilos de panel de administracion. */
+.admin-frontend-badge .material-symbols-outlined {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Estilos de panel de administracion. */
+.admin-main {
+  flex: 1;
+  margin-left: 240px;
+  padding: 2rem 2.5rem;
+  min-height: 100vh;
+}
+
+/* Estilos de panel de administracion. */
+.admin-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-page-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.75rem;
+  color: var(--bs-primary);
+  margin-bottom: 0.15rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-page-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-outline);
+  margin: 0;
+}
+
+/* Estilos de panel de administracion. */
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-metric-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-metric-green  { background-color: #1e5c38; color: #fff; }
+/* Estilos de panel de administracion. */
+.admin-metric-blue   { background-color: #163b6b; color: #fff; }
+/* Estilos de panel de administracion. */
+.admin-metric-amber  { background-color: #7c4a00; color: #fff; }
+/* Estilos de panel de administracion. */
+.admin-metric-purple { background-color: #4a1a6e; color: #fff; }
+
+/* Estilos de panel de administracion. */
+.admin-metric-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos de panel de administracion. */
+.admin-metric-value {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Estilos de panel de administracion. */
+.admin-metric-label {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+/* Estilos de panel de administracion. */
+.admin-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-outline-l);
+}
+
+/* Estilos de panel de administracion. */
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--bs-primary);
+  margin: 0;
+}
+
+/* Estilos de panel de administracion. */
+.admin-card-action {
+  font-size: 0.78rem;
+  color: var(--color-outline);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+/* Estilos de panel de administracion. */
+.admin-card-action:hover { color: var(--bs-primary); }
+
+/* Estilos de panel de administracion. */
+.admin-table {
+  width: 100%;
+  font-size: 0.83rem;
+  border-collapse: collapse;
+}
+
+/* Estilos de panel de administracion. */
+.admin-table thead th {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-outline);
+  border-bottom: 1px solid var(--color-outline-l);
+  white-space: nowrap;
+}
+
+/* Estilos de panel de administracion. */
+.admin-table tbody tr {
+  border-bottom: 1px solid var(--color-surface-l);
+  transition: background 0.1s;
+}
+
+/* Estilos de panel de administracion. */
+.admin-table tbody tr:hover { background-color: var(--color-surface-l); }
+
+/* Estilos de panel de administracion. */
+.admin-table tbody td {
+  padding: 0.75rem;
+  color: var(--color-muted);
+  vertical-align: middle;
+}
+
+/* Estilos de panel de administracion. */
+.admin-work-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Estilos de panel de administracion. */
+.admin-work-thumb {
+  width: 2.5rem;
+  height: 3.25rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-surface);
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos de panel de administracion. */
+.admin-work-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--bs-primary);
+}
+
+/* Estilos de panel de administracion. */
+.admin-work-authors {
+  font-size: 0.75rem;
+  color: var(--color-outline);
+}
+
+/* Estilos de panel de administracion. */
+.admin-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background-color: var(--color-surface);
+  color: var(--color-muted);
+}
+
+/* Estilos de panel de administracion. */
+.admin-badge-admin  { background-color: #163528; color: #fff; }
+/* Estilos de panel de administracion. */
+.admin-badge-sub    { background-color: #1e5c38; color: #fff; }
+
+/* Estilos de panel de administracion. */
+.admin-stock-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Estilos de panel de administracion. */
+.admin-stock-empty { background-color: #fde8e8; color: #ba1a1a; }
+/* Estilos de panel de administracion. */
+.admin-stock-low   { background-color: #fff3cd; color: #7c4a00; }
+/* Estilos de panel de administracion. */
+.admin-stock-ok    { background-color: #d1fae5; color: #1e5c38; }
+
+/* Estilos de panel de administracion. */
+.admin-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-surface-l);
+}
+/* Estilos de panel de administracion. */
+.admin-stock-row:last-child { border-bottom: none; }
+
+/* Estilos de panel de administracion. */
+.admin-event-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+}
+
+/* Estilos de panel de administracion. */
+.admin-event-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #2d7a4f;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1200px) {
+  /* Estilos de panel de administracion. */
+.admin-metrics { grid-template-columns: repeat(2, 1fr); }
+  /* Estilos de panel de administracion. */
+.admin-content-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  /* Estilos de panel de administracion. */
+.admin-layout {
+    display: block;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-sidebar {
+    position: sticky;
+    top: 0;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    min-width: 0;
+    max-height: none;
+    padding: 0.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    z-index: 1030;
+  }
+
+  /* Estilos de navegacion. */
+.admin-sidebar-logo,
+  .admin-frontend-badge,
+  .admin-nav-section,
+  .admin-user-chip {
+    display: none;
+  }
+
+  /* Estilos de navegacion. */
+.admin-nav,
+  .admin-sidebar-bottom {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: max-content;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-sidebar-bottom {
+    padding-top: 0;
+    margin-top: 0;
+    margin-left: 0.4rem;
+    border-top: 0;
+    border-left: 1px solid rgba(255,255,255,0.18);
+    padding-left: 0.4rem;
+  }
+
+  /* Estilos de navegacion. */
+.admin-nav-link {
+    min-height: 2.5rem;
+    padding: 0.55rem 0.7rem;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  /* Estilos de navegacion. */
+.admin-nav-link .material-symbols-outlined {
+    font-size: 1.05rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-main {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-topbar,
+  .admin-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-topbar .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-page-title {
+    font-size: 1.45rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-card {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-metrics { grid-template-columns: repeat(2, 1fr); }
+
+  /* Estilos de tabla. */
+.table-responsive {
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-table {
+    min-width: 680px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Estilos de panel de administracion. */
+.admin-main {
+    padding: 0.75rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-metric-card {
+    padding: 1rem;
+  }
+
+  /* Estilos de panel de administracion. */
+.admin-card {
+    padding: 0.875rem;
+  }
+
+  /* Estilos de tabla. */
+.table-responsive {
+    margin-inline: -0.875rem;
+    padding-inline: 0.875rem;
+  }
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-search-form  { position: relative; }
+/* Estilos de barra de navegacion. */
+.navbar-search-group { width: 240px; }
+/* Estilos de barra de navegacion. */
+.navbar-search-input { border-radius: 2rem 0 0 2rem; padding-right: 0.5rem; }
+/* Estilos de barra de navegacion. */
+.navbar-search-btn {
+  border-radius: 0 2rem 2rem 0;
+  background-color: var(--bs-primary);
+  color: #fff;
+  border: none;
+  padding: 0 0.75rem;
+}
+/* Estilos de barra de navegacion. */
+.navbar-search-btn .material-symbols-outlined { font-size: 1rem; vertical-align: middle; }
+
+/* Estilos de barra de navegacion. */
+.navbar-cart-link { color: var(--bs-primary); }
+
+/* Estilos de barra de navegacion. */
+.navbar-actions {
+  flex-shrink: 0;
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-btn-login    { color: var(--color-muted); font-weight: 600; }
+/* Estilos de barra de navegacion. */
+.navbar-btn-register { background-color: var(--bs-primary); color: #fff; font-weight: 600; }
+
+/* Estilos de barra de navegacion. */
+.navbar-user-link {
+  color: var(--bs-primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+/* Estilos de barra de navegacion. */
+.navbar-user-link .material-symbols-outlined { font-size: 1.2rem; }
+/* Estilos de barra de navegacion. */
+.navbar-btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.45rem;
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid rgba(45, 76, 62, 0.55);
+  border-radius: 9999px;
+  background-color: rgba(45, 76, 62, 0.04);
+  color: var(--bs-primary);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-btn-logout .material-symbols-outlined {
+  font-size: 1rem;
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-btn-logout:hover,
+.navbar-btn-logout:focus-visible {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: #fff;
+}
+
+/* Estilos de barra de navegacion. */
+.navbar-btn-logout:active {
+  transform: translateY(1px);
+}
+
+/* Estilos de pie de pagina. */
+.footer-brand-desc { font-size: 0.875rem; max-width: 18rem; }
+
+/* Estilos de pie de pagina. */
+.site-footer .social-icon .material-symbols-outlined { font-size: 1.1rem; }
+
+/* Estilos de pie de pagina. */
+.footer-divider {
+  border-color: rgba(192, 236, 218, 0.15);
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+/* Estilos de pie de pagina. */
+.footer-bottom-bar { font-size: 0.8rem; }
+
+/* Estilos de pie de pagina. */
+.footer-heart { color: #c0ecda; }
+
+/* Estilos de aviso. */
+.alert-success-msg {
+  background: rgba(45, 76, 62, 0.08);
+  border: 1px solid rgba(45, 76, 62, 0.2);
+  border-radius: 0.75rem;
+  color: var(--bs-primary);
+}
+
+/* Estilos de aviso. */
+.alert-error-msg {
+  background: rgba(186, 26, 26, 0.08);
+  border: 1px solid rgba(186, 26, 26, 0.2);
+  border-radius: 0.75rem;
+  color: #ba1a1a;
+}
+
+/* Estilos de aviso. */
+.alert-msg-icon { font-size: 1.1rem; }
+
+/* Estilos de aviso. */
+.global-api-alert {
+  position: fixed;
+  top: 5.25rem;
+  left: 0;
+  right: 0;
+  z-index: 1020;
+  pointer-events: none;
+}
+
+/* Estilos de aviso. */
+.global-api-alert .alert {
+  pointer-events: auto;
+  box-shadow: 0 0.75rem 2rem rgba(28, 28, 24, 0.08);
+}
+
+/* Estilos de panel de administracion. */
+.admin-body .global-api-alert,
+.global-api-alert:has(+ .auth-wrapper),
+.global-api-alert:has(+ .error-box) {
+  top: 1rem;
+}
+
+/* Estilos de comentario. */
+.comment-action--liked  { color: var(--bs-primary); font-weight: 700; }
+
+/* Estilos de comentario. */
+.comment-action--guest  { cursor: default; pointer-events: none; }
+
+/* Estilos de comentario. */
+.comment-action--delete { color: #dc3545; }
+
+/* Estilos de comentario. */
+.comment-icon           { font-size: 0.9rem; }
+
+/* Estilos de formulario. */
+.comment-reply-form     { display: none; margin-top: 0.75rem; }
+/* Estilos de comentario. */
+.comment-reply-textarea { width: 100%; resize: vertical; }
+
+/* Estilos de boton. */
+.comment-reply-btn         { font-size: 0.8rem; }
+/* Estilos de boton. */
+.comment-reply-btn--submit { padding: 0.4rem 1.25rem; }

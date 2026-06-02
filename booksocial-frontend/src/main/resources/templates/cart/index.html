@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carrito — BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/cart.css}">
+</head>
+<body>
+
+  
+  
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  
+  
+  <main class="container cart-main">
+
+    
+    
+    
+    <div th:if="${cartSuccess}"
+         class="alert d-flex align-items-center gap-2 mb-4 cart-alert-success">
+      <span class="material-symbols-outlined">check_circle</span>
+      <span th:text="${cartSuccess}"></span>
+    </div>
+    
+    <div th:if="${cartError}"
+         class="alert d-flex align-items-center gap-2 mb-4 cart-alert-error">
+      <span class="material-symbols-outlined">error</span>
+      <span th:text="${cartError}"></span>
+    </div>
+
+    
+    <header class="mb-5">
+      
+      <p class="filter-section-title mb-1">BookSocial</p>
+      
+      <h1 class="font-serif cart-heading">
+        Tu Colección Curada
+      </h1>
+      
+      <p class="cart-subheading">
+        Revisa tus selecciones antes de confirmar la compra.
+      </p>
+    </header>
+
+    
+    <div class="row g-5 align-items-start">
+
+      
+      <div class="col-lg-7">
+
+        
+        
+        
+        <div th:if="${cartItems == null or cartItems.isEmpty()}"
+             class="text-center py-5 cart-empty">
+          
+          <span class="material-symbols-outlined d-block mb-3 cart-empty-icon">shopping_cart</span>
+          <p class="font-serif mb-2 cart-empty-title">Tu carrito está vacío</p>
+          <p class="cart-empty-text">
+            Explora el catálogo y añade obras a tu colección.
+          </p>
+          
+          <a href="/catalog" class="btn-primary-pill cart-empty-btn">
+            Explorar catálogo
+          </a>
+        </div>
+
+        
+        
+        
+        <div th:if="${cartItems != null and !cartItems.isEmpty()}"
+             class="d-flex flex-column gap-4">
+
+          
+          
+          <div th:each="item : ${cartItems}" class="cart-item">
+
+            
+            
+            <div class="cart-item-cover">
+              
+              <img th:if="${item.workImg != null and !item.workImg.isEmpty()}"
+                   th:src="${item.workImg}"
+                   th:alt="${item.workTitle}"
+                   class="cart-item-img">
+              <div th:unless="${item.workImg != null and !item.workImg.isEmpty()}"
+                   class="cart-item-img-placeholder">
+                
+                <span class="material-symbols-outlined cart-placeholder-icon">menu_book</span>
+              </div>
+            </div>
+
+            
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <div>
+                  
+                  <h3 class="font-serif cart-item-title" th:text="${item.workTitle}">Título</h3>
+                  <p class="cart-item-sub"
+                     th:text="${item.editionTitle + (item.editorialName != null ? ' • ' + item.editorialName : '')}">Edición</p>
+                </div>
+                
+                <span th:if="${isSubscribed}" class="d-flex flex-column align-items-end gap-0">
+                  <span class="cart-item-price text-decoration-line-through text-muted"
+                        style="font-size:0.82rem"
+                        th:text="'€' + ${#numbers.formatDecimal(item.price, 1, 2)}">€0.00</span>
+                  <span class="cart-item-price"
+                        th:text="'€' + ${#numbers.formatDecimal(item.price * 0.70, 1, 2)}">€0.00</span>
+                </span>
+                <span th:unless="${isSubscribed}" class="cart-item-price"
+                      th:text="'€' + ${#numbers.formatDecimal(item.price, 1, 2)}">€0.00</span>
+              </div>
+
+              
+              <div class="d-flex align-items-center justify-content-between mt-3">
+                
+                
+                <form th:action="@{/cart/update}" method="post" class="d-flex align-items-center gap-0">
+                  <input type="hidden" name="productId" th:value="${item.productId}">
+                  <div class="cart-qty-control">
+                    <button type="submit" name="quantity" th:value="${item.quantity - 1}"
+                            class="cart-qty-btn">
+                      
+                      <span class="material-symbols-outlined cart-qty-icon">remove</span>
+                    </button>
+                    <span class="cart-qty-num" th:text="${item.quantity}">1</span>
+                    <button type="submit" name="quantity" th:value="${item.quantity + 1}"
+                            class="cart-qty-btn">
+                      <span class="material-symbols-outlined cart-qty-icon">add</span>
+                    </button>
+                  </div>
+                </form>
+
+                
+                
+                
+                <form th:action="@{'/cart/remove/' + ${item.productId}}" method="post">
+                  <button type="submit" class="cart-remove-btn">
+                    
+                    <span class="material-symbols-outlined cart-remove-icon">delete</span>
+                    Eliminar
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          
+          <div class="pt-2">
+            
+            <a href="/catalog" class="btn-ghost-pill text-decoration-none">
+              
+              <span class="material-symbols-outlined cart-back-icon">arrow_back</span>
+              Seguir explorando
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      
+      
+      <div class="col-lg-5" th:if="${cartItems != null and !cartItems.isEmpty()}">
+        
+        <div class="cart-summary">
+
+          
+          <h2 class="font-serif mb-4 cart-summary-heading">Resumen de Compra</h2>
+
+          
+          
+          <div class="cart-summary-row mb-4 pb-3 cart-summary-row--bordered">
+            <div class="d-flex align-items-center gap-3">
+              
+              <div class="cart-summary-icon">
+                
+                <span class="material-symbols-outlined cart-summary-shipping-icon">local_shipping</span>
+              </div>
+              <div>
+                
+                <p class="fw-bold mb-0 cart-summary-shipping-title">Envío estándar</p>
+                <p class="mb-0 cart-summary-shipping-desc">3-5 días hábiles</p>
+              </div>
+            </div>
+          </div>
+
+          
+          
+          <div th:if="${isSubscribed}"
+               class="d-flex align-items-center gap-2 mb-3 px-3 py-2 rounded-3"
+               style="background:var(--bs-success-bg-subtle,#d1e7dd);border:1px solid var(--bs-success-border-subtle,#a3cfbb)">
+            <span class="material-symbols-outlined" style="color:#198754;font-size:1.1rem">workspace_premium</span>
+            <span style="color:#0f5132;font-size:0.85rem;font-weight:600">Descuento suscriptor 30% aplicado</span>
+          </div>
+
+          
+          <div class="d-flex flex-column gap-3 mb-4">
+            
+            
+            <div class="d-flex justify-content-between cart-total-row" th:if="${isSubscribed}">
+              <span class="cart-total-label text-decoration-line-through">Subtotal sin descuento</span>
+              <span class="fw-bold text-muted text-decoration-line-through"
+                    th:text="'€' + ${#numbers.formatDecimal(subtotal, 1, 2)}">€0.00</span>
+            </div>
+            
+            <div class="d-flex justify-content-between cart-total-row" th:if="${isSubscribed}">
+              <span class="cart-total-label" style="color:#198754">Descuento (30%)</span>
+              <span class="fw-bold" style="color:#198754"
+                    th:text="'- €' + ${#numbers.formatDecimal(discountAmount, 1, 2)}">€0.00</span>
+            </div>
+            <div class="d-flex justify-content-between cart-total-row" th:unless="${isSubscribed}">
+              <span class="cart-total-label">Subtotal</span>
+              <span class="fw-bold cart-total-value"
+                    th:text="'€' + ${#numbers.formatDecimal(subtotal, 1, 2)}">€0.00</span>
+            </div>
+            
+            <div class="d-flex justify-content-between cart-total-row" th:if="${isSubscribed}">
+              <span class="cart-total-label">Subtotal con descuento</span>
+              <span class="fw-bold cart-total-value"
+                    th:text="'€' + ${#numbers.formatDecimal(discountedSubtotal, 1, 2)}">€0.00</span>
+            </div>
+            <div class="d-flex justify-content-between cart-total-row">
+              <span class="cart-total-label">Envío editorial</span>
+              <span class="fw-bold cart-total-value"
+                    th:text="'€' + ${#numbers.formatDecimal(shipping, 1, 2)}">€5.50</span>
+            </div>
+            
+            <div class="d-flex justify-content-between pt-3 cart-total-final">
+              <span class="font-serif fw-bold cart-total-value">Total</span>
+              <span class="font-serif fw-bold cart-total-value"
+                    th:text="'€' + ${#numbers.formatDecimal(total, 1, 2)}">€0.00</span>
+            </div>
+          </div>
+
+          
+          
+          
+          <form th:action="@{/cart/checkout}" method="post">
+            
+            <div th:if="${session.userId == null}" class="mb-3">
+              <label for="guestEmail" class="form-label fw-semibold">Email de confirmacion</label>
+              <input id="guestEmail"
+                     type="email"
+                     name="guestEmail"
+                     class="form-control"
+                     placeholder="tu@email.com"
+                     required>
+              <p class="mb-0 mt-2 text-muted" style="font-size:0.85rem">
+                Puedes comprar sin crear una cuenta.
+              </p>
+            </div>
+            <button type="submit" class="btn-primary-pill w-100 cart-checkout-btn">
+              Confirmar Compra
+            </button>
+          </form>
+
+          
+          
+          <p class="text-center mt-3 d-flex align-items-center justify-content-center gap-1 cart-secure-text">
+            <span class="material-symbols-outlined cart-secure-icon">verified_user</span>
+            Transacción encriptada y segura
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <section class="mt-5 pt-4" th:if="${suggestions != null and !suggestions.isEmpty()}">
+      <div class="mb-4">
+        <p class="filter-section-title mb-1">También te puede interesar</p>
+        
+        <h2 class="font-serif mb-0 cart-suggestions-heading">Más del catálogo</h2>
+      </div>
+
+      
+      <div class="row g-4 align-items-end">
+        
+        <div th:each="w, stat : ${suggestions}"
+             th:classappend="${stat.index == 1 or stat.index == 3} ? 'col-sm-6 col-lg-3 home-work-offset' : 'col-sm-6 col-lg-3'">
+          
+          <div class="home-work-card">
+            <a th:href="@{'/work/' + ${w.id}}" class="text-decoration-none">
+              
+              <div class="home-work-cover-wrap">
+                <span class="home-work-type-badge"
+                      th:text="${w.type != null ? w.type : ''}"></span>
+                <img th:src="${w.img}"
+                     th:alt="${w.title}"
+                     class="home-work-cover">
+              </div>
+            </a>
+            <div class="home-work-info">
+              <h3 class="home-work-title font-serif" th:text="${w.title}">Título</h3>
+              <p class="home-work-authors mb-2"
+                 th:text="${w.authors != null and !w.authors.isEmpty() ? w.authors.get(0) : ''}"></p>
+              <div class="d-flex align-items-center justify-content-between">
+                
+                <span class="cart-work-demographic"
+                      th:text="${w.demographic != null ? w.demographic : ''}"></span>
+                
+                <a th:href="@{'/work/' + ${w.id}}"
+                   class="event-card-join-btn text-decoration-none">Ver obra</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

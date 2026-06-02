@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo — BookSocial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <link rel="stylesheet" th:href="@{/css/pages/public/catalog.css}">
+</head>
+
+<body>
+
+  
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  
+  
+  <main class="container catalog-main">
+
+    
+    <div class="mb-5">
+      
+      <p class="filter-section-title mb-1">Biblioteca digital</p>
+      
+      <h1 class="font-serif mb-2 catalog-heading">Catálogo de Obras</h1>
+      
+      <p class="catalog-subheading">Explora nuestra colección de libros, manga y cómics</p>
+    </div>
+
+    
+    <div class="row g-4 align-items-start">
+
+      
+      
+      <aside class="col-xl-2 col-lg-3">
+        
+        <form th:action="@{/catalog/filter}" method="get" id="filterForm">
+
+          
+          <input type="hidden" name="page" id="pageInput" th:value="${currentPage}">
+          <input type="hidden" name="sort" id="sortInput" th:value="${filter.sort}">
+
+          
+          <div class="mb-4">
+            
+            <p class="filter-section-title">Tipo</p>
+            
+            <div class="d-flex flex-wrap gap-2">
+              
+              <button type="submit" name="type" value=""
+                      th:classappend="${filter.type == null} ? 'active'"
+                      class="type-btn" onclick="resetPage()">Todos</button>
+              
+              <button type="submit" name="type" value="BOOK"
+                      th:classappend="${filter.type?.name() == 'BOOK'} ? 'active'"
+                      class="type-btn" onclick="resetPage()">Libro</button>
+              <button type="submit" name="type" value="MANGA"
+                      th:classappend="${filter.type?.name() == 'MANGA'} ? 'active'"
+                      class="type-btn" onclick="resetPage()">Manga</button>
+              <button type="submit" name="type" value="COMIC"
+                      th:classappend="${filter.type?.name() == 'COMIC'} ? 'active'"
+                      class="type-btn" onclick="resetPage()">Cómic</button>
+            </div>
+          </div>
+
+          
+          <div class="mb-4">
+            
+            <p class="filter-section-title">Título</p>
+            
+            <input type="text" class="form-control form-control-sm" name="title"
+                   placeholder="Buscar título..."
+                   th:value="${filter.title}"
+                   autocomplete="off">
+          </div>
+
+          
+          <div class="mb-4">
+            
+            <p class="filter-section-title">Géneros</p>
+            
+            <div class="genre-list">
+              
+              <div class="form-check mb-1"
+                   
+                   th:each="g : ${T(com.example.booksocial_frontend.domain.Genre).values()}">
+                
+                <input class="form-check-input" type="checkbox" name="genres"
+                       th:value="${g.name()}"
+                       th:id="'genre-' + ${g.name()}"
+                       th:checked="${filter.genres != null and filter.genres.contains(g)}">
+                
+                <label class="form-check-label catalog-genre-label"
+                       th:for="'genre-' + ${g.name()}"
+                       th:text="${#strings.replace(g.name(), '_', ' ')}">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="mb-4">
+            
+            <p class="filter-section-title">Demografía</p>
+            <div class="d-flex flex-wrap gap-2">
+              
+              <label class="demographic-pill">
+                <input type="radio" name="demographic" class="d-none demographic-radio"
+                       value=""
+                       th:checked="${filter.demographic == null}">
+                <span>Todos</span>
+              </label>
+              <label class="demographic-pill"
+                     
+                     th:each="d : ${T(com.example.booksocial_frontend.domain.Demographic).values()}">
+                
+                <input type="radio" name="demographic" class="d-none demographic-radio"
+                       th:value="${d.name()}"
+                       th:checked="${filter.demographic != null and filter.demographic.name() == d.name()}">
+                <span th:text="${d.name()}"></span>
+              </label>
+            </div>
+          </div>
+
+          
+          <div class="mb-4">
+            
+            <p class="filter-section-title">Rating mínimo</p>
+            <div class="d-flex align-items-center gap-2">
+              
+              <input type="range" class="form-range flex-grow-1" name="minRating"
+                     min="0" max="10" step="0.5"
+                     th:value="${filter.minRating != null ? filter.minRating : 0}"
+                     id="ratingRange"
+                     oninput="document.getElementById('ratingVal').textContent = this.value">
+              
+              <span id="ratingVal" class="catalog-rating-val"
+                    th:text="${filter.minRating != null ? filter.minRating : '0'}"></span>
+            </div>
+          </div>
+
+          
+          <div class="mb-4">
+            
+            <p class="filter-section-title">Publicación</p>
+            <div class="d-flex flex-column gap-2">
+              <div>
+                
+                <label class="catalog-date-label">Desde</label>
+                <input type="date" class="form-control form-control-sm" name="publishedAfter"
+                       th:value="${filter.publishedAfter}">
+              </div>
+              <div>
+                <label class="catalog-date-label">Hasta</label>
+                <input type="date" class="form-control form-control-sm" name="publishedBefore"
+                       th:value="${filter.publishedBefore}">
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="d-flex flex-column gap-2">
+            
+            
+            <button type="submit" class="btn btn-sm w-100 rounded-pill catalog-filter-apply"
+                    onclick="resetPage()">
+              Aplicar filtros
+            </button>
+            
+            
+            <a th:href="@{/catalog}" class="btn btn-sm w-100 rounded-pill catalog-filter-clear">
+              Limpiar
+            </a>
+          </div>
+
+        </form>
+      </aside>
+
+      
+      <section class="col-xl-10 col-lg-9">
+
+        
+        
+        <div class="sort-bar d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+          
+          <p class="mb-0 catalog-results-text">
+            
+            <span class="catalog-results-count" th:text="${total}">0</span>
+            obras encontradas
+            
+            <th:block th:if="${totalPages > 1}">
+              — página
+              <span class="catalog-results-count" th:text="${currentPage + 1}">1</span>
+              de
+              <span th:text="${totalPages}">1</span>
+            </th:block>
+          </p>
+          <div class="d-flex align-items-center gap-2">
+            
+            <span class="catalog-sort-label">Ordenar por:</span>
+            
+            <select class="form-select form-select-sm catalog-sort-select" id="catalogSortSelect" th:data-current-sort="${filter.sort}">
+              <option value="relevance" th:selected="${filter.sort == null or filter.sort == 'relevance'}">Relevancia</option>
+              <option value="rating" th:selected="${filter.sort == 'rating'}">Mejor valorados</option>
+              <option>Más nuevos</option>
+              <option>Título A-Z</option>
+            </select>
+          </div>
+        </div>
+
+        
+        
+        
+        <div class="row g-4" th:if="${works != null and !works.isEmpty()}">
+
+          
+          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6"
+               
+               th:each="work : ${works}">
+
+            
+            <article class="book-card" th:onclick="|window.location='/work/' + ${work.id}|">
+
+              
+              <div class="book-cover-wrapper">
+
+                
+                <span class="book-badge book-badge-new"
+                      th:text="${work.type != null ? work.type.name() : ''}"></span>
+
+                
+                
+                <img th:if="${work.img != null and !work.img.isEmpty()}"
+                     th:src="${work.img}"
+                     th:alt="${work.title}"
+                     loading="lazy">
+
+                
+                
+                <div th:unless="${work.img != null and !work.img.isEmpty()}"
+                     class="d-flex flex-column align-items-center justify-content-center w-100 h-100 gap-2 catalog-cover-placeholder">
+                  
+                  <span class="material-symbols-outlined catalog-cover-placeholder-icon">menu_book</span>
+                  
+                  <span class="catalog-cover-placeholder-text">Sin portada</span>
+                </div>
+
+              </div>
+
+              
+              <div class="book-info">
+
+                <h3 class="book-title" th:text="${work.title}">Título</h3>
+
+                
+                <p class="book-author"
+                   th:text="${work.authors != null and !work.authors.isEmpty()} ? ${#strings.listJoin(work.authors, ', ')} : 'Autor desconocido'">
+                </p>
+
+                
+                
+                <div class="book-stars d-flex align-items-center gap-1 mb-2"
+                     
+                     th:if="${work.averageRating != null}">
+                  <th:block th:each="i : ${#numbers.sequence(1, 5)}">
+                    
+                    <span class="material-symbols-outlined"
+                          th:classappend="${work.averageRating >= i * 2} ? 'material-symbols-filled'"
+                          style="font-size:0.9rem;">star</span>
+                  </th:block>
+                  <span class="reviews-count"
+                        th:text="'(' + ${#numbers.formatDecimal(work.averageRating, 1, 1)} + ')'">
+                  </span>
+                </div>
+
+                
+                
+                <div class="book-stars mb-2" th:unless="${work.averageRating != null}">
+                  <span class="catalog-no-rating">Sin valoraciones</span>
+                </div>
+
+                
+                
+                <span th:if="${work.genre != null}"
+                      class="catalog-genre-tag"
+                      th:text="${#strings.replace(work.genre.name(), '_', ' ')}">
+                </span>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </div>
+
+        
+        <div th:if="${works == null or works.isEmpty()}"
+             class="text-center py-5">
+          
+          <span class="material-symbols-outlined d-block mb-3 catalog-empty-icon">search_off</span>
+          
+          <h5 class="font-serif catalog-empty-heading">No se encontraron obras</h5>
+          
+          <p class="catalog-empty-text">Prueba con otros filtros o
+            
+            <a th:href="@{/catalog}" class="catalog-empty-link">ver todo el catálogo</a>.
+          </p>
+        </div>
+
+        
+        
+        <nav th:if="${totalPages > 1}" class="mt-5 d-flex justify-content-center" aria-label="Paginación">
+          <ul class="pagination pagination-bs gap-1 mb-0">
+
+            
+            
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+              <a class="page-link" href="#"
+                 th:onclick="${currentPage > 0} ? 'goToPage(' + ${currentPage - 1} + '); return false;' : 'return false;'"
+                 aria-label="Anterior">
+                
+                <span class="material-symbols-outlined catalog-pager-icon">chevron_left</span>
+              </a>
+            </li>
+
+            
+            <th:block th:each="p : ${pageNumbers}">
+              
+              <li class="page-item disabled" th:if="${p == -1}">
+                
+                <span class="page-link catalog-ellipsis">···</span>
+              </li>
+              
+              <li class="page-item" th:if="${p != -1}"
+                  th:classappend="${p == currentPage} ? 'active'">
+                <a class="page-link" href="#"
+                   th:onclick="'goToPage(' + ${p} + '); return false;'"
+                   th:text="${p + 1}">1</a>
+              </li>
+            </th:block>
+
+            
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+              <a class="page-link" href="#"
+                 th:onclick="${currentPage < totalPages - 1} ? 'goToPage(' + ${currentPage + 1} + '); return false;' : 'return false;'"
+                 aria-label="Siguiente">
+                <span class="material-symbols-outlined catalog-pager-icon">chevron_right</span>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+
+      </section>
+
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /**
+     * Resetea la paginación a 0 antes de aplicar cualquier filtro.
+     * Se llama desde los botones de tipo y de "Aplicar filtros".
+     */
+    function resetPage() {
+      document.getElementById('pageInput').value = 0;
+    }
+
+    /**
+     * Navega a una página concreta escribiendo el número en el input oculto
+     * y enviando el formulario de filtrado.
+     * @param {number} pageNum - Índice de página (base 0)
+     */
+    function goToPage(pageNum) {
+      document.getElementById('pageInput').value = pageNum;
+      document.getElementById('filterForm').submit();
+    }
+
+    // Auto-submit al cambiar la demografía seleccionada (y resetear página)
+    document.querySelectorAll('.demographic-radio').forEach(radio => {
+      radio.addEventListener('change', () => {
+        resetPage();
+        document.getElementById('filterForm').submit();
+      });
+    });
+
+    const sortSelect = document.getElementById('catalogSortSelect');
+    const sortInput = document.getElementById('sortInput');
+    const sortValues = ['relevance', 'rating', 'newest', 'title'];
+    if (sortSelect && sortInput) {
+      const currentSort = sortSelect.dataset.currentSort || 'relevance';
+      const selectedIndex = sortValues.indexOf(currentSort);
+      if (selectedIndex >= 0) {
+        sortSelect.selectedIndex = selectedIndex;
+      }
+
+      sortSelect.addEventListener('change', () => {
+        sortInput.value = sortValues[sortSelect.selectedIndex] || 'relevance';
+        resetPage();
+        document.getElementById('filterForm').submit();
+      });
+    }
+  </script>
+
+</body>
+</html>

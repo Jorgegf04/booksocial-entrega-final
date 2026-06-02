@@ -1,0 +1,137 @@
+/* Estilos de la vista publica: home.css. */
+
+/* Estilos del selector .home-main. */
+.home-main { padding-top: 5rem; }
+
+/* Estilos de seccion. */
+.home-section-bg { background: var(--color-bg); }
+
+/* Estilos del selector .home-featured-heading. */
+.home-featured-heading {
+  font-size: 2.25rem;
+  color: var(--bs-primary);
+}
+
+/* Estilos del selector .home-view-all-icon. */
+.home-view-all-icon { font-size: 1.1rem; }
+
+/* Estilos de mensaje vacio. */
+.home-empty-state { color: var(--color-outline); }
+/* Estilos de mensaje vacio. */
+.home-empty-icon  { font-size: 3rem; }
+
+/* Estilos del selector .home-community-heading. */
+.home-community-heading { font-size: 2.5rem; color: #fff; }
+/* Estilos del selector .home-community-desc. */
+.home-community-desc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.05rem;
+  max-width: 30rem;
+  line-height: 1.7;
+}
+
+/* Estilos del selector .home-community-icon. */
+.home-community-icon { font-variation-settings: 'FILL' 1; }
+
+/* Estilos del selector .home-feature-icon .material-symbols-outlined. */
+.home-feature-icon .material-symbols-outlined {
+  color: var(--bs-primary);
+  font-size: 1.75rem;
+}
+/* Estilos de tarjeta. */
+.home-feature-card__title { color: var(--bs-primary); font-size: 1.1rem; }
+/* Estilos de tarjeta. */
+.home-feature-card__desc  { font-size: 0.875rem; color: var(--color-muted); }
+
+/* Estilos de catalogo. */
+.home-catalog-heading {
+  font-size: 2.5rem;
+  color: var(--bs-primary);
+}
+/* Estilos de catalogo. */
+.home-catalog-desc { color: var(--color-muted); line-height: 1.8; }
+
+/* Estilos del selector .home-bento-tag-icon. */
+.home-bento-tag-icon  { font-size: 2.5rem; color: var(--bs-primary); }
+/* Estilos del selector .home-bento-tag-label. */
+.home-bento-tag-label { color: var(--bs-primary); }
+
+/* Estilos del selector .home-sub-separator. */
+.home-sub-separator {
+  width: 3rem;
+  height: 1px;
+  background: var(--bs-secondary);
+  display: block;
+}
+/* Estilos de seccion. */
+.home-sub-section-label { color: var(--bs-secondary); }
+/* Estilos del selector .home-sub-heading. */
+.home-sub-heading       { font-size: 2.5rem; color: #fff; }
+/* Estilos del selector .home-sub-desc. */
+.home-sub-desc {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.8;
+  max-width: 32rem;
+}
+
+/* Estilos del selector .home-sub-feature-icon. */
+.home-sub-feature-icon {
+  color: var(--bs-secondary);
+  font-variation-settings: 'FILL' 1;
+}
+/* Estilos del selector .home-sub-feature-text. */
+.home-sub-feature-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
+
+/* Estilos de etiqueta. */
+.home-sub-badge__title { font-size: 0.9rem; line-height: 1.4; }
+/* Estilos de etiqueta. */
+.home-sub-badge__date {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Estilos del selector .home-sub-package-icon. */
+.home-sub-package-icon {
+  font-size: 5rem;
+  color: rgba(192, 236, 218, 0.3);
+  font-variation-settings: 'FILL' 1;
+}
+
+/* Estilos de tarjeta. */
+.home-sub-benefit-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(192, 236, 218, 0.12);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  height: 100%;
+  text-align: center;
+}
+/* Estilos del selector .home-sub-benefit-icon. */
+.home-sub-benefit-icon {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+/* Estilos de precio. */
+.home-sub-price-num {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: var(--font-serif, 'Noto Serif', serif);
+  color: var(--bs-secondary);
+}
+/* Estilos de precio. */
+.home-sub-price-cur {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--bs-secondary);
+  vertical-align: super;
+}
+/* Estilos de precio. */
+.home-sub-price-per {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-left: 0.25rem;
+}

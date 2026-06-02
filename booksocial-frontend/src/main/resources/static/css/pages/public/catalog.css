@@ -1,0 +1,165 @@
+/* Estilos de la vista publica: catalog.css. */
+
+/* Estilos de catalogo. */
+.catalog-main {
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+
+/* Estilos de catalogo. */
+.catalog-heading    { font-size: 2.2rem; color: var(--bs-primary); }
+/* Estilos de catalogo. */
+.catalog-subheading { color: var(--color-muted); font-size: 0.9rem; }
+
+/* Estilos de catalogo. */
+.catalog-genre-label { font-size: 0.82rem; color: var(--color-muted); }
+
+/* Estilos de catalogo. */
+.catalog-rating-val {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  min-width: 4ch;
+}
+
+/* Estilos de catalogo. */
+.catalog-date-label { font-size: 0.72rem; color: var(--color-muted); }
+
+/* Estilos de catalogo. */
+.catalog-filter-apply {
+  background-color: var(--bs-primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Estilos de catalogo. */
+.catalog-filter-clear {
+  background-color: var(--color-surface-h);
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+/* Estilos de catalogo. */
+.catalog-results-text { font-size: 0.85rem; color: var(--color-muted); }
+
+/* Estilos de catalogo. */
+.catalog-results-count { font-weight: 700; color: var(--bs-primary); }
+
+/* Estilos de catalogo. */
+.catalog-sort-label { font-size: 0.78rem; color: var(--color-muted); }
+
+/* Estilos de catalogo. */
+.catalog-sort-select { width: auto; font-size: 0.82rem; }
+
+/* Estilos de portada. */
+.catalog-cover-placeholder { color: var(--color-outline); }
+
+/* Estilos de portada. */
+.catalog-cover-placeholder-icon { font-size: 3rem; }
+
+/* Estilos de portada. */
+.catalog-cover-placeholder-text { font-size: 0.7rem; }
+
+/* Estilos de catalogo. */
+.catalog-no-rating { font-size: 0.75rem; color: var(--color-outline); }
+
+/* Estilos de catalogo. */
+.catalog-genre-tag {
+  font-size: 0.7rem;
+  color: var(--color-outline);
+  font-weight: 600;
+}
+
+/* Estilos de catalogo. */
+.catalog-empty-icon    { font-size: 4rem; color: var(--color-outline-l); }
+/* Estilos de catalogo. */
+.catalog-empty-heading { color: var(--bs-primary); }
+/* Estilos de catalogo. */
+.catalog-empty-text    { color: var(--color-muted); font-size: 0.9rem; }
+/* Estilos de catalogo. */
+.catalog-empty-link    { color: var(--bs-primary); }
+
+/* Estilos de catalogo. */
+.catalog-pager-icon { font-size: 1rem; }
+
+/* Estilos de catalogo. */
+.catalog-ellipsis { letter-spacing: 0.05em; }
+
+@media (max-width: 991.98px) {
+  /* Estilos de catalogo. */
+.catalog-main {
+    padding-top: 5rem;
+  }
+
+  /* Estilos de formulario. */
+#filterForm {
+    background-color: var(--color-surface-l);
+    border: 1px solid rgba(193, 200, 194, 0.45);
+    border-radius: 0.9rem;
+    padding: 1rem;
+  }
+
+  /* Estilos de listado. */
+.genre-list {
+    max-height: 160px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Estilos de catalogo. */
+.catalog-main {
+    padding-top: 4.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  /* Estilos de catalogo. */
+.catalog-heading {
+    font-size: 1.75rem;
+  }
+
+  /* Estilos de catalogo. */
+.catalog-subheading {
+    font-size: 0.85rem;
+  }
+
+  /* Estilos del selector .sort-bar. */
+.sort-bar {
+    align-items: stretch !important;
+    padding: 0.85rem;
+  }
+
+  /* Estilos del selector .sort-bar > div. */
+.sort-bar > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Estilos de catalogo. */
+.catalog-sort-select {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Estilos de obra o libro. */
+.book-cover-wrapper {
+    margin-bottom: 0.85rem;
+  }
+
+  /* Estilos de obra o libro. */
+.book-info {
+    padding: 0;
+  }
+
+  /* Estilos de paginacion. */
+.pagination-bs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Estilos de paginacion. */
+.pagination-bs .page-link {
+    width: 2.35rem;
+    height: 2.35rem;
+    font-size: 0.78rem;
+  }
+}

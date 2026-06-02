@@ -1,0 +1,57 @@
+# Control de versiones local
+.git/
+_git_repo/
+
+# Entorno y credenciales
+.env
+.env.local
+*.local
+
+# Dependencias
+node_modules/
+.npm/
+.m2repo/
+
+# Builds generados
+target/
+dist/
+build/
+out/
+*.jar
+*.war
+
+# Logs y temporales
+logs/
+*.log
+npm-debug.log*
+.codex-tmp-*/
+.claude/
+.cache/
+.vite/
+
+# IDE / sistema
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Datos locales generados por la aplicacion
+data/
+uploads/
+*.mv.db
+*.trace.db
+
+# Certificados SSL autofirmados
+certs/
+nginx/ssl/*.pem
+nginx/ssl/*.crt
+nginx/ssl/*.key
+
+# Entregables pesados: subirlos a Drive/Dropbox y enlazarlos en docs
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.zip

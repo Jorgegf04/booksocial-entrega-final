@@ -1,0 +1,295 @@
+/* Estilos de la vista publica: auth.css. */
+
+/* Estilos de cuerpo de pagina. */
+html, body { height: 100%; margin: 0; }
+
+/* Estilos del selector .auth-wrapper. */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Estilos del selector .auth-panel. */
+.auth-panel {
+  width: 42%;
+  background: linear-gradient(160deg, #1a3328 0%, #2D4C3E 50%, #3a6050 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Estilos del selector .auth-panel. */
+.auth-panel::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Estilos del selector .auth-panel. */
+.auth-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Estilos del selector .auth-brand. */
+.auth-brand {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 1.7rem;
+  color: #c0ecda;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+/* Estilos del selector .auth-brand span. */
+.auth-brand span { color: #fff; }
+
+/* Estilos del selector .auth-panel-middle. */
+.auth-panel-middle { position: relative; z-index: 1; }
+
+/* Estilos del selector .auth-panel-quote. */
+.auth-panel-quote {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 1.55rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Estilos del selector .auth-panel-sub. */
+.auth-panel-sub {
+  font-size: 0.82rem;
+  color: rgba(192, 236, 218, 0.75);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Estilos de pie de pagina. */
+.auth-panel-footer {
+  font-size: 0.78rem;
+  color: rgba(192, 236, 218, 0.5);
+}
+
+/* Estilos del selector .auth-panel-perks. */
+.auth-panel-perks {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Estilos del selector .auth-perk. */
+.auth-perk {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.82rem;
+  color: rgba(192, 236, 218, 0.8);
+}
+
+/* Estilos del selector .auth-perk-icon. */
+.auth-perk-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* Estilos de formulario. */
+.auth-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+  background-color: var(--color-bg);
+}
+
+/* Estilos de formulario. */
+.auth-form-side--scroll { overflow-y: auto; }
+
+/* Estilos de tarjeta. */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Estilos de tarjeta. */
+.auth-card--wide {
+  max-width: 460px;
+  padding: 0.5rem 0;
+}
+
+/* Estilos de tarjeta. */
+.auth-card-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.75rem;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+/* Estilos de tarjeta. */
+.auth-card-sub {
+  font-size: 0.85rem;
+  color: var(--color-outline);
+  margin-bottom: 2rem;
+}
+
+/* Estilos de tarjeta. */
+.auth-card-sub--tight { margin-bottom: 1.75rem; }
+
+/* Estilos de seccion. */
+.auth-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-outline-l);
+}
+
+/* Estilos del selector .auth-label. */
+.auth-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 0.35rem;
+}
+
+/* Estilos de campo de formulario. */
+.auth-input {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-outline-l);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+/* Estilos de campo de formulario. */
+.auth-input:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 3px rgba(45, 76, 62, 0.12);
+  background: #fff;
+  outline: none;
+}
+
+/* Estilos de campo de formulario. */
+.auth-input.optional { background: var(--color-surface-l); }
+
+/* Estilos del selector .auth-optional-tag. */
+.auth-optional-tag {
+  font-size: 0.72rem;
+  color: var(--color-outline);
+  margin-left: 0.3rem;
+  font-weight: 400;
+}
+
+/* Estilos de boton. */
+.auth-btn {
+  background: var(--bs-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  width: 100%;
+  transition: background 0.15s, transform 0.1s;
+}
+/* Estilos de boton. */
+.auth-btn:hover { background: #1a3328; transform: translateY(-1px); }
+
+/* Estilos del selector .auth-divider. */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-outline-l);
+  font-size: 0.78rem;
+  margin: 1.25rem 0;
+}
+/* Estilos del selector .auth-divider. */
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-outline-l);
+}
+
+/* Estilos del selector .auth-link. */
+.auth-link {
+  font-size: 0.85rem;
+  color: var(--bs-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+/* Estilos del selector .auth-link. */
+.auth-link:hover { text-decoration: underline; }
+
+/* Estilos de campo de formulario. */
+.auth-input-group { position: relative; }
+
+/* Estilos del selector .auth-pw-toggle. */
+.auth-pw-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-outline);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Estilos del selector .pw-strength. */
+.pw-strength {
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 6px;
+  transition: all 0.3s;
+  background: var(--color-outline-l);
+}
+/* Estilos del selector .pw-strength.weak. */
+.pw-strength.weak   { background: #e05252; width: 30%; }
+/* Estilos del selector .pw-strength.medium. */
+.pw-strength.medium { background: #d4a017; width: 65%; }
+/* Estilos del selector .pw-strength.strong. */
+.pw-strength.strong { background: #2d7a4f; width: 100%; }
+
+/* Estilos de formulario. */
+.auth-form-hint { font-size: 0.75rem; }
+
+/* Estilos del selector .auth-switch-text. */
+.auth-switch-text { font-size: 0.85rem; color: var(--color-muted); }
+
+/* Estilos de aviso. */
+.auth-alert-text { font-size: 0.85rem; }
+
+@media (max-width: 768px) {
+  /* Estilos del selector .auth-panel. */
+.auth-panel { display: none; }
+}

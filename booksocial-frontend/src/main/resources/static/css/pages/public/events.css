@@ -1,0 +1,133 @@
+/* Estilos de la vista publica: events.css. */
+
+/* Estilos de evento. */
+.events-main {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilos de cabecera principal. */
+.events-hero-body    { max-width: 44rem; }
+/* Estilos de cabecera principal. */
+.events-hero-heading {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 700;
+  color: var(--bs-primary);
+  line-height: 1.1;
+}
+/* Estilos de cabecera principal. */
+.events-hero-desc {
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  max-width: 36rem;
+  line-height: 1.75;
+}
+
+/* Estilos de evento. */
+.events-featured-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+/* Estilos de evento. */
+.events-featured-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+/* Estilos de evento. */
+.events-featured-img-placeholder {
+  font-size: 5rem;
+  color: rgba(192, 236, 218, 0.25);
+  font-variation-settings: 'FILL' 1;
+}
+
+/* Estilos de evento. */
+.events-featured-date-icon       { font-size: 1rem; }
+/* Estilos de evento. */
+.events-featured-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  line-height: 1.2;
+}
+/* Estilos de evento. */
+.events-featured-desc             { color: var(--color-muted); line-height: 1.7; }
+/* Estilos de evento. */
+.events-featured-participants     { font-size: 0.8rem; color: var(--color-muted); }
+/* Estilos de evento. */
+.events-featured-participants-icon { font-size: 1rem; }
+
+/* Estilos de evento. */
+.events-action-icon { font-size: 1rem; }
+
+/* Estilos de evento. */
+.events-secondary-badge-icon { font-size: 0.8rem; }
+/* Estilos de evento. */
+.events-secondary-star       { color: var(--bs-secondary); }
+/* Estilos de evento. */
+.events-secondary-heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--bs-secondary);
+  line-height: 1.25;
+}
+/* Estilos de evento. */
+.events-secondary-desc {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+/* Estilos de evento. */
+.events-secondary-meta      { font-size: 0.78rem; color: rgba(255, 255, 255, 0.5); }
+/* Estilos de evento. */
+.events-secondary-meta-icon { font-size: 0.9rem; }
+
+/* Estilos de evento. */
+.events-empty {
+  background: var(--color-surface-l);
+  border-radius: 1.25rem;
+}
+/* Estilos de evento. */
+.events-empty-icon    { font-size: 4rem; color: var(--color-outline-l); }
+/* Estilos de evento. */
+.events-empty-heading { font-size: 1.2rem; color: var(--bs-primary); }
+/* Estilos de evento. */
+.events-empty-text    { color: var(--color-muted); font-size: 0.875rem; }
+
+/* Estilos de evento. */
+.events-upcoming-heading { font-size: 1.75rem; color: var(--bs-primary); }
+
+/* Estilos de tarjeta. */
+.events-card-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+/* Estilos de tarjeta. */
+.events-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+/* Estilos de tarjeta. */
+.events-card-img-placeholder {
+  font-size: 3rem;
+  color: rgba(45, 76, 62, 0.15);
+  font-variation-settings: 'FILL' 1;
+}
+
+/* Estilos de evento. */
+.events-joined-badge-icon { font-size: 0.75rem; }
+
+/* Estilos de tarjeta. */
+.events-card-date      { font-size: 0.72rem; }
+/* Estilos de tarjeta. */
+.events-card-date-icon { font-size: 0.9rem; }
+
+/* Estilos de tarjeta. */
+.events-card-participants      { font-size: 0.78rem; color: var(--color-muted); }
+/* Estilos de tarjeta. */
+.events-card-participants-icon { font-size: 0.9rem; }
