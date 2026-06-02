@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 
+// Codigo de la ilustración 40
 /**
  * Manejador global de excepciones para la API REST de BookSocial.
  *
@@ -41,7 +42,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de usuario no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -54,7 +55,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por usuarios duplicados y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -71,7 +72,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de autor no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -84,7 +85,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por autores duplicados y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -101,7 +102,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de obra no encontrada y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -118,7 +119,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de edicion no encontrada y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -131,12 +132,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de editorial no encontrada y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(EditorialNotFoundException.class)
-  public ResponseEntity<ExceptionBody> handleEditorialNotFound(EditorialNotFoundException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleEditorialNotFound(EditorialNotFoundException ex,
+      HttpServletRequest request) {
     log.warn("[EDITORIAL] [READ] [NOT_FOUND] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
   }
@@ -144,7 +146,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de volumen no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -157,7 +159,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de producto no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -174,7 +176,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de pedido no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -187,12 +189,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de linea de pedido no encontrada y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(OrderLineNotFoundException.class)
-  public ResponseEntity<ExceptionBody> handleOrderLineNotFound(OrderLineNotFoundException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleOrderLineNotFound(OrderLineNotFoundException ex,
+      HttpServletRequest request) {
     log.warn("[ORDER_LINE] [READ] [NOT_FOUND] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
   }
@@ -204,7 +207,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de comentario no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -217,12 +220,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de reaccion no encontrada y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(ReactionNotFoundException.class)
-  public ResponseEntity<ExceptionBody> handleReactionNotFound(ReactionNotFoundException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleReactionNotFound(ReactionNotFoundException ex,
+      HttpServletRequest request) {
     log.warn("[REACTION] [READ] [NOT_FOUND] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
   }
@@ -234,12 +238,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de suscripcion no encontrada y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(SubscriptionNotFoundException.class)
-  public ResponseEntity<ExceptionBody> handleSubscriptionNotFound(SubscriptionNotFoundException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleSubscriptionNotFound(SubscriptionNotFoundException ex,
+      HttpServletRequest request) {
     log.warn("[SUBSCRIPTION] [READ] [NOT_FOUND] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
   }
@@ -247,12 +252,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por suscripciones ya activas y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(SubscriptionAlreadyActiveException.class)
-  public ResponseEntity<ExceptionBody> handleSubscriptionAlreadyActive(SubscriptionAlreadyActiveException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleSubscriptionAlreadyActive(SubscriptionAlreadyActiveException ex,
+      HttpServletRequest request) {
     log.warn("[SUBSCRIPTION] [CREATE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
@@ -260,7 +266,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de evento no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -273,12 +279,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de seguimiento de obra no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(TrackingWorkNotFoundException.class)
-  public ResponseEntity<ExceptionBody> handleTrackingWorkNotFound(TrackingWorkNotFoundException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleTrackingWorkNotFound(TrackingWorkNotFoundException ex,
+      HttpServletRequest request) {
     log.warn("[TRACKING_WORK] [READ] [NOT_FOUND] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
   }
@@ -286,12 +293,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por seguimientos de obra duplicados y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(TrackingWorkAlreadyExistsException.class)
-  public ResponseEntity<ExceptionBody> handleTrackingWorkExists(TrackingWorkAlreadyExistsException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleTrackingWorkExists(TrackingWorkAlreadyExistsException ex,
+      HttpServletRequest request) {
     log.warn("[TRACKING_WORK] [CREATE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
@@ -299,12 +307,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de seguimiento de pedido no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(TrackingOrderNotFoundException.class)
-  public ResponseEntity<ExceptionBody> handleTrackingOrderNotFound(TrackingOrderNotFoundException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleTrackingOrderNotFound(TrackingOrderNotFoundException ex,
+      HttpServletRequest request) {
     log.warn("[TRACKING_ORDER] [READ] [NOT_FOUND] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
   }
@@ -316,25 +325,28 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por editoriales duplicadas y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(EditorialAlreadyExistsException.class)
-  public ResponseEntity<ExceptionBody> handleEditorialExists(EditorialAlreadyExistsException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleEditorialExists(EditorialAlreadyExistsException ex,
+      HttpServletRequest request) {
     log.warn("[EDITORIAL] [CREATE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
 
   /**
-   * Gestiona conflictos al eliminar editoriales con ediciones asociadas y devuelve HTTP 409.
+   * Gestiona conflictos al eliminar editoriales con ediciones asociadas y
+   * devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(EditorialHasEditionsException.class)
-  public ResponseEntity<ExceptionBody> handleEditorialHasEditions(EditorialHasEditionsException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleEditorialHasEditions(EditorialHasEditionsException ex,
+      HttpServletRequest request) {
     log.warn("[EDITORIAL] [DELETE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
@@ -346,25 +358,28 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por ediciones duplicadas y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(EditionAlreadyExistsException.class)
-  public ResponseEntity<ExceptionBody> handleEditionExists(EditionAlreadyExistsException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleEditionExists(EditionAlreadyExistsException ex,
+      HttpServletRequest request) {
     log.warn("[EDITION] [CREATE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
 
   /**
-   * Gestiona conflictos al eliminar ediciones con lineas de pedido asociadas y devuelve HTTP 409.
+   * Gestiona conflictos al eliminar ediciones con lineas de pedido asociadas y
+   * devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(EditionHasOrderLinesException.class)
-  public ResponseEntity<ExceptionBody> handleEditionHasOrderLines(EditionHasOrderLinesException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleEditionHasOrderLines(EditionHasOrderLinesException ex,
+      HttpServletRequest request) {
     log.warn("[EDITION] [DELETE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
@@ -376,7 +391,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por tomos duplicados y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -393,7 +408,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de capitulo no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -406,12 +421,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona conflictos por capitulos duplicados y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(ChapterAlreadyExistsException.class)
-  public ResponseEntity<ExceptionBody> handleChapterExists(ChapterAlreadyExistsException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleChapterExists(ChapterAlreadyExistsException ex,
+      HttpServletRequest request) {
     log.warn("[CHAPTER] [CREATE] [CONFLICT] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, request);
   }
@@ -419,7 +435,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de tomo no encontrado y devuelve HTTP 404.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -436,7 +452,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona validaciones de negocio y devuelve HTTP 400.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -447,31 +463,35 @@ public class GlobalExceptionHandler {
   }
 
   /**
-   * Gestiona errores de validacion de Bean Validation y devuelve detalle por campo con HTTP 400.
+   * Gestiona errores de validacion de Bean Validation y devuelve detalle por
+   * campo con HTTP 400.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ExceptionBody> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+      HttpServletRequest request) {
     List<Map<String, String>> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
         .map(fe -> Map.of("field", fe.getField(), "message",
             fe.getDefaultMessage() != null ? fe.getDefaultMessage() : "Valor inválido"))
         .toList();
     log.warn("[VALIDATION] [BEAN] [ERROR] {} campo(s) inválido(s): {}", fieldErrors.size(), fieldErrors);
-    return buildResponseWithFields("Errores de validación en la petición", HttpStatus.BAD_REQUEST, request, fieldErrors);
+    return buildResponseWithFields("Errores de validación en la petición", HttpStatus.BAD_REQUEST, request,
+        fieldErrors);
   }
 
   /**
    * Gestiona violaciones de restricciones en parametros y devuelve HTTP 400.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(ConstraintViolationException.class)
-  public ResponseEntity<ExceptionBody> handleConstraintViolation(ConstraintViolationException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleConstraintViolation(ConstraintViolationException ex,
+      HttpServletRequest request) {
     String message = ex.getConstraintViolations().stream()
         .findFirst()
         .map(cv -> cv.getPropertyPath() + ": " + cv.getMessage())
@@ -487,7 +507,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona cuerpos JSON mal formados o no legibles y devuelve HTTP 400.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -505,12 +525,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona restricciones de integridad de base de datos y devuelve HTTP 409.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(DataIntegrityViolationException.class)
-  public ResponseEntity<ExceptionBody> handleDataIntegrity(DataIntegrityViolationException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleDataIntegrity(DataIntegrityViolationException ex,
+      HttpServletRequest request) {
     Throwable root = ex.getRootCause();
     String rootMsg = (root != null) ? root.getMessage() : ex.getMessage();
     log.warn("[DB] [INTEGRITY] [CONFLICT] {}", rootMsg);
@@ -536,12 +557,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores de conexion con la base de datos y devuelve HTTP 503.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(CannotCreateTransactionException.class)
-  public ResponseEntity<ExceptionBody> handleCannotCreateTransaction(CannotCreateTransactionException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleCannotCreateTransaction(CannotCreateTransactionException ex,
+      HttpServletRequest request) {
     log.error("[DB] [CONNECTION] [ERROR] No se puede conectar con la base de datos: {}", ex.getMessage());
     return buildResponse("No se puede conectar con la base de datos. Verifique que MySQL está activo.",
         HttpStatus.SERVICE_UNAVAILABLE, request);
@@ -550,7 +572,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona errores generales de acceso a datos y devuelve HTTP 503.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -568,12 +590,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona pedidos con stock insuficiente y devuelve HTTP 422.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(InsufficientStockException.class)
-  public ResponseEntity<ExceptionBody> handleInsufficientStock(InsufficientStockException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleInsufficientStock(InsufficientStockException ex,
+      HttpServletRequest request) {
     log.warn("[ORDER] [STOCK] [UNPROCESSABLE] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY, request);
   }
@@ -581,12 +604,13 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona acciones no autorizadas de negocio y devuelve HTTP 403.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(UnauthorizedActionException.class)
-  public ResponseEntity<ExceptionBody> handleUnauthorizedAction(UnauthorizedActionException ex, HttpServletRequest request) {
+  public ResponseEntity<ExceptionBody> handleUnauthorizedAction(UnauthorizedActionException ex,
+      HttpServletRequest request) {
     log.warn("[SECURITY] [UNAUTHORIZED] [FORBIDDEN] {}", ex.getMessage());
     return buildResponse(ex.getMessage(), HttpStatus.FORBIDDEN, request);
   }
@@ -598,7 +622,7 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona argumentos invalidos y devuelve HTTP 400.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -615,13 +639,14 @@ public class GlobalExceptionHandler {
   /**
    * Gestiona cualquier excepcion no contemplada y devuelve HTTP 500.
    *
-   * @param ex excepcion capturada por Spring
+   * @param ex      excepcion capturada por Spring
    * @param request peticion HTTP que provoco el error
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionBody> handleGeneric(Exception ex, HttpServletRequest request) {
-    log.error("[SYSTEM] [UNHANDLED] [ERROR] {} en {}: {}", ex.getClass().getSimpleName(), request.getRequestURI(), ex.getMessage(), ex);
+    log.error("[SYSTEM] [UNHANDLED] [ERROR] {} en {}: {}", ex.getClass().getSimpleName(), request.getRequestURI(),
+        ex.getMessage(), ex);
     return buildResponse("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
@@ -633,7 +658,7 @@ public class GlobalExceptionHandler {
    * Construye una respuesta de error estandar sin detalle de campos.
    *
    * @param message mensaje que se incluira en la respuesta
-   * @param status estado HTTP que se devolvera al cliente
+   * @param status  estado HTTP que se devolvera al cliente
    * @param request peticion HTTP original
    * @return respuesta HTTP con el cuerpo de error normalizado
    */
@@ -649,9 +674,9 @@ public class GlobalExceptionHandler {
   /**
    * Construye una respuesta de error estandar con detalle de errores por campo.
    *
-   * @param message mensaje que se incluira en la respuesta
-   * @param status estado HTTP que se devolvera al cliente
-   * @param request peticion HTTP original
+   * @param message     mensaje que se incluira en la respuesta
+   * @param status      estado HTTP que se devolvera al cliente
+   * @param request     peticion HTTP original
    * @param fieldErrors errores de validacion asociados a campos concretos
    * @return respuesta HTTP con el cuerpo de error normalizado
    */

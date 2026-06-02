@@ -6,6 +6,7 @@ import java.util.Map;
 
 import lombok.Getter;
 
+// Codigo de la ilustracion 39
 /**
  * Esta clase representa el cuerpo comun de las respuestas de error que devuelve
  * la api

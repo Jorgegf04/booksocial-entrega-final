@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-//REF-01/BACKEND/CONTROLLER/USERCONTROLLER:JAVA
+//REF-01/BACKEND/CONTROLLER/USERCONTROLLER.JAVA
 /**
  * Gestiona los usuarios registrados dentro de BookSocial.
  * Permite administrar usuarios, consultar su biblioteca y gestionar relaciones

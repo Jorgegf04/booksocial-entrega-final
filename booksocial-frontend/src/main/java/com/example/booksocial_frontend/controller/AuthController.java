@@ -21,9 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+// Codigo de ilustracion 45
+//Codigo de la ilustracion 46
 /**
- * Controlador de autenticacion del frontend. Muestra login y registro, conecta con el backend, guarda la sesion y elimina cookies.
- * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+ * Controlador de autenticacion del frontend. Muestra login y registro, conecta
+ * con el backend, guarda la sesion y elimina cookies.
+ * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+ * respuestas del frontend.
  *
  * @author Jorge
  * @version 3
@@ -38,7 +42,8 @@ public class AuthController {
 
   /**
    * Muestra la pantalla de login y prepara el formulario.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -54,7 +59,8 @@ public class AuthController {
 
   /**
    * Procesa el inicio de sesion y guarda datos en sesion y cookies.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -107,7 +113,8 @@ public class AuthController {
 
   /**
    * Cierra la sesion y borra las cookies de autenticacion.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -125,7 +132,8 @@ public class AuthController {
 
   /**
    * Crea una cookie con nombre, valor, duracion y seguridad.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -142,7 +150,8 @@ public class AuthController {
 
   /**
    * Muestra la pantalla de registro y prepara el formulario.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -156,7 +165,8 @@ public class AuthController {
 
   /**
    * Procesa el registro y muestra errores si el backend los devuelve.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3

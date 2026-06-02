@@ -15,10 +15,13 @@ import com.example.booksocial_frontend.security.SessionJwtInterceptor;
 
 import jakarta.annotation.PostConstruct;
 
+// Codigo de la ilustracion 43
 /**
  * Servicio de work del frontend Thymeleaf.
- * @Service hace que Spring cree esta clase como componente para poder inyectarla.
- * Usa del backend: /works.
+ * 
+ * @Service hace que Spring cree esta clase como componente para poder
+ *          inyectarla.
+ *          Usa del backend: /works.
  *
  * @author Jorge
  * @version 3
@@ -27,17 +30,26 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class WorkClientService {
 
-  /** @Value lee la URL base del backend desde application.properties o usa un valor por defecto. */
+  /**
+   * @Value lee la URL base del backend desde application.properties o usa un
+   *        valor por defecto.
+   */
   @Value("${api.base-url:http://localhost:9999/api}")
   private String apiBaseUrl;
 
-  /** @Autowired inyecta automaticamente el interceptor o dependencia que necesita el servicio. */
+  /**
+   * @Autowired inyecta automaticamente el interceptor o dependencia que necesita
+   *            el servicio.
+   */
   @Autowired
   private SessionJwtInterceptor jwtInterceptor;
 
   private RestClient restClient;
 
-  /** @PostConstruct ejecuta init despues de crear el servicio para preparar el RestClient. */
+  /**
+   * @PostConstruct ejecuta init despues de crear el servicio para preparar el
+   *                RestClient.
+   */
   @PostConstruct
   public void init() {
     this.restClient = RestClient.builder()
@@ -58,7 +70,8 @@ public class WorkClientService {
     return restClient.get()
         .uri("")
         .retrieve()
-        .body(new ParameterizedTypeReference<List<WorkResponseDTO>>() {});
+        .body(new ParameterizedTypeReference<List<WorkResponseDTO>>() {
+        });
   }
 
   /**
@@ -88,13 +101,17 @@ public class WorkClientService {
     return restClient.get()
         .uri(uriBuilder -> {
           var builder = uriBuilder.path("/search");
-          if (title != null && !title.isBlank()) builder = builder.queryParam("title", title);
-          if (genre != null) builder = builder.queryParam("genre", genre);
-          if (rating != null && rating > 0) builder = builder.queryParam("rating", rating);
+          if (title != null && !title.isBlank())
+            builder = builder.queryParam("title", title);
+          if (genre != null)
+            builder = builder.queryParam("genre", genre);
+          if (rating != null && rating > 0)
+            builder = builder.queryParam("rating", rating);
           return builder.build();
         })
         .retrieve()
-        .body(new ParameterizedTypeReference<List<WorkResponseDTO>>() {});
+        .body(new ParameterizedTypeReference<List<WorkResponseDTO>>() {
+        });
   }
 
   /**

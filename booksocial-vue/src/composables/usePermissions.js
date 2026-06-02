@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/auth' // con esto recuperamos por ejemplo el rol que tiene el usuario
 
+// Codigo de la ilustracion 51
 /**
  * Este archivo sirve para centralizar los permiso del frontend.
  Es decir: en vez de comprobar roles directamente en cada componente Vue, se usa este composable para preguntar cosas como “¿este usuario puede comentar?”, “¿puede entrar al panel admin?”, “¿puede apuntarse a eventos?”, etc.

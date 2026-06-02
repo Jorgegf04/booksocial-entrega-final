@@ -229,4 +229,4 @@ docker compose exec mysql-db mysql -uroot -proot123 booksocial
 
 ## Documentacion y videos de entrega
 
-La documentacion del proyecto esta en `docs` y tambien puede mantenerse en GitHub junto al codigo. Los videos de demostracion no se incluyen en el repositorio para evitar archivos pesados; lo recomendado es subirlos a Dropbox, Drive o una plataforma similar y anadir los enlaces en la documentacion de entrega.
+La documentacion del proyecto esta en `docs` y en esta misma carpeta tambien tiene enlaces para descargar el proyecto en dropbox y desde GitHub.

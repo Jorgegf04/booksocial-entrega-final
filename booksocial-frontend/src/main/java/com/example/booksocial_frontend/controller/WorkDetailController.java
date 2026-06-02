@@ -37,9 +37,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+//REF-02.BOOKSOCIAL-FRONTEND/CONTROLLER/WORKDETAILCONTROLLER.JAVA
 /**
- * Controlador del detalle de una obra. Carga informacion completa, comentarios, biblioteca, wishlist y reacciones.
- * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+ * Controlador del detalle de una obra. Carga informacion completa, comentarios,
+ * biblioteca, wishlist y reacciones.
+ * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+ * respuestas del frontend.
  *
  * @author Jorge
  * @version 3
@@ -61,7 +64,8 @@ public class WorkDetailController {
 
   /**
    * Muestra el detalle de una obra con comentarios y estado del usuario.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -138,7 +142,8 @@ public class WorkDetailController {
           if (liked)
             userLikedCommentIds.add(comment.getId());
         } catch (Exception e) {
-          log.warn("[WORK_DETAIL] Error al cargar reacciones del comentario id={}: {}", comment.getId(), e.getMessage());
+          log.warn("[WORK_DETAIL] Error al cargar reacciones del comentario id={}: {}", comment.getId(),
+              e.getMessage());
         }
       }
     }
@@ -160,7 +165,8 @@ public class WorkDetailController {
     Map<String, Long> authorIds = new HashMap<>();
     try {
       authorService.getAllAuthors().forEach(a -> {
-        if (a.getName() != null && a.getId() != null) authorIds.put(a.getName(), a.getId());
+        if (a.getName() != null && a.getId() != null)
+          authorIds.put(a.getName(), a.getId());
       });
     } catch (Exception e) {
       log.warn("[WORK_DETAIL] Error al cargar autores: {}", e.getMessage());
@@ -185,7 +191,8 @@ public class WorkDetailController {
   // POST: Añadir / quitar de biblioteca
   /**
    * Anade o quita la obra de la biblioteca del usuario.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -222,7 +229,8 @@ public class WorkDetailController {
   // ── POST: Añadir / quitar de wishlist
   /**
    * Anade o quita la obra de la wishlist del usuario.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -259,7 +267,8 @@ public class WorkDetailController {
   // ── POST: Publicar comentario raíz
   /**
    * Publica un comentario principal en una obra.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -285,7 +294,8 @@ public class WorkDetailController {
   // ── POST: Responder a un comentario
   /**
    * Gestiona la ruta asociada al metodo addReply.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -312,7 +322,8 @@ public class WorkDetailController {
   // POST: Eliminar comentario
   /**
    * Elimina un comentario por su identificador.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -337,7 +348,8 @@ public class WorkDetailController {
 
   /**
    * Cuenta comentarios y respuestas de forma recursiva.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -357,7 +369,8 @@ public class WorkDetailController {
   // comentarios de un padre
   /**
    * Agrupa comentarios y respuestas en una lista plana.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -375,7 +388,8 @@ public class WorkDetailController {
   // Crear recursivad para los comentarios
   /**
    * Ordena comentarios y respuestas por fecha.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3
@@ -394,7 +408,8 @@ public class WorkDetailController {
   // POST: Toggle reacción (like/unlike)
   /**
    * Gestiona la ruta asociada al metodo toggleReaction.
-   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+   * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+   * respuestas del frontend.
    *
    * @author Jorge
    * @version 3

@@ -16,7 +16,8 @@
     5. Si error → se muestra el mensaje en un toast + alerta inline.
 
   Store: useAuthStore (login, isAuthenticated)
-  CSS: auth.css (variables + clases .auth-*)
+  CSS: auth.css (variables + clases .auth-*) 
+
 -->
 <script setup>
 import { ref } from 'vue'
@@ -36,7 +37,8 @@ const cargando = ref(false)
 // Alterna visibilidad de la contraseña
 const mostrarPassword = ref(false)
 
-// ─── Esquema de validación con Yup ───────────────────────────────────────────
+// Codigo de la ilustración 54
+//  Esquema de validación con Yup
 const esquema = yup.object({
   username: yup.string().required('El nombre de usuario es obligatorio.'),
   password: yup
@@ -45,12 +47,12 @@ const esquema = yup.object({
     .min(6, 'La contraseña debe tener al menos 6 caracteres.'),
 })
 
-// ─── VeeValidate: useForm + useField ─────────────────────────────────────────
+//  VeeValidate: useForm + useField 
 const { handleSubmit } = useForm({ validationSchema: esquema })
 const { value: username, errorMessage: usernameError } = useField('username')
 const { value: password, errorMessage: passwordError } = useField('password')
 
-// ─── Submit ───────────────────────────────────────────────────────────────────
+// Submit 
 const onSubmit = handleSubmit(async (values) => {
   cargando.value = true
   errorLogin.value = null

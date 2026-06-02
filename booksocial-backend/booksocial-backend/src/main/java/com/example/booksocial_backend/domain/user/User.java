@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+// Codigo de la ilustración 21
 /**
  * Entidad que representa a un usuario registrado en la plataforma BookSocial.
  *
@@ -59,6 +60,8 @@ import lombok.ToString;
 @Builder
 public class User {
 
+  // Codigo de la ilustración 24
+  // Codigo de la ilustracion 25
   /**
    * ID único del usuario generado automáticamente por la base de
    * datos.
@@ -171,6 +174,7 @@ public class User {
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Subscription subscription;
 
+  // Codigo de la ilustración 23
   /**
    * Lista de obras seguidas por el usuario.
    * Representa la relación entre el usuario y las obras que sigue,

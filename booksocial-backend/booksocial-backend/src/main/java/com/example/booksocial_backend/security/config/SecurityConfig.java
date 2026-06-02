@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.example.booksocial_backend.security.jwt.AuthEntryPointJwt;
 import com.example.booksocial_backend.security.jwt.AuthTokenFilter;
 
+// Codigo de la ilustracion 36
 /**
  * Configuración central de Spring Security para el backend de BookSocial.
  *

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
+// Codigo de la ilustracion 37
 /**
  * Clase utilitaria encargada de la gestión de tokens JWT.
  *
@@ -46,12 +47,12 @@ public class JwtUtils {
     UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
 
     return Jwts.builder()
-            .setSubject(userPrincipal.getUsername())
-            .setIssuedAt(new Date())
-            .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-            .signWith(key(), SignatureAlgorithm.HS256)
-            .compact();
-}
+        .setSubject(userPrincipal.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+        .signWith(key(), SignatureAlgorithm.HS256)
+        .compact();
+  }
 
   /**
    * Extrae el username del token JWT.

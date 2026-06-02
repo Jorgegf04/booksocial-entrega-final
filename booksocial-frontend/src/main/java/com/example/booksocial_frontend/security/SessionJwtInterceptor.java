@@ -11,8 +11,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
 
+// Codigo de la ilustración 44
 /**
- * Interceptor que anade el token JWT de la sesion a las peticiones que van al backend.
+ * Interceptor que anade el token JWT de la sesion a las peticiones que van al
+ * backend.
  * Se usa para organizar mejor la logica del frontend Thymeleaf.
  *
  * @author Jorge
@@ -24,9 +26,8 @@ public class SessionJwtInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body,
-                                        ClientHttpRequestExecution execution) throws IOException {
-        ServletRequestAttributes attrs =
-                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            ClientHttpRequestExecution execution) throws IOException {
+        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attrs != null) {
             HttpSession session = attrs.getRequest().getSession(false);
             if (session != null) {

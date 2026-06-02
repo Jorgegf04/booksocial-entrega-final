@@ -11,6 +11,8 @@
  * siempre usan este servicio.
  */
 
+// Codigo de la ilustracion 53
+
 import apiClient from '@/api/axios'
 
 export const worksService = {
@@ -21,7 +23,7 @@ export const worksService = {
   async listar() {
     const { data } = await apiClient.get('/works')
     // El backend puede devolver un array o un Page<> — normalizamos
-    return Array.isArray(data) ? data : data.content ?? []
+    return Array.isArray(data) ? data : (data.content ?? [])
   },
 
   /**

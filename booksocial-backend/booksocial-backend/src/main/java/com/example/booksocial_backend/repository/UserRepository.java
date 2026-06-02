@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.example.booksocial_backend.domain.user.User;
 
+// Codigo de la ilustracion 31
+//Codigo de la ilustracion 32
 /**
  * Repositorio de usuarios de BookSocial.
  *
@@ -32,6 +34,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
    * Busca un usuario por su nombre de usuario.
    *
    * Este metodo utiliza query derivada de Spring Data JPA a partir de su nombre.
+   * 
    * @param username nombre de usuario usado como criterio de busqueda
    * @return Optional con el usuario encontrado, o vacio si no existe
    *
@@ -45,6 +48,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
    * Comprueba si existe un usuario con el nombre de usuario indicado.
    *
    * Este metodo utiliza query derivada de Spring Data JPA a partir de su nombre.
+   * 
    * @param username nombre de usuario usado como criterio de busqueda
    * @return true si el username ya existe; false en caso contrario
    *
@@ -60,6 +64,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
    * Comprueba si existe un usuario con el email indicado.
    *
    * Este metodo utiliza query derivada de Spring Data JPA a partir de su nombre.
+   * 
    * @param email correo electronico usado como criterio de busqueda
    * @return true si el email ya existe; false en caso contrario
    *

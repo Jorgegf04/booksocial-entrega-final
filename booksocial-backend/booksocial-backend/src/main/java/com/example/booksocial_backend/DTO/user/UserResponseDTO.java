@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// Codigo de la ilustracion 28
 /**
  * DTO de salida para la entidad User.
  *

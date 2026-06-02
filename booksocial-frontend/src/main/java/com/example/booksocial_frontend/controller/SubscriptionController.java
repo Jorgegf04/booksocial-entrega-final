@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Controlador de suscripciones premium. Muestra la pantalla premium y permite activar, cancelar o reactivar la suscripcion.
- * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+ * Controlador de suscripciones premium. Muestra la pantalla premium y permite
+ * activar, cancelar o reactivar la suscripcion.
+ * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+ * respuestas del frontend.
  *
  * @author Jorge
  * @version 3
@@ -30,7 +32,8 @@ public class SubscriptionController {
 
     /**
      * Muestra la pagina premium y el estado de suscripcion.
-     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+     * respuestas del frontend.
      *
      * @author Jorge
      * @version 3
@@ -51,7 +54,8 @@ public class SubscriptionController {
 
     /**
      * Activa la suscripcion premium del usuario conectado.
-     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+     * respuestas del frontend.
      *
      * @author Jorge
      * @version 3
@@ -60,7 +64,8 @@ public class SubscriptionController {
     @PostMapping("/activate")
     public String activate(HttpSession session, RedirectAttributes ra) {
         Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) return "redirect:/auth/login";
+        if (userId == null)
+            return "redirect:/auth/login";
 
         try {
             subscriptionService.activate(userId);
@@ -76,7 +81,8 @@ public class SubscriptionController {
 
     /**
      * Cancela la suscripcion premium del usuario conectado.
-     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+     * respuestas del frontend.
      *
      * @author Jorge
      * @version 3
@@ -85,7 +91,8 @@ public class SubscriptionController {
     @PostMapping("/cancel")
     public String cancel(HttpSession session, RedirectAttributes ra) {
         Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) return "redirect:/auth/login";
+        if (userId == null)
+            return "redirect:/auth/login";
 
         try {
             subscriptionService.cancel(userId);
@@ -100,7 +107,8 @@ public class SubscriptionController {
 
     /**
      * Reactiva la suscripcion premium del usuario conectado.
-     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o respuestas del frontend.
+     * Usa anotaciones de Spring MVC para conectar rutas con vistas Thymeleaf o
+     * respuestas del frontend.
      *
      * @author Jorge
      * @version 3
@@ -109,7 +117,8 @@ public class SubscriptionController {
     @PostMapping("/reactivate")
     public String reactivate(HttpSession session, RedirectAttributes ra) {
         Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) return "redirect:/auth/login";
+        if (userId == null)
+            return "redirect:/auth/login";
 
         try {
             subscriptionService.activate(userId);

@@ -25,10 +25,16 @@ import org.slf4j.LoggerFactory;
 
 import lombok.RequiredArgsConstructor;
 
+// Codigo de la ilustración 22
+//Codigo de la ilustración 33
+// Codigo de la ilustracion 35
+
 /**
  * Implementacion de servicio para la gestion de usuarios.
  *
- * Define operaciones de usuarios, registro y relaciones sociales entre usuarios. Coordina repositorios, validaciones de dominio y transformacion entre entidades y DTOs.
+ * Define operaciones de usuarios, registro y relaciones sociales entre
+ * usuarios. Coordina repositorios, validaciones de dominio y transformacion
+ * entre entidades y DTOs.
  *
  * @author Jorge
  * @version 2
@@ -45,13 +51,17 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   /** Componente de seguridad utilizado para cifrar contrasenas. */
   private final PasswordEncoder passwordEncoder;
-  /** Repositorio JPA utilizado para gestionar relaciones de seguimiento entre usuarios. */
+  /**
+   * Repositorio JPA utilizado para gestionar relaciones de seguimiento entre
+   * usuarios.
+   */
   private final UserFollowRepository userFollowRepository;
 
   // ==============================
   // CREATE
   // ==============================
 
+  // Codigo de la ilustracion 34
   /**
    * Crea un nuevo recurso aplicando las validaciones de negocio correspondientes.
    *
@@ -167,7 +177,7 @@ public class UserServiceImpl implements UserService {
   /**
    * Actualiza un recurso existente aplicando validaciones de negocio.
    *
-   * @param id identificador del recurso sobre el que se realiza la operacion
+   * @param id      identificador del recurso sobre el que se realiza la operacion
    * @param request DTO con los datos necesarios para ejecutar la operacion
    * @return DTO de respuesta con los datos actualizados
    *
@@ -178,7 +188,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponseDTO updateUser(Long id, UpdateUserRequestDTO request) {
 
-    if (request == null) throw new IllegalArgumentException("Datos de actualización inválidos");
+    if (request == null)
+      throw new IllegalArgumentException("Datos de actualización inválidos");
 
     User existing = userRepository.findById(id)
         .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado con id: " + id));
@@ -188,7 +199,8 @@ public class UserServiceImpl implements UserService {
     if (request.getUsername() != null && !request.getUsername().isBlank()) {
       String username = request.getUsername().trim();
       releaseInactiveCredentials(username, existing.getEmail());
-      if (!existing.getUsername().equalsIgnoreCase(username) && userRepository.existsByUsernameAndActiveTrue(username)) {
+      if (!existing.getUsername().equalsIgnoreCase(username)
+          && userRepository.existsByUsernameAndActiveTrue(username)) {
         log.warn("[USER] [UPDATE] [CONFLICT] Username ya existe: '{}'", username);
         throw new UserAlreadyExistsException("El username '" + username + "' ya está en uso");
       }
@@ -205,9 +217,12 @@ public class UserServiceImpl implements UserService {
       existing.setEmail(email);
     }
 
-    if (request.getName() != null) existing.setName(request.getName());
-    if (request.getSecondName() != null) existing.setSecondName(request.getSecondName());
-    if (request.getImg() != null) existing.setImg(request.getImg());
+    if (request.getName() != null)
+      existing.setName(request.getName());
+    if (request.getSecondName() != null)
+      existing.setSecondName(request.getSecondName());
+    if (request.getImg() != null)
+      existing.setImg(request.getImg());
     if (request.getRole() != null && !request.getRole().isBlank()) {
       try {
         existing.setRole(Role.valueOf(request.getRole().trim().toUpperCase()));
@@ -215,7 +230,8 @@ public class UserServiceImpl implements UserService {
         log.warn("[USER] [UPDATE] Rol desconocido ignorado: '{}'", request.getRole());
       }
     }
-    if (request.getActive() != null) existing.setActive(request.getActive());
+    if (request.getActive() != null)
+      existing.setActive(request.getActive());
 
     log.info("[USER] [UPDATE] [SUCCESS] id={}", id);
     return mapToDTO(userRepository.save(existing));
@@ -252,6 +268,7 @@ public class UserServiceImpl implements UserService {
   // MAPPER
   // ==============================
 
+  // Codigo de la ilustracion 29
   /**
    * Convierte una entidad de dominio en su DTO de respuesta.
    *
@@ -373,7 +390,7 @@ public class UserServiceImpl implements UserService {
   /**
    * Crea una relacion de seguimiento entre los recursos indicados.
    *
-   * @param userId identificador del usuario asociado a la operacion
+   * @param userId   identificador del usuario asociado a la operacion
    * @param targetId identificador del usuario objetivo de la relacion social
    * @return no devuelve contenido
    *
@@ -410,7 +427,7 @@ public class UserServiceImpl implements UserService {
   /**
    * Elimina, cancela o desactiva el recurso indicado segun la regla de negocio.
    *
-   * @param userId identificador del usuario asociado a la operacion
+   * @param userId   identificador del usuario asociado a la operacion
    * @param targetId identificador del usuario objetivo de la relacion social
    * @return no devuelve contenido
    *

@@ -1,4 +1,5 @@
 //REF-05.BOOKSOCIA-VUE/SRC/API/AXIOS.JS
+// Codigo de la ilustración 52
 /**
  * Este archivo es el punto central desde donde el frontend se comunica con el backend
  *

@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+// Codigo de ilustracion 47
 /**
- * Interceptor que revisa si el usuario tiene rol ADMIN antes de entrar al panel de administracion.
+ * Interceptor que revisa si el usuario tiene rol ADMIN antes de entrar al panel
+ * de administracion.
  * Se usa para organizar mejor la logica del frontend Thymeleaf.
  *
  * @author Jorge
@@ -20,8 +22,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler) throws Exception {
+      HttpServletResponse response,
+      Object handler) throws Exception {
 
     HttpSession session = request.getSession(false);
 

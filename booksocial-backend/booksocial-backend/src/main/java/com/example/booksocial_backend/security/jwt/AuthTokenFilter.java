@@ -13,6 +13,7 @@ import com.example.booksocial_backend.security.service.UserDetailsServiceImpl;
 
 import java.io.IOException;
 
+// Codigo de la ilustracion 38
 /**
  * Filtro de autenticación JWT.
  *

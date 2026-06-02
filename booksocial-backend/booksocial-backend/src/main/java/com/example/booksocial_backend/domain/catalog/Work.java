@@ -130,6 +130,7 @@ public class Work {
   @Enumerated(EnumType.STRING)
   private Demographic demographic;
 
+  // Codigo de la ilustración 26
   /**
    * Autores asociados a la obra
    * Relación muchos a muchos entre obras y autores. La tabla intermedia
@@ -141,6 +142,7 @@ public class Work {
   @JoinTable(name = "WORK_AUTHOR", joinColumns = @JoinColumn(name = "work_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
   private List<Author> authors = new ArrayList<>();
 
+  // Codigo de la ilustracion 27
   /**
    * Ediciones publicadas de esta obra.
    * 

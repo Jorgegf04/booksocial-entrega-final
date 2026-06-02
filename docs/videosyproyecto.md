@@ -11,4 +11,4 @@ Enlaces:
 -El proyecto esta subido en github y en dropbox: 
 
 Dropbox: 
-GitHub: 
+GitHub: https://github.com/Jorgegf04/booksocial-entrega-final.git

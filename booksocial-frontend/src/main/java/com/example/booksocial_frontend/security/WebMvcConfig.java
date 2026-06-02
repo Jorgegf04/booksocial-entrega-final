@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.RequiredArgsConstructor;
 
+// Codigo de la ilustracion 48
 /**
  * Configuracion MVC que registra interceptores y reglas propias del frontend.
  * Se usa para organizar mejor la logica del frontend Thymeleaf.

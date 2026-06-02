@@ -26,7 +26,9 @@ import lombok.RequiredArgsConstructor;
 /**
  * Implementacion de servicio para la gestion de obras.
  *
- * Define operaciones de catalogo para crear, buscar, consultar, actualizar y eliminar obras. Coordina repositorios, validaciones de dominio y transformacion entre entidades y DTOs.
+ * Define operaciones de catalogo para crear, buscar, consultar, actualizar y
+ * eliminar obras. Coordina repositorios, validaciones de dominio y
+ * transformacion entre entidades y DTOs.
  *
  * @author Jorge
  * @version 2
@@ -66,6 +68,7 @@ public class WorkServiceImpl implements WorkService {
     log.info("[WORK] [CREATE] [START] title='{}'", request != null ? request.getTitle() : "null");
     validateWorkRequest(request);
 
+    // Codigo de la ilustracion 30
     Work work = modelMapper.map(request, Work.class);
 
     work.setTitle(request.getTitle().trim());
@@ -80,18 +83,18 @@ public class WorkServiceImpl implements WorkService {
 
     List<Author> savedAuthors = saved.getAuthors();
     if (savedAuthors != null) {
-      // La notificacion a seguidores es secundaria: si falla el correo, la obra sigue creada.
-      savedAuthors.forEach(author ->
-          authorFollowRepository.findByAuthorId(author.getId()).forEach(follow -> {
-            try {
-              if (follow.getUser() != null && follow.getUser().getEmail() != null) {
-                emailService.sendNewWorkNotification(
-                    follow.getUser().getEmail(), author.getName(), saved.getTitle());
-              }
-            } catch (Exception e) {
-              log.warn("[WORK] [EMAIL] Error al notificar a seguidor: {}", e.getMessage());
-            }
-          }));
+      // La notificacion a seguidores es secundaria: si falla el correo, la obra sigue
+      // creada.
+      savedAuthors.forEach(author -> authorFollowRepository.findByAuthorId(author.getId()).forEach(follow -> {
+        try {
+          if (follow.getUser() != null && follow.getUser().getEmail() != null) {
+            emailService.sendNewWorkNotification(
+                follow.getUser().getEmail(), author.getName(), saved.getTitle());
+          }
+        } catch (Exception e) {
+          log.warn("[WORK] [EMAIL] Error al notificar a seguidor: {}", e.getMessage());
+        }
+      }));
     }
 
     return mapWorkToDTO(saved);
@@ -100,7 +103,8 @@ public class WorkServiceImpl implements WorkService {
   /**
    * Ejecuta una creacion masiva de recursos.
    *
-   * @param requests lista de DTOs con los datos necesarios para ejecutar la operacion masiva
+   * @param requests lista de DTOs con los datos necesarios para ejecutar la
+   *                 operacion masiva
    * @return lista de DTOs de respuesta creados
    *
    * @author Jorge
@@ -138,17 +142,16 @@ public class WorkServiceImpl implements WorkService {
       List<Author> authors = work.getAuthors();
       if (authors != null) {
         // Cada obra creada en lote notifica a los seguidores de sus autores asociados.
-        authors.forEach(author ->
-            authorFollowRepository.findByAuthorId(author.getId()).forEach(follow -> {
-              try {
-                if (follow.getUser() != null && follow.getUser().getEmail() != null) {
-                  emailService.sendNewWorkNotification(
-                      follow.getUser().getEmail(), author.getName(), work.getTitle());
-                }
-              } catch (Exception e) {
-              log.warn("[WORK] [EMAIL] Error al notificar a seguidor: {}", e.getMessage());
+        authors.forEach(author -> authorFollowRepository.findByAuthorId(author.getId()).forEach(follow -> {
+          try {
+            if (follow.getUser() != null && follow.getUser().getEmail() != null) {
+              emailService.sendNewWorkNotification(
+                  follow.getUser().getEmail(), author.getName(), work.getTitle());
             }
-            }));
+          } catch (Exception e) {
+            log.warn("[WORK] [EMAIL] Error al notificar a seguidor: {}", e.getMessage());
+          }
+        }));
       }
     });
 
@@ -192,8 +195,8 @@ public class WorkServiceImpl implements WorkService {
   /**
    * Busca recursos aplicando los filtros recibidos.
    *
-   * @param title titulo usado como filtro de busqueda
-   * @param genre genero usado como filtro de busqueda
+   * @param title  titulo usado como filtro de busqueda
+   * @param genre  genero usado como filtro de busqueda
    * @param rating valoracion minima usada como filtro de busqueda
    * @return lista de DTOs que cumplen los filtros
    *
@@ -213,7 +216,7 @@ public class WorkServiceImpl implements WorkService {
   /**
    * Actualiza un recurso existente aplicando validaciones de negocio.
    *
-   * @param id identificador del recurso sobre el que se realiza la operacion
+   * @param id      identificador del recurso sobre el que se realiza la operacion
    * @param request DTO con los datos necesarios para ejecutar la operacion
    * @return DTO de respuesta con los datos actualizados
    *
