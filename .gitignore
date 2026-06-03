@@ -44,6 +44,9 @@ uploads/
 
 # Certificados SSL autofirmados
 certs/
+!booksocial-frontend/certs/
+!booksocial-frontend/certs/localhost.crt
+!booksocial-frontend/certs/localhost.key
 nginx/ssl/*.pem
 nginx/ssl/*.crt
 nginx/ssl/*.key
