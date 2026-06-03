@@ -36,7 +36,7 @@ docker compose up -d --build
 
 Este comando construye y arranca todos los servicios. La primera vez puede tardar unos minutos porque descarga imagenes y compila los proyectos.
 
-Si existe un volcado en `data/mysql-init/01-booksocial.sql`, el servicio `mysql-seed` lo importa automaticamente durante el arranque cuando la base esta vacia. Las imagenes subidas por la aplicacion se guardan en `uploads`, por lo que esa carpeta debe viajar junto al proyecto si se quiere conservar el mismo contenido.
+Si existe un volcado en `data/mysql-init/01-booksocial.sql`, el propio contenedor de MySQL lo importa automaticamente la primera vez que crea la base. Las imagenes subidas por la aplicacion se guardan en `uploads`, por lo que esa carpeta debe viajar junto al proyecto si se quiere conservar el mismo contenido.
 
 Para comprobar que todo esta funcionando:
 
