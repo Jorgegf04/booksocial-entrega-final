@@ -36,9 +36,14 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Datos locales generados por la aplicacion
-data/
-uploads/
+# Datos portables de entrega
+data/*
+!data/mysql-init/
+!data/mysql-init/.gitkeep
+!data/mysql-init/*.sql
+uploads/*
+!uploads/.gitkeep
+!uploads/**
 *.mv.db
 *.trace.db
 

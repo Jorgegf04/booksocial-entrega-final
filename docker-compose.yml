@@ -20,6 +20,7 @@ services:
       MYSQL_ROOT_HOST: '%'
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./data/mysql-init:/docker-entrypoint-initdb.d:ro
     networks:
       - private-network
     healthcheck:
@@ -54,7 +55,7 @@ services:
       MAIL_USERNAME: ${MAIL_USERNAME:-}
       MAIL_PASSWORD: ${MAIL_PASSWORD:-}
     volumes:
-      - images_data:/app/images
+      - ./uploads:/app/images
     networks:
       - private-network
     depends_on:
@@ -161,4 +162,3 @@ networks:
 
 volumes:
   mysql_data:    # Persistencia de la base de datos
-  images_data:   # Imágenes subidas, compartidas entre backend y frontends
