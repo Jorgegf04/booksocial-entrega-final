@@ -36,7 +36,7 @@ docker compose up -d --build
 
 Este comando construye y arranca todos los servicios. La primera vez puede tardar unos minutos porque descarga imagenes y compila los proyectos.
 
-Si existe un volcado en `data/mysql-init/01-booksocial.sql`, MySQL lo importa automaticamente la primera vez que se crea el volumen de base de datos. Las imagenes subidas por la aplicacion se guardan en `uploads`, por lo que esa carpeta debe viajar junto al proyecto si se quiere conservar el mismo contenido.
+Si existe un volcado en `data/mysql-init/01-booksocial.sql`, el servicio `mysql-seed` lo importa automaticamente durante el arranque cuando la base esta vacia. Las imagenes subidas por la aplicacion se guardan en `uploads`, por lo que esa carpeta debe viajar junto al proyecto si se quiere conservar el mismo contenido.
 
 Para comprobar que todo esta funcionando:
 
@@ -56,7 +56,7 @@ Para parar y borrar tambien la base de datos guardada en volumen:
 docker compose down -v
 ```
 
-Despues de `docker compose down -v`, al volver a ejecutar `docker compose up -d --build`, MySQL reimportara los SQL de `data/mysql-init`.
+Despues de `docker compose down -v`, al volver a ejecutar `docker compose up -d --build`, MySQL reimportara `data/mysql-init/01-booksocial.sql` si existe.
 
 ## Exportar datos para otra maquina
 
@@ -73,7 +73,7 @@ Esto genera:
 | `data/mysql-init/01-booksocial.sql` | Volcado completo de la base de datos MySQL. |
 | `uploads` | Imagenes subidas mediante la aplicacion. |
 
-Despues sube esos cambios a GitHub o incluyelos en el ZIP de entrega. En otro ordenador, si la base esta vacia, Docker importara el SQL automaticamente al arrancar por primera vez.
+Despues sube esos cambios a GitHub o incluyelos en el ZIP de entrega. En otro ordenador, si la base esta vacia, Docker importara el SQL automaticamente durante `docker compose up --build`.
 
 Si el otro ordenador ya habia creado el volumen de MySQL antes de tener el SQL, ejecuta:
 

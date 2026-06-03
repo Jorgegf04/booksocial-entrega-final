@@ -30,6 +30,41 @@ services:
       retries: 10
       start_period: 30s
 
+  mysql-seed:
+    image: mysql:8.4
+    container_name: mysql-seed
+    restart: "no"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-booksocial}
+    volumes:
+      - ./data/mysql-init:/seed:ro
+    networks:
+      - private-network
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    command: >
+      sh -c '
+        if [ ! -f /seed/01-booksocial.sql ]; then
+          echo "[mysql-seed] No existe /seed/01-booksocial.sql; se continua sin importar datos.";
+          exit 0;
+        fi;
+        USER_TABLES=$$(mysql -hmysql-db -uroot -p"$$MYSQL_ROOT_PASSWORD" -N -s -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='\''$$MYSQL_DATABASE'\'' AND LOWER(table_name)='\''appuser'\'';");
+        if [ "$$USER_TABLES" = "0" ]; then
+          echo "[mysql-seed] Base sin tabla de usuarios; importando datos de entrega.";
+          mysql -hmysql-db -uroot -p"$$MYSQL_ROOT_PASSWORD" < /seed/01-booksocial.sql;
+          exit 0;
+        fi;
+        USER_ROWS=$$(mysql -hmysql-db -uroot -p"$$MYSQL_ROOT_PASSWORD" "$$MYSQL_DATABASE" -N -s -e "SELECT COUNT(*) FROM appuser;");
+        if [ "$$USER_ROWS" = "0" ]; then
+          echo "[mysql-seed] Tabla de usuarios vacia; importando datos de entrega.";
+          mysql -hmysql-db -uroot -p"$$MYSQL_ROOT_PASSWORD" < /seed/01-booksocial.sql;
+        else
+          echo "[mysql-seed] La base ya tiene datos; no se importa el volcado.";
+        fi;
+      '
+
   backend-api:
     build:
       context: ./booksocial-backend/booksocial-backend
@@ -59,8 +94,8 @@ services:
     networks:
       - private-network
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      mysql-seed:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9999/actuator/health"]
       interval: 30s
